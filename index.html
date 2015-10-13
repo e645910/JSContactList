@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Contacts List</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+<body>
+	<div class="contacts-header">
+		<h1>Ricks Company Contacts</h1>
+	</div>
+<hr>	
+	
+	<form id="contacts-form">
+		<div class="formText">
+			<label>Company:</label>
+			<div class="field"><input type="text" name="company" /></div>
+		</div>
+		<div class="formText">
+			<label>Address 1:</label>
+			<div class="field"><input type="text" name="address1" /></div>
+		</div>
+		<div class="formText">
+			<label>Address 2:</label>
+			<div class="field"><input type="text" name="address2" /></div>
+		</div>		
+		<div class="formText">
+			<label>City:</label>
+			<div class="field"><input type="text" name="city" /></div>
+		</div>
+		<div class="formText">
+			<label>St/Prov:</label>
+			<div class="field"><input type="text" name="state" /></div>
+		</div>
+		<div class="formText">
+			<label>Zip/Postal:</label>
+			<div class="field"><input type="text" name="zip" /></div>
+		</div>
+		<div class="formText">
+			<label>Notes:</label>
+			<div class="field"><input type="text" name="notes" /></div>
+		</div>
+
+		<div class="formText">
+			<label>Name:</label>
+			<div class="field"><input type="text" name="fullName" /></div>
+		</div>
+		<div class="formText">
+			<label>Dept:</label>
+			<div class="field"><input type="text" name="dept" /></div>
+		</div>
+		<div class="formText">
+			<label>Phone:</label>
+			<div class="field"><input type="text" name="phone" /></div>
+		</div>
+
+		<div class="formText">
+			<label>Email:</label>
+			<div class="field"><input type="text" name="email" /></div>
+		</div>
+		<div class="button-wrapper">
+			<div class="item button">
+				<div class="field"><input type="button" id="contacts-op-discard" value="Discard" /></div>
+			</div>
+			<div class="item button button-default">
+				<div class="field"><input type="submit" id="contacts-op-save" value="Save" /></div>
+			</div>
+		</div>
+		<input type="hidden" name="idEntry" value="0" />
+	</form>
+
+<hr>
+	<table cellpadding="0" cellspacing="0" id="contacts-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Company</th>
+				<th>Address 1</th>
+				<th>Address 2</th>
+				<th>City</th>
+				<th>St/Prov</th>
+				<th>Zip/Postal</th>
+				<th>Notes</th>
+				<th>Name</th>
+				<th>Dept</th>
+				<th>Phone</th>
+				<th>Email</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+	</table>
+<hr>
+	<input type="button" value="button text" onclick="test()"></input>
+
+<script src="js/scripts.js"></script>
+<!-- <script src="js/sorttable.js"></script> -->
+
+</body>
+</html>

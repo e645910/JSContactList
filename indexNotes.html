@@ -1,0 +1,50 @@
+<!-- We'll begin by creating the necessary markup for the table and the form. -->
+<h1>Contacts</h1>
+<table id="contacts-table">
+    <tr id="contacts-head">
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Actions</th>  <!-- The table has an extra column for the actions links. -->
+    </tr>
+</table>
+
+<form id="contacts-form">
+    <div class="item text">
+        <label>First name:</label>
+        <div class="field"><input type="text" name="first_name" /></div>
+    </div>
+    <div class="item text">
+        <label>Last name:</label>
+        <div class="field"><input type="text" name="last_name" /></div>
+    </div>
+    <div class="item text">
+        <label>Email:</label>
+        <div class="field"><input type="text" name="email" /></div>
+    </div>
+    <div class="button-wrapper">
+        <div class="item button">
+            <div class="field"><input type="button" id="contacts-op-discard" value="Discard" /></div>
+        </div>
+
+        <div class="item button button-default">
+            <div class="field">
+            	<input type="submit" id="contacts-op-save" value="Save" /></div>
+        </div>
+
+    </div>
+    <input type="hidden" name="id_entry" value="0" /> <!-- The form will be used for both adding and editing, and will need a hidden field to store the current object's ID (initialized to 0). -->
+</form>
+
+    <select>
+        <option value="company">Company</option>
+        <option value="address1">Address 1</option>
+        <option value="address2">Address 2</option>
+        <option value="city">City</option>
+        <option value="state">St/Prov</option>
+        <option value="zip">Zip/Postal</option>
+        <option value="fullName">Name</option>
+        <option value="dept">Dept</option>
+        <option value="phone">Phone</option>
+    </select>
