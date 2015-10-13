@@ -49,11 +49,6 @@ var Contacts = {
 		// initialize table
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
-			
-
-		var titles = document.getElementsByTagName("th");
-		for ( var i = 0; i < titles.length; i++ ) { 
-			titles[i].addEventListener("click", function() {
 			for (i = 0; i < window.localStorage.length; i++) {
 				key = window.localStorage.key(i);
 				if (/Contacts:\d+/.test(key)) {
@@ -61,30 +56,39 @@ var Contacts = {
 					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
-			contacts_list.forEach(Contacts.tableAdd);
+			//contacts_list.forEach(Contacts.tableAdd);
 			console.log(11111111, contacts_list)
 
-
-
-
-
-
-				console.log(222222222, contacts_list)
-				console.log(333333333, this.innerHTML)
-				console.log(444444444, window.localStorage)	
+	var titles = document.getElementsByTagName("th");
+		for ( var i = 0; i < titles.length; i++ ) { 
+			titles[i].addEventListener("click", function() {
+				console.log(222222222, this.innerHTML)
+				sortTable()
+				console.log(11111111, contacts_list)
 			}, false);
 		}
+
+
+
+
+
+
         }
 
-
+console.log(9999999999, window.localStorage)
 // =================== sorts contact list
-		// if (contacts_list.length) {
-  //           contacts_list
-  //               .sort(function(a, b) {
-  //                   return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
-  //               })
-  //               .forEach(Contacts.tableAdd);
-  // 		}
+function test() {
+	alert("worked")
+}
+	function sortTable() {
+		if (contacts_list.length) {
+            contacts_list
+                .sort(function(a, b) {
+                    return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
+                })
+                .forEach(Contacts.tableAdd);
+  		}
+  	}
  // ====================== test sort ==========================
 
 	
