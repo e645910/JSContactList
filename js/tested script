@@ -10,9 +10,7 @@
 			}, false);
 		}
 	}
-
-
-
+	
 	var titles = document.getElementsByTagName("th");
 		if (contacts_list.length) {
             contacts_list

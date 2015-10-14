@@ -46,36 +46,49 @@ var Contacts = {
 		event.preventDefault();
 		}, true);
 
-		// initialize table
+		// initialize table and bind to click on header selection
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
-			
+			var titles = document.getElementsByTagName("th");
+			for ( var i = 0; i < titles.length; i++ ) { 
+				titles[i].addEventListener("click", function() {
+				for (i = 0; i < window.localStorage.length; i++) {
+					key = window.localStorage.key(i);
+					if (/Contacts:\d+/.test(key)) {
+						contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+							this.x = this.innerHTML;
+							var module = {
+							getX: function() { 
+							return this.x; }
+							};
 
-		var titles = document.getElementsByTagName("th");
-		for ( var i = 0; i < titles.length; i++ ) { 
-			titles[i].addEventListener("click", function() {
-			for (i = 0; i < window.localStorage.length; i++) {
-				key = window.localStorage.key(i);
-				if (/Contacts:\d+/.test(key)) {
-					//console.log(33333333, window.localStorage.getItem(key)) // shows Contact:21, 22, etc
-					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+							var retrieveX = module.getX;
+							retrieveX();
+					}
 				}
+			// sort the data
+				function sortByProperty(property) {console.log(555555555, retrieveX)
+					function compareStrings(a, b) {
+						a = a.toLowerCase();
+						b = b.toLowerCase();
+						return (a < b) ? -1 : (a > b) ? 1 : 0;
+					}
+					contacts_list.sort(function(a, b) {
+						if (this.innerHTML === "Company"){
+						return compareStrings(a.property, b.property);
+						}
+					})
+					}
+					sortByProperty()
+					contacts_list.forEach(Contacts.tableAdd);
+					console.log(11111111, contacts_list)
+
+					console.log(333333333, this.innerHTML)
+					console.log(444444444, window.localStorage)	
+				}, false);
 			}
-			contacts_list.forEach(Contacts.tableAdd);
-			console.log(11111111, contacts_list)
-
-
-
-
-
-
-				console.log(222222222, contacts_list)
-				console.log(333333333, this.innerHTML)
-				console.log(444444444, window.localStorage)	
-			}, false);
-		}
         }
-
+		
 
 // =================== sorts contact list
 		// if (contacts_list.length) {
