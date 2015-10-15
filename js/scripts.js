@@ -1,3 +1,4 @@
+// =================set up the DOM ==========================================
 var Contacts = {
 	index: window.localStorage.getItem("Contacts:index"),
 	$table: document.getElementById("contacts-table"),
@@ -6,12 +7,12 @@ var Contacts = {
 	$button_discard: document.getElementById("contacts-op-discard"),
 	
 	init: function() {
-		// initialize storage index
+// =================== initialize storage index =============================
 		if (!Contacts.index) {
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
 		}
 
-		// initialize form
+// ==================== initialize form ======================================
 		Contacts.$form.reset();
 		Contacts.$button_discard.addEventListener("click", function(event) {
 			Contacts.$form.reset();
@@ -46,88 +47,48 @@ var Contacts = {
 		event.preventDefault();
 		}, true);
 
-		// initialize table and bind to click on header selection
+// ================= initialize table =======================================
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
-			var titles = document.getElementsByTagName("th");
-			for ( var i = 0; i < titles.length; i++ ) { 
-				titles[i].addEventListener("click", function() {
-				for (i = 0; i < window.localStorage.length; i++) {
-					key = window.localStorage.key(i);
-					if (/Contacts:\d+/.test(key)) {
-						contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
-							this.x = this.innerHTML;
-							var module = {
-							getX: function() { 
-							return this.x; }
-							};
-
-							var retrieveX = module.getX;
-							retrieveX();
-					}
+			for (i = 0; i < window.localStorage.length; i++) {
+				key = window.localStorage.key(i);
+				if (/Contacts:\d+/.test(key)) {
+					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
-			// sort the data
-				function sortByProperty(property) {console.log(555555555, retrieveX)
-					function compareStrings(a, b) {
-						a = a.toLowerCase();
-						b = b.toLowerCase();
-						return (a < b) ? -1 : (a > b) ? 1 : 0;
-					}
-					contacts_list.sort(function(a, b) {
-						if (this.innerHTML === "Company"){
-						return compareStrings(a.property, b.property);
-						}
-					})
-					}
-					sortByProperty()
-					contacts_list.forEach(Contacts.tableAdd);
-					console.log(11111111, contacts_list)
-
-					console.log(333333333, this.innerHTML)
-					console.log(444444444, window.localStorage)	
-				}, false);
 			}
-        }
-		
 
-// =================== sorts contact list
-		// if (contacts_list.length) {
-  //           contacts_list
-  //               .sort(function(a, b) {
-  //                   return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
-  //               })
-  //               .forEach(Contacts.tableAdd);
-  // 		}
- // ====================== test sort ==========================
+		// ==== sorts the database =========================================
+			function scopepreserver() {
+				return function() {
+				var string = this.innerText;
+				var tableHeader = string.toLowerCase();
+				console.log('tableHeader= ', tableHeader)
+					if (contacts_list.length) {
+						contacts_list
+							.sort(function(a, b) {
+								console.log(222222222, tableHeader)//okay shows name of company
+								if (tableHeader === 'company') {
+									return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
+								}if (tableHeader === 'address1') {
+									return a.address1 < b.address1 ? -1 : (a.address1 > b.address1 ? 1 : 0);
+								}
+							})
+						.forEach(Contacts.tableAdd);
+					}	
+				};
+			}
+		} console.log(1111111, contacts_list)
+		// ===== keeps scope from being lost and starts sort based on "th" selection 
+		function myfunction() {
+		  var titles = document.getElementsByTagName("th");
+		  var rows = document.getElementsByTagName("tr");
+		  for( var i = 0; i < titles.length; i++ ) {
+		    titles[i].onclick = scopepreserver(i,rows[i]);
+		  }
+		}
+		myfunction();
 
-	
-
-		function sortData(data) {
-		    var sorted = [];
-		    Object.keys(data).sort(function(a,b){
-		        return data[a].address1 < data[b].address1 ? -1 : 1
-		    }).forEach(function(key){
-		        sorted.push(data[key]);
-		    });
-		    return sorted;
-		}sortData(window.localStorage)
-
-			if (window.localStorage.length - 1) {
-				var contacts_list = [], i, key;
-				var localStorageArray = new Array();
-				for (i = 0; i < window.localStorage.length; i++) {
-					key = window.localStorage.key(i);
-					if (/Contacts:\d+/.test(key)) {
-						localStorageArray.push(localStorage.key(i)+localStorage.getItem(localStorage.key(i)));
-						
-						//"{"id":"26","company":"q","address1":"6","address2":"5","city":"r","state":"a","zip":"1","notes":"huguyg","fullName":"l","dept":"hy","phone":"787","email":"uhighiu"}"
-					}
-				}
-			}console.log(8888888, localStorageArray)
-
-
-// ================== end test =======================
-
+// ======== display info when a record is selected to be edited ============
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
 			if (/edit|remove/.test(op)) {
@@ -156,50 +117,51 @@ var Contacts = {
 			}
 		}, true);
 	},
-	//add, update, delete contacts
-	storeAdd: function(entry) {
+
+// =============== create, update, delete individual contacts ==============
+		storeAdd: function(entry) {
 		entry.id = Contacts.index;
 		window.localStorage.setItem("Contacts:index", ++Contacts.index);
 		window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-	},
-	storeEdit: function(entry) {
-		window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-	},
-	storeRemove: function(entry) {
-		window.localStorage.removeItem("Contacts:"+ entry.id);
-	},
+		},
+		storeEdit: function(entry) {
+			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
+		},
+		storeRemove: function(entry) {
+			window.localStorage.removeItem("Contacts:"+ entry.id);
+		},
 
-	tableAdd: function(entry) {
-		var $tr = document.createElement("tr"), $td, key;
-		for (key in entry) {
-			if (entry.hasOwnProperty(key)) {
-				$td = document.createElement("td");
-				$td.appendChild(document.createTextNode(entry[key]));
-				$tr.appendChild($td);
+		tableAdd: function(entry) {
+			var $tr = document.createElement("tr"), $td, key;
+			for (key in entry) {
+				if (entry.hasOwnProperty(key)) {
+					$td = document.createElement("td");
+					$td.appendChild(document.createTextNode(entry[key]));
+					$tr.appendChild($td);
+				}
 			}
-		}
-		$td = document.createElement("td");
-		$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
-		$tr.appendChild($td);
-		$tr.setAttribute("id", "entry-"+ entry.id);
-		Contacts.$table.appendChild($tr);
-	},
-	tableEdit: function(entry) {
-		var $tr = document.getElementById("entry-"+ entry.id), $td, key;
-		$tr.innerHTML = "";
-		for (key in entry) {
-			if (entry.hasOwnProperty(key)) {
-				$td = document.createElement("td");
-				$td.appendChild(document.createTextNode(entry[key]));
-				$tr.appendChild($td);
+			$td = document.createElement("td");
+			$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
+			$tr.appendChild($td);
+			$tr.setAttribute("id", "entry-"+ entry.id);
+			Contacts.$table.appendChild($tr);
+		},
+		tableEdit: function(entry) {
+			var $tr = document.getElementById("entry-"+ entry.id), $td, key;
+			$tr.innerHTML = "";
+			for (key in entry) {
+				if (entry.hasOwnProperty(key)) {
+					$td = document.createElement("td");
+					$td.appendChild(document.createTextNode(entry[key]));
+					$tr.appendChild($td);
+				}
 			}
+			$td = document.createElement("td");
+			$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
+			$tr.appendChild($td);
+		},
+		tableRemove: function(entry) {
+			Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
 		}
-		$td = document.createElement("td");
-		$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
-		$tr.appendChild($td);
-	},
-	tableRemove: function(entry) {
-		Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
-	}
-};
-Contacts.init();
+	};
+	Contacts.init();

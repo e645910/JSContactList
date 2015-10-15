@@ -1,4 +1,84 @@
 // ================ does not work loses this.innerHTML =========
+				// sort the data
+			// if (contacts_list.length) {
+			// 	contacts_list
+			// 		.sort(function(a, b) {
+			// 			console.log(333333333, contacts_list)
+			// 			return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
+			// 		})
+			// 		.forEach(Contacts.tableAdd);
+			// }
+
+		function scopepreserver() {
+			return function() {
+				var string = this.innerText;
+				var tableHeader = string.toLowerCase();
+				console.log('tableHeader= ', tableHeader)
+				if (contacts_list.length) {
+					contacts_list
+						.sort(function(a, b) {
+							console.log('a.company= ', a.company)//okay shows name of company
+							console.log(222222222, a, b) // undefined
+
+							//console.log(222222222, a[0]) // undefined
+							//console.log(222222222, a[x]) // undefined
+							//console.log('a.tableHeader= ', a.tablHeader) //undefined
+							//console.log('contacts_list= ', contacts_list) //ok shows list
+							// console.log(222222222, [a].tableHeader)//undefined
+							// console.log(222222222, a,tableHeader) //object{}, company
+							// console.log('a.tableHeader= ', a.[tableHeader]) //Uncaught SyntaxError: Unexpected token [
+							//console.log('a.tableHeader= ', a.["tableHeader"])//Uncaught SyntaxError: Unexpected token [
+							// console.log('a.tableHeader= ', a.["'tableHeader'"])//Uncaught SyntaxError: Unexpected token [
+							//console.log('a.tableHeader= ', a.["'tableHeader'"])//Uncaught SyntaxError: Unexpected token [
+
+							return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
+						})
+						.forEach(Contacts.tableAdd);
+				}	
+			};
+		}
+	}
+
+// =============== test sort
+
+// function scopepreserver() {
+//   	return function () {
+//   	var string = this.innerText;
+//   	var tableHeader = string.toLowerCase();
+//   	console.log(22222222, tableHeader);
+// 	if (contacts_list.length) {
+// 		contacts_list
+// 			.sort(function(a, b) {
+// 				console.log(333333333, tableHeader)
+// 				//var tableHeader = 'company'
+// 				return a.tableHeader < b.tableHeader ? -1 : (a.tableHeader > b.tableHeader ? 1 : 0);
+// 			})
+// 			//.forEach(Contacts.tableAdd);
+// 	}
+
+// 	// ================= test to compare above code ===================
+// 	var x = 'company'
+//   	if (x === 'company') {
+//   		console.log('iffy worked')
+// 			contacts_list
+//   				.sort(function(a, b) {//a, b = Object {address1: "2" address2: "3" city: "z" company: "b"
+//   											//a[x], b[x] = company name (i.e. b, a, a, z)
+//   					console.log(44444444, a.company)
+// 					// return a['x'] < a['x'] ? -1 : (a['x'] > a['x'] ? 1 : 0);
+// 					return a.company < a.company ? -1 : (a.company > a.company ? 1 : 0);
+//   				})
+//   				.forEach(Contacts.tableAdd);
+//   	}
+// 	// =======================================================================
+
+ //   };
+ // }
+
+
+
+
+
+
 	if (contacts_list.length){
 		var titles = document.getElementsByTagName("th");
 		for ( var i = 0; i< titles.length; i++ ) { 
@@ -10,7 +90,7 @@
 			}, false);
 		}
 	}
-	
+
 	var titles = document.getElementsByTagName("th");
 		if (contacts_list.length) {
             contacts_list
@@ -107,6 +187,67 @@ function SortLocalStorage(){
 			globalVar = "test"
 			}
 		})(); 
+
+function sortData(data) {
+		    var sorted = [];
+		    Object.keys(data).sort(function(a,b){
+		        return data[a].address1 < data[b].address1 ? -1 : 1
+		    }).forEach(function(key){
+		        sorted.push(data[key]);
+		    });
+		    return sorted;
+		}sortData(window.localStorage)
+
+			if (window.localStorage.length - 1) {
+				var contacts_list = [], i, key;
+				var localStorageArray = new Array();
+				for (i = 0; i < window.localStorage.length; i++) {
+					key = window.localStorage.key(i);
+					if (/Contacts:\d+/.test(key)) {
+						localStorageArray.push(localStorage.key(i)+localStorage.getItem(localStorage.key(i)));
+						
+						//"{"id":"26","company":"q","address1":"6","address2":"5","city":"r","state":"a","zip":"1","notes":"huguyg","fullName":"l","dept":"hy","phone":"787","email":"uhighiu"}"
+					}
+				}
+			}console.log(8888888, localStorageArray)
+
+
+					// sorts the data
+		// var titles = document.getElementsByTagName("th");
+		// // var rows = document.getElementsByTagName("tr");
+		// for ( var i = 0; i< titles.length; i++ ) { 
+		// 	titles[i].addEventListener("click", function() {
+		// 		var x = this.innerText;
+		// 		console.log(4444444444, this.innerText)
+		// 		if (this.innerText === "company") {
+		// 			var y = 'company';
+		// 			console.log(222222222, 'it worked')
+		// 		}
+				
+		// 		if (contacts_list.length) {
+		// 		contacts_list
+		// 			.sort(function(a, b) {
+						
+		// 				return a.x < b.x ? -1 : (a.x > b.x ? 1 : 0);
+		// 			})
+		// 			.forEach(Contacts.tableAdd);
+		// 	}
+		// 	console.log(1111111111, contacts_list)
+		// 	console.log(33333333, x)
+
+		// 	}, false);
+		// }
+
+// =================== sorts contact list
+		// if (contacts_list.length) {
+  //           contacts_list
+  //               .sort(function(a, b) {
+  //                   return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
+  //               })
+  //               .forEach(Contacts.tableAdd);
+  // 		}
+
+
 
 			// function SortLocalStorage(){
 			// 	if(localStorage.length > 0){

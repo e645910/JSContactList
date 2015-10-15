@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<table>
+<tbody>
+<tr id="myRow"><td>A</td></tr>
+</tbody>
+</table>
+<textarea rows="3" id="results"></textarea>
+<button id="inner">Inner HTML</button>
+<button id="outer">Outer text</button>
+<script>
+var results = document.getElementById("results");
+var row = document.getElementById("myRow");
+document.getElementById("inner").onclick = function() {
+results.innerHTML = row.innerHTML;
+console.log(row.innerHTML)
+if (row.innerHTML === "A") {
+	console.log(11111111, "it works")
+}
+};
+document.getElementById("outer").onclick = function() {
+results.innerHTML = row.outerText;
+console.log(row.outerText)
+if (row.innerText === "A") {
+	console.log(22222222, "it works")
+}
+}
+</script>
+</body>
+</html>

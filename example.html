@@ -127,7 +127,6 @@
 					var op = event.target.getAttribute("data-op");
 					if (/edit|remove/.test(op)) {
 						var entry = JSON.parse(window.localStorage.getItem("Contacts:"+ event.target.getAttribute("data-id")));
-						console.log(entry)
 						if (op == "edit") {
 							Contacts.$form.first_name.value = entry.first_name;
 							Contacts.$form.last_name.value = entry.last_name;
