@@ -37,7 +37,9 @@ function SortLocalStorage(){
 
 
 ===================================================
+Since your current approach is to have your code managing the Table HTML and the Animal data directly, it will need to be your code that does the sorting of the data and the rewrite of the table. That is, you will need to listen for click events on the column headers, and then sort your Animal data according to that particular column, and then redraw the table completely. Redrawing the table could simply entail looping through your tableRemove() and then tableAdd() functions for all Animals being displayed, although that might be a little slow. The sorting of the data by each column is a bit more of a mess for which I have a solution below.
 
+==================================================
 
 
 

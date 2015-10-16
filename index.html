@@ -6,72 +6,87 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 <body>
-	<div class="contacts-header">
-		<h1>Ricks Company Contacts</h1>
+	<div class="headerContainer">
+		<div class="header">
+			<h1>Ricks Company Contacts</h1>
+		</div>
 	</div>
-<hr>	
 	
-	<form id="contacts-form">
-		<div class="formText">
-			<label>Company:</label>
-			<div class="field"><input type="text" name="company" /></div>
-		</div>
-		<div class="formText">
-			<label>Address 1:</label>
-			<div class="field"><input type="text" name="address1" /></div>
-		</div>
-		<div class="formText">
-			<label>Address 2:</label>
-			<div class="field"><input type="text" name="address2" /></div>
-		</div>		
-		<div class="formText">
-			<label>City:</label>
-			<div class="field"><input type="text" name="city" /></div>
-		</div>
-		<div class="formText">
-			<label>St/Prov:</label>
-			<div class="field"><input type="text" name="state" /></div>
-		</div>
-		<div class="formText">
-			<label>Zip/Postal:</label>
-			<div class="field"><input type="text" name="zip" /></div>
-		</div>
-		<div class="formText">
-			<label>Notes:</label>
-			<div class="field"><input type="text" name="notes" /></div>
-		</div>
 
-		<div class="formText">
-			<label>Name:</label>
-			<div class="field"><input type="text" name="fullName" /></div>
-		</div>
-		<div class="formText">
-			<label>Dept:</label>
-			<div class="field"><input type="text" name="dept" /></div>
-		</div>
-		<div class="formText">
-			<label>Phone:</label>
-			<div class="field"><input type="text" name="phone" /></div>
-		</div>
+	<form class="formContainer" id="contacts-form">
 
-		<div class="formText">
-			<label>Email:</label>
-			<div class="field"><input type="text" name="email" /></div>
-		</div>
-		<div class="button-wrapper">
-			<div class="item button">
-				<div class="field"><input type="button" id="contacts-op-discard" value="Discard" /></div>
-			</div>
-			<div class="item button button-default">
-				<div class="field"><input type="submit" id="contacts-op-save" value="Save" /></div>
+		<div class="formCompanyContainer">
+			<div class="formCompany">
+				<div>
+					<label>Company:</label>
+					<div><input type="text" name="company" /></div>
+				</div>
+				<div>
+					<label>Address 1:</label>
+					<div><input type="text" name="address1" /></div>
+				</div>
+				<div>
+					<label>Address 2:</label>
+					<div><input type="text" name="address2" /></div>
+				</div>		
+				<div>
+					<label>City:</label>
+					<div><input type="text" name="city" /></div>
+				</div>
+				<div>
+					<label>St/Prov:</label>
+					<div><input type="text" name="state" /></div>
+				</div>
+				<div>
+					<label>Zip/Postal:</label>
+					<div><input type="text" name="zip" /></div>
+				</div>
 			</div>
 		</div>
-		<input type="hidden" name="idEntry" value="0" />
+		
+		<div class="formCompanyNotesContainer">
+			<div>
+				<label>Notes:</label>
+				<div><input type="text" name="notes" /></div>
+			</div>
+		</div>
+			
+		<div class="formPersonContainer">
+			<div class="formPersonal">
+				<div>
+					<label>Name:</label>
+					<div><input type="text" name="fullName" /></div>
+				</div>
+				<div>
+					<label>Dept:</label>
+					<div><input type="text" name="dept" /></div>
+				</div>
+				<div>
+					<label>Phone:</label>
+					<div><input type="text" name="phone" /></div>
+				</div>
+
+				<div>
+					<label>Email:</label>
+					<div><input type="text" name="email" /></div>
+				</div>
+			</div>
+		</div>
+			<div class="buttonContainer">
+				<div class="itemButton">
+					<div>
+						<div><input type="button" id="contacts-op-discard" value="Clear" /></div>
+					</div>
+					<div>
+						<div class="button-default"><input type="submit" id="contacts-op-save" value="Save" /></div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="idEntry" value="0" />
+
 	</form>
 
-<hr>
-	<table cellpadding="0" cellspacing="0" id="contacts-table">
-		<thead>
+	<table class="tableContainer" id="contacts-table">
 			<tr>
 				<th>ID</th>
 				<th>Company</th>
@@ -87,9 +102,8 @@
 				<th>Email</th>
 				<th>Actions</th>
 			</tr>
-		</thead>
 	</table>
-<hr>
+
 <script src="js/scripts.js"></script>
 <!-- <script src="js/sorttable.js"></script> -->
 

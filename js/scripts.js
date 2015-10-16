@@ -56,25 +56,36 @@ var Contacts = {
 					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
+			contacts_list.forEach(Contacts.tableShow)
 
 		// ==== sorts the database =========================================
 			function scopepreserver() {
 				return function() {
 				var string = this.innerText;
 				var tableHeader = string.toLowerCase();
+				var headerA;
+				var headerB;
 				console.log('tableHeader= ', tableHeader)
 					if (contacts_list.length) {
 						contacts_list
 							.sort(function(a, b) {
-								console.log(222222222, tableHeader)//okay shows name of company
-								if (tableHeader === 'company') {
-									return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
-								}if (tableHeader === 'address1') {
-									return a.address1 < b.address1 ? -1 : (a.address1 > b.address1 ? 1 : 0);
+								// console.log(a)// shows parsed object array
+								// console.log('header Selected = ', tableHeader)//shows name of selected header
+								// console.log('array & headerName = ', a, tableHeader)//shows name of selected header and object array data
+								for(var key in a){
+									if(key === tableHeader){
+										a.tableHeader = key;
+										console.log("THE WHOLE FRIGGIN OBJECT", a)
+										console.log("LOOK HERE IT'S WORKING", a.tableHeader);
+									}
 								}
+									// return a.tableHeader < b.tableHeader ? -1 : (a.tableHeader > b.tableHeader ? 1 : 0);// this doesn't work
+									// return headerA < headerB ? -1 : (a.tableHeader > b.tableHeader ? 1 : 0);// this doesn't work
+										//return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);// this works
+
 							})
 						.forEach(Contacts.tableAdd);
-					}	
+					}	//localStorage.clear();
 				};
 			}
 		} console.log(1111111, contacts_list)
@@ -83,12 +94,14 @@ var Contacts = {
 		  var titles = document.getElementsByTagName("th");
 		  var rows = document.getElementsByTagName("tr");
 		  for( var i = 0; i < titles.length; i++ ) {
-		    titles[i].onclick = scopepreserver(i,rows[i]);
+		    titles[i].onclick = scopepreserver( i, rows[i]);
+
+
 		  }
 		}
 		myfunction();
 
-// ======== display info when a record is selected to be edited ============
+// ======== display info when a record is selected to be removed  ============
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
 			if (/edit|remove/.test(op)) {
@@ -118,7 +131,51 @@ var Contacts = {
 		}, true);
 	},
 
-// =============== create, update, delete individual contacts ==============
+// =============== show data ==============
+		tableShow: function(entry) {
+			var $tr = document.createElement("tr"), $td, key;
+			for (key in entry) {
+				if (entry.hasOwnProperty(key)) {
+					$td = document.createElement("td");
+					$td.appendChild(document.createTextNode(entry[key]));
+					$tr.appendChild($td);
+				}
+			}
+			$td = document.createElement("td");
+			$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
+			$tr.appendChild($td);
+			$tr.setAttribute("id", "entry-"+ entry.id);
+			Contacts.$table.appendChild($tr);
+		},
+
+
+
+
+// 	var i;
+
+// function(){
+//     if (window.localStorage.length - 1) {
+//         var localStorageArray = new Array();
+//         for (i = 0; i < window.localStorage.length; i++) {
+//         key = window.localStorage.key(i);
+//     if (/Contacts:\d+/.test(key)) {
+//         //localStorageArray.push(JSON.parse(localStorage.key(i)+localStorage.getItem(localStorage.key(i))))
+//         localStorageArray[i] = localStorage.key(i)+localStorage.getItem(localStorage.key(i));
+
+//         }
+//     }
+//     }
+
+// }SortLocalStorage()
+
+//document.write("<pre>" + localStorage.getItem(contacts_list) + "</pre>");
+
+
+
+
+
+// =============== create, update, delete individual contacts ==============	
+
 		storeAdd: function(entry) {
 		entry.id = Contacts.index;
 		window.localStorage.setItem("Contacts:index", ++Contacts.index);
@@ -146,6 +203,7 @@ var Contacts = {
 			$tr.setAttribute("id", "entry-"+ entry.id);
 			Contacts.$table.appendChild($tr);
 		},
+
 		tableEdit: function(entry) {
 			var $tr = document.getElementById("entry-"+ entry.id), $td, key;
 			$tr.innerHTML = "";
@@ -160,6 +218,7 @@ var Contacts = {
 			$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
 			$tr.appendChild($td);
 		},
+
 		tableRemove: function(entry) {
 			Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
 		}
