@@ -37,70 +37,84 @@ h1 {
 	top: calc(14% - 1em);
 	left: calc(12% - 1em);
 	width: 70%;
-	height: 50%;
+	height: 55%;
 	padding: 1%;
-	font-size: 12px;
+	font-size: 15px;
 	font-size: 1vw;
 	border: 2px solid blue;
 	}
 
-.formCompanyContainer{
-	border: 2px solid red;
+.formCompanyContainer {
+	/*border: 2px solid red;*/
 }
 
 .formCompany {
 	width: 20%;
-	margin-left: 3%;
-	border: 2px solid blue;
+	/*border: 2px solid blue;*/
 }
 
 .formCompany label {
-	font: bold;
-	border: 2px solid green;
+	font-weight: bold;
+	/*border: 2px solid green;*/
+}
+
+.formCompany input {
+	width: 200%;
+	height: 20px;
+	margin: 2%;
+	/*font-size: 15px;
+	font-size: 1.6vw;*/
 }
 
 /* notes */
 .formCompanyNotesContainer {
     position: relative;
-    top: calc(20% - 1em);
-    border: 2px solid black;
+    top: calc(6% - 1em);
+    /*border: 2px solid black;*/
 }
 	
 .formCompanyNotesContainer input {
-	width: 90%;
-	height: 20%;
+	position: relative;
+	left: calc(3% - 1em);
+	width: 96%;
+	height: 60px;
 	border: 2px solid black;
 }
 
-.formPersonContainer{
+/*personal info*/
+.formPersonContainer {
 	position: absolute;
-	top: calc(5% - 1em);
-	left: calc(60% - 1em)
-	border: 2px solid black;
+	top: calc(6% - 1em);
+	left: calc(58% - 1em);
+	/*border: 2px solid black;*/
 }
 
 .formPersonal {
-	float: right;
-	width: 20%;
-	margin-left: 35%;
-	border: 2px solid blue;
+	width: 60%;
+	/*border: 2px solid blue;*/
 }
 
 .formPersonal label {
-	border: 2px solid blue;
+	font-weight: bold;
+	/*border: 2px solid blue;*/
 }
 
 .formPersonal input {
-	border: 2px solid blue;
+    width: 250%;
+    height: 20px;
+    margin: 2%;
+    font-size: 15px;
+    font-size: 1.6vw;
+	/*border: 2px solid blue;*/
 }
 
 /*--------- buttons  -------------*/
 .buttonContainer {
-	/*border: 2px solid yellow;*/
+	border: 2px solid yellow;
 }
 
 .itemButton {
-	/*border: 2px solid yellow;*/
+	border: 2px solid yellow;
 }
 
 .button-default {

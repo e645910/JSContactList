@@ -48,6 +48,53 @@ var Contacts = {
 		}, true);
 
 // ================= initialize table =======================================
+		// if (window.localStorage.length - 1) {
+		// 	var contacts_list = [], i, key;
+		// 	for (i = 0; i < window.localStorage.length; i++) {
+		// 		key = window.localStorage.key(i);
+		// 		if (/Contacts:\d+/.test(key)) {
+		// 			contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+		// 		}
+		// 	}
+
+			// if (contacts_list.length) {
+			// 	function compareStrings(a, b) {
+			// 		a = a.toLowerCase();
+			// 		b = b.toLowerCase();
+			// 	return (a < b) ? -1 : (a > b) ? 1 : 0;
+			// 	}
+			// 	contacts_list.sort(function(a, b) {
+			// 		if (this.innerHTML === "Company"){
+			// 	  		return compareStrings(a.Company, b.Company);
+			// 	  	}
+			// 	  	if (this.innerHTML === "city"){
+			// 	  	 	return compareStrings(a.city, b.city);
+			// 	  	 }
+			// 	console.log(111111111, contacts_list)
+			// 	})
+			// 	.forEach(Contacts.tableAdd);
+			// }
+		// }
+
+
+
+
+			// if (contacts_list.length) {
+			// 	contacts_list
+			// 		.sort(function(a, b) {
+
+			// 			return a.fullName < b.fullName ? -1 : (a.fullName > b.fullName ? 1 : 0);
+			// 		})
+			// 		.forEach(Contacts.tableAdd);
+			// }
+		//}
+
+
+
+
+
+
+
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
@@ -63,29 +110,22 @@ var Contacts = {
 				return function() {
 				var string = this.innerText;
 				var tableHeader = string.toLowerCase();
-				var headerA;
-				var headerB;
 				console.log('tableHeader= ', tableHeader)
 					if (contacts_list.length) {
 						contacts_list
 							.sort(function(a, b) {
-								// console.log(a)// shows parsed object array
-								// console.log('header Selected = ', tableHeader)//shows name of selected header
-								// console.log('array & headerName = ', a, tableHeader)//shows name of selected header and object array data
-								for(var key in a){
-									if(key === tableHeader){
-										a.tableHeader = key;
-										console.log("THE WHOLE FRIGGIN OBJECT", a)
-										console.log("LOOK HERE IT'S WORKING", a.tableHeader);
-									}
+							if (tableHeader == "company") {
+									console.log(1111111)
+									return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);
+								}								
+								if (tableHeader == "name") {
+									console.log(2222222)
+									return a.fullName < b.fullName ? -1 : (a.fullName > b.fullName ? 1 : 0);
 								}
-									// return a.tableHeader < b.tableHeader ? -1 : (a.tableHeader > b.tableHeader ? 1 : 0);// this doesn't work
-									// return headerA < headerB ? -1 : (a.tableHeader > b.tableHeader ? 1 : 0);// this doesn't work
-										//return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);// this works
-
-							})
-						.forEach(Contacts.tableAdd);
-					}	//localStorage.clear();
+						//console.log(111111111, contacts_list)
+						})
+					//.forEach(Contacts.tableAdd);
+					}
 				};
 			}
 		} console.log(1111111, contacts_list)
@@ -95,11 +135,8 @@ var Contacts = {
 		  var rows = document.getElementsByTagName("tr");
 		  for( var i = 0; i < titles.length; i++ ) {
 		    titles[i].onclick = scopepreserver( i, rows[i]);
-
-
 		  }
-		}
-		myfunction();
+		}myfunction();
 
 // ======== display info when a record is selected to be removed  ============
 		Contacts.$table.addEventListener("click", function(event) {
