@@ -3,6 +3,9 @@ body {
 	padding: 0; 
 	border: 0; 
 	font-family: fantasy;
+	background-image: url("./img/green_Background.png");
+	background-size: cover;
+	z-index: 0;
 }
 
 /*--------- header -------------*/
@@ -110,7 +113,10 @@ h1 {
 
 /*--------- buttons  -------------*/
 .buttonContainer {
-	border: 2px solid yellow;
+	position: absolute;
+    top: calc(70% - 1em);
+    left: calc(80% - 1em);
+    border: 2px solid yellow;
 }
 
 .itemButton {
