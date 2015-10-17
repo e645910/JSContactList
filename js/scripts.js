@@ -48,6 +48,7 @@ var Contacts = {
 		}, true);
 
 // ================= initialize table =======================================
+
 		// if (window.localStorage.length - 1) {
 		// 	var contacts_list = [], i, key;
 		// 	for (i = 0; i < window.localStorage.length; i++) {
@@ -103,7 +104,7 @@ var Contacts = {
 					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
-			contacts_list.forEach(Contacts.tableShow)
+			// contacts_list.forEach(Contacts.tableShow)
 
 		// ==== sorts the database =========================================
 			function scopepreserver() {
@@ -114,6 +115,16 @@ var Contacts = {
 					if (contacts_list.length) {
 						contacts_list
 							.sort(function(a, b) {
+
+						for(var key in a){
+							if(key === tableHeader){
+								a.tableHeader = key;
+								console.log("THE WHOLE FRIGGIN OBJECT", a)
+								console.log("LOOK HERE IT'S WORKING", a.tableHeader);
+								}
+							}
+
+
 							if (tableHeader == "company") {
 									console.log(1111111)
 									return a.company < b.company ? -1 : (a.company > b.company ? 1 : 0);

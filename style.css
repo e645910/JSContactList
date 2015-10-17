@@ -1,8 +1,10 @@
+
 body {
-	margin: 0; 
+	margin: 0 auto; 
+	max-width: 600px;
 	padding: 0; 
 	border: 0; 
-	font-family: fantasy;
+	font-family: fantasy, Times;
 	background-image: url("./img/green_Background.png");
 	background-size: cover;
 	z-index: 0;
@@ -17,7 +19,7 @@ body {
 	height: 8%;
 	background: #F0F0F0;
 	color: #000000;
-	border: 2px solid red;
+	border: 2px solid #000;
 	}
 
 .header {
@@ -28,7 +30,7 @@ body {
 	font-weight: bold;
 }
 
-h1 {
+.header h1 {
 	font-family: fantasy;
 	font-size: 50px;
 	font-size: 2vw;
@@ -42,139 +44,149 @@ h1 {
 	width: 70%;
 	height: 55%;
 	padding: 1%;
-	font-size: 15px;
-	font-size: 1vw;
 	border: 2px solid blue;
 	}
 
-.formCompanyContainer {
-	/*border: 2px solid red;*/
-}
-
-.formCompany {
-	width: 20%;
-	/*border: 2px solid blue;*/
-}
-
-.formCompany label {
+formContainer label {
+	font-size: 15px;
+	font-size: 1.2vw;
+	font-family: Times;
 	font-weight: bold;
-	/*border: 2px solid green;*/
 }
 
-.formCompany input {
-	width: 200%;
-	height: 20px;
-	margin: 2%;
-	/*font-size: 15px;
-	font-size: 1.6vw;*/
+.formContainer input {
+	width: 100%;
+	height: 100%;
+	font-size: 10px;
+	font-size: 1vw;
+	font-family: Times;
+	border: 1px solid #000;
+}
+
+.formContainer div input{
+	width: 90%;
+	height: 3vh;
+}
+
+/* company */
+.formCompany {
+	position: absolute;
+	width: 40%;
+	height: 70%;
+	/*border: 2px solid red;*/
 }
 
 /* notes */
 .formCompanyNotesContainer {
-    position: relative;
-    top: calc(6% - 1em);
-    /*border: 2px solid black;*/
+    position: absolute;
+    top: calc(51.5% - 1em);
+    left: calc(58% - 1em);
+    width: 40%;
+    height: 40%;
+    /*border: 2px solid red;*/
 }
-	
-.formCompanyNotesContainer input {
-	position: relative;
-	left: calc(3% - 1em);
-	width: 96%;
-	height: 60px;
-	border: 2px solid black;
+
+.formCompanyNotesContainer div input {
+	height: 25vh;
 }
 
 /*personal info*/
 .formPersonContainer {
 	position: absolute;
-	top: calc(6% - 1em);
+	top: calc(6.5% - 1em);
 	left: calc(58% - 1em);
-	/*border: 2px solid black;*/
+	width: 40%;
+	height: 60%;
+	/*border: 2px solid red;*/
 }
 
-.formPersonal {
-	width: 60%;
-	/*border: 2px solid blue;*/
-}
-
-.formPersonal label {
-	font-weight: bold;
-	/*border: 2px solid blue;*/
-}
-
-.formPersonal input {
-    width: 250%;
-    height: 20px;
-    margin: 2%;
-    font-size: 15px;
-    font-size: 1.6vw;
-	/*border: 2px solid blue;*/
-}
 
 /*--------- buttons  -------------*/
-.buttonContainer {
+/*.buttonContainer {
 	position: absolute;
-    top: calc(70% - 1em);
-    left: calc(80% - 1em);
-    border: 2px solid yellow;
+    bottom: calc(9% - 1em);
+    left: calc(4% - 1em);
+    border: 2px solid #FF0;
+    width: 20%;
+    height: 10%;
+    padding: 1%;
 }
 
-.itemButton {
-	border: 2px solid yellow;
+.a input {
+	width: 80px;
+	height: 40px;
+	border: 1px solid red;
 }
 
-.button-default {
-
+.b  {
+	position: absolute;
+	top: calc(40% - 1em);
+	left: calc(65% - 1em);
 }
+
+.b input {
+	width: 80px;
+	height: 40px;
+	border: 1px solid green;
+}*/
+
+/*.itemButton {
+	width: 30%;
+	height: 50%;
+	display: inline-block;
+	border: 1px solid red;
+}*/
+
+/*.itemButton input{
+	width: 30%;
+	height: 220px;
+}*/
+
+/*.buttonContainer button:hover{ 
+	background:#FF0000;
+	color: #000;
+}*/
+
+/*.button-save {
+	position: absolute;
+	top: calc(40% - 1em);
+	left: calc(60% - 1em);
+	width: 90%;
+	height: 220px;
+}*/
 
 /*--------- table  -------------*/
 
-.tableContainer {
+/*.tableContainer {
 	position: absolute;
-	bottom: calc(10% - 1em);
+	bottom: calc(8% - 1em);
 	left: calc(3% - 1em);
 	border-collapse: collapse;
 	width: 95%;
 	height: auto;
 	padding: 1%;
-	border: 2px solid green;
+	border: 2px solid #000;
 }
 
 .tableContainer th {
 	font-weight: bold; 
-	text-align:center; 
+	text-align:center;
+	font-weight: bold; 
 	font-size: 14px; 
-	color: #29344B;
-	border: 2px solid red;
+	font-size: 1.2vw;
+	font-family: fantasy;
+	color:#000;
+	border: 2px solid #000;
 }
 .tableContainer tr {
 	color: #000;
-	font-size: 12px;
+	font-size: 12px;*/
+	/*font-weight: bold;*/
+/*	font-family: sans-serif;
+	font-size: 1vw;
 	text-align: left; 
 }
 
 .tableContainer tr:nth-child(2n) {
-	background: #E8EDFF;
+	background: #E8EDFF;*/
 }
-
-
-/*a { color: #0068D2; cursor: pointer; }
-a:link, a:visited { text-decoration: none; color: #0068D2; }
-a:hover, a:active { text-decoration: underline; color: #0068D2; }
-*/
-/*#contacts-table { border-collapse: collapse; }*/
-/*#contacts-table, #contacts-table th, #contacts-table td { padding: 8px 16px; text-align: left; border: 0px solid #B9BABE; }*/
-/*#contacts-table th { font-weight: bold; font-size: 14px; color: #29344B; }*/
-/*#contacts-table td { color: #000; }*/
-/*#contacts-table tr:nth-child(2n) { background: #E8EDFF; }*/
-
-/*#contacts-form { padding: 10px; }
-.text input, .button input { padding: 5px; margin: 0; border: 1px solid #ccc; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px; }
-#contacts-form .item { margin: 3px 0; }
-#contacts-form label, #contacts-form .field { display: inline-block; color: #0C0B07; }
-#contacts-form label { width: 110px; font-weight: bold; text-align: right; color: #666; }
-#contacts-form .text input { width: 176px; padding: 3px; }
-#contacts-form .button { display: inline-block; }
-#contacts-form .button-wrapper { padding-left: 113px; }
-.button input { padding: 4px 8px; color: #343434; background-color: #fdfdfd; background: -moz-linear-gradient(#fdfdfd, #e1e1e1); background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#e1e1e1)); }
-.button-default input { font-weight: bold; color: #fff; background-color: #7ca0c7; background: -moz-linear-gradient(#acc6e1, #7ca0c7); background: -webkit-gradient(linear, 0 0, 0 100%, from(#acc6e1), to(#7ca0c7)); border-color: #5b80b2; }*/
