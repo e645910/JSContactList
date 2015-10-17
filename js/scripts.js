@@ -1,3 +1,29 @@
+// function that detects whether localStorage is both supported and available:
+function storageAvailable(type) {
+	try {
+		var storage = window[type],
+			x = '__storage_test__';
+		storage.setItem(x, x);
+		storage.removeItem(x);
+		return true;
+	}
+	catch(e) {
+		return false;
+	}
+}
+
+//And here is how you would use it:
+
+if (storageAvailable('localStorage')) {
+	// Yippee! We can use localStorage awesomeness
+}
+else {
+	// Too bad, no localStorage for us
+}
+//You can test for sessionStorage instead by calling storageAvailable('sessionStorage'). 
+
+
+
 // =================set up the DOM ==========================================
 var Contacts = {
 	index: window.localStorage.getItem("Contacts:index"),
@@ -104,7 +130,7 @@ var Contacts = {
 					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
-			// contacts_list.forEach(Contacts.tableShow)
+			contacts_list.forEach(Contacts.tableShow)
 
 		// ==== sorts the database =========================================
 			function scopepreserver() {

@@ -68,96 +68,75 @@ formContainer label {
 	height: 3vh;
 }
 
+.formContainer div textarea {
+	/*width: 100%;
+	height: 100%;*/
+}
+
 /* company */
+
 .formCompany {
 	position: absolute;
 	width: 40%;
 	height: 70%;
-	/*border: 2px solid red;*/
 }
 
 /* notes */
+
 .formCompanyNotesContainer {
     position: absolute;
-    top: calc(51.5% - 1em);
-    left: calc(58% - 1em);
+    top: calc(75% - 1em);
+    left: calc(3% - 1em);
     width: 40%;
     height: 40%;
-    /*border: 2px solid red;*/
 }
 
-.formCompanyNotesContainer div input {
-	height: 25vh;
+.formCompanyNotesContainer textarea{
+	width: 90%;
+	height: 9vh;
+	border: 1px solid #000;
 }
-
 /*personal info*/
+
 .formPersonContainer {
 	position: absolute;
 	top: calc(6.5% - 1em);
 	left: calc(58% - 1em);
 	width: 40%;
-	height: 60%;
-	/*border: 2px solid red;*/
+	height: 46%;
 }
 
-
 /*--------- buttons  -------------*/
-/*.buttonContainer {
+.buttonContainer {
 	position: absolute;
-    bottom: calc(9% - 1em);
-    left: calc(4% - 1em);
+    top: calc(80% - 1em);
+    left: calc(70% - 1em);
     border: 2px solid #FF0;
     width: 20%;
     height: 10%;
-    padding: 1%;
+    padding: 2%;
 }
 
-.a input {
-	width: 80px;
-	height: 40px;
-	border: 1px solid red;
+.itemButton input {
+	border-radius: 36px; 
+	-moz-border-radius: 36px; 
+	-webkit-border-radius: 36px; 
+	border: 1px solid #000000;
+	margin-bottom: 4%;
 }
 
-.b  {
-	position: absolute;
-	top: calc(40% - 1em);
-	left: calc(65% - 1em);
-}
-
-.b input {
-	width: 80px;
-	height: 40px;
-	border: 1px solid green;
-}*/
-
-/*.itemButton {
-	width: 30%;
-	height: 50%;
-	display: inline-block;
-	border: 1px solid red;
-}*/
-
-/*.itemButton input{
-	width: 30%;
-	height: 220px;
-}*/
-
-/*.buttonContainer button:hover{ 
+.itemButton input[type="button"]:hover{
 	background:#FF0000;
 	color: #000;
-}*/
+}
 
-/*.button-save {
-	position: absolute;
-	top: calc(40% - 1em);
-	left: calc(60% - 1em);
-	width: 90%;
-	height: 220px;
-}*/
+.itemButton input[type="submit"]:hover{
+	background:#FF0000;
+	color: #000;
+}
 
 /*--------- table  -------------*/
-
-/*.tableContainer {
+.tableContainer {
 	position: absolute;
 	bottom: calc(8% - 1em);
 	left: calc(3% - 1em);
@@ -169,7 +148,6 @@ formContainer label {
 }
 
 .tableContainer th {
-	font-weight: bold; 
 	text-align:center;
 	font-weight: bold; 
 	font-size: 14px; 
@@ -178,15 +156,15 @@ formContainer label {
 	color:#000;
 	border: 2px solid #000;
 }
+
 .tableContainer tr {
 	color: #000;
-	font-size: 12px;*/
-	/*font-weight: bold;*/
-/*	font-family: sans-serif;
+	font-size: 10px;
 	font-size: 1vw;
+	font-family: Times;
 	text-align: left; 
 }
 
 .tableContainer tr:nth-child(2n) {
-	background: #E8EDFF;*/
+	background: #E8EDFF;
 }
