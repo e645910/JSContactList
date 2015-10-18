@@ -1,28 +1,3 @@
-// function that detects whether localStorage is both supported and available:
-function storageAvailable(type) {
-	try {
-		var storage = window[type],
-			x = '__storage_test__';
-		storage.setItem(x, x);
-		storage.removeItem(x);
-		return true;
-	}
-	catch(e) {
-		return false;
-	}
-}
-
-//And here is how you would use it:
-
-if (storageAvailable('localStorage')) {
-	// Yippee! We can use localStorage awesomeness
-}
-else {
-	// Too bad, no localStorage for us
-}
-//You can test for sessionStorage instead by calling storageAvailable('sessionStorage'). 
-
-
 
 // =================set up the DOM ==========================================
 var Contacts = {
@@ -84,44 +59,20 @@ var Contacts = {
 		// 		}
 		// 	}
 
-			// if (contacts_list.length) {
-			// 	function compareStrings(a, b) {
-			// 		a = a.toLowerCase();
-			// 		b = b.toLowerCase();
-			// 	return (a < b) ? -1 : (a > b) ? 1 : 0;
-			// 	}
-			// 	contacts_list.sort(function(a, b) {
-			// 		if (this.innerHTML === "Company"){
-			// 	  		return compareStrings(a.Company, b.Company);
-			// 	  	}
-			// 	  	if (this.innerHTML === "city"){
-			// 	  	 	return compareStrings(a.city, b.city);
-			// 	  	 }
-			// 	console.log(111111111, contacts_list)
-			// 	})
-			// 	.forEach(Contacts.tableAdd);
-			// }
+		// 	console.log(111111111, contacts_list)
+
+		// 	if (contacts_list.length) {
+		// 		contacts_list
+		// 			.sort(function(a, b) {
+
+		// 				return a.fullName < b.fullName ? -1 : (a.fullName > b.fullName ? 1 : 0);
+		// 			})
+		// 			.forEach(Contacts.tableAdd);
+		// 	}
 		// }
 
 
-
-
-			// if (contacts_list.length) {
-			// 	contacts_list
-			// 		.sort(function(a, b) {
-
-			// 			return a.fullName < b.fullName ? -1 : (a.fullName > b.fullName ? 1 : 0);
-			// 		})
-			// 		.forEach(Contacts.tableAdd);
-			// }
-		//}
-
-
-
-
-
-
-
+// =====================================================================================
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
@@ -263,6 +214,7 @@ var Contacts = {
 		},
 
 		tableAdd: function(entry) {
+			console.log(9999999, entry)
 			var $tr = document.createElement("tr"), $td, key;
 			for (key in entry) {
 				if (entry.hasOwnProperty(key)) {
