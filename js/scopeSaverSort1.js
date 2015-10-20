@@ -58,7 +58,7 @@ var Contacts = {
 		event.preventDefault();
 		}, true);
 
- 		// initialize table
+// ======================== initialize table ===================================
 
 	if (window.localStorage.length - 1) {
 		var contacts_list = [], i, key;
@@ -75,9 +75,8 @@ var Contacts = {
 						return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
 					})
 					.forEach(Contacts.tableAdd);
-					
 
-		//preserve var tableHeader scope
+		//preserve var table Header scope
 		function scopepreserver() {
 			return function() {
 				var string = this.innerText;
@@ -89,7 +88,7 @@ var Contacts = {
 				var x = tableHeader;
 
 				var sortOn = function(arr, prop, reverse, numeric) {
-						//emsure there is a property
+						//ensure there is a property
 						if (!prop || !arr) {
 							return arr;
 						}
@@ -115,7 +114,7 @@ var Contacts = {
 								//parse as float to allow 0.02 values
 							return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
 							}));
-						}else {
+						}else {	
 							//do sort "in place" with sort_by function
 							arr.sort(sort_by(prop, reverse, function(a){
 								// - force value to string.
@@ -124,28 +123,37 @@ var Contacts = {
 						}
 				}
 
-				// if (window.localStorage.length - 1) {
-				// 	var contacts_list = [], i, key;
-				// 	for (i = 0; i < window.localStorage.length; i++) {
-				// 		key = window.localStorage.key(i);
-				// 		if (/Contacts:\d+/.test(key)) {
-				// 			contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
-				// 		}
-				// 	}
-				// 		//acsending order
-				// 		sortOn(contacts_list, x, false, false);
-				// 		.forEach(contacts_list.tableShowSort);
-				// 		console.log('Sorted Array', contacts_list)
-				// 		//reverse order
-				// 		//sortOn(contacts_list, x, true, false);
-				// };	
+				if (window.localStorage.length - 1) {
+					var contacts_list = [], i, key;
+					for (i = 0; i < window.localStorage.length; i++) {
+						key = window.localStorage.key(i);
+						if (/Contacts:\d+/.test(key)) {
+							contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+						}
+					} 
+					
+					if (tableHeader !== 'actions') {
+						var tableHeaderRowCount = 1;
+						var table = document.getElementById('contacts-table');
+						var rowCount = table.rows.length;
+						for (var i = tableHeaderRowCount; i < rowCount; i++) {
+					    	table.deleteRow(tableHeaderRowCount);
+					    }
+							//acsending order
+							sortOn(contacts_list, x, false, false);
+							contacts_list.forEach(Contacts.tableAdd)
+							console.log('Sorted Array', contacts_list)
+							//reverse order
+							//sortOn(contacts_list, x, true, false);	
+					}
+				};
 			};
 		}
 
 			// keeps scope from being lost and starts sort based on "th" selection 
 			function myfunction() {
-			var titles = document.getElementsByTagName("th");
-			var rows = document.getElementsByTagName("tr");
+			var titles = document.getElementsByTagName('th');
+			var rows = document.getElementsByTagName('tr');
 				for( var i = 0; i < titles.length; i++) {
 					titles[i].onclick = scopepreserver( i, rows[i]);
 				}
@@ -188,31 +196,13 @@ var Contacts = {
 				window.localStorage.setItem("Contacts:index", ++Contacts.index);
 				window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
 			},
-
 			storeEdit: function(entry) {
 				window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
 			},
 			storeRemove: function(entry) {
 				window.localStorage.removeItem("Contacts:"+ entry.id);
 			},
-// ===========create sort tabel ============
-			tableShowSort: function(entry) {
-				var $tr = document.createElement("tr"), $td, key;
-				for (key in entry) {
-					
-					if (entry.hasOwnProperty(key)) {
-						$td = document.createElement("td");
-						$td.appendChild(document.createTextNode(entry[key]));
-						$tr.appendChild($td);
-					}
-				}console.log(11111111, entry)
-				$td = document.createElement("td");
-				$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
-				$tr.appendChild($td);
-				$tr.setAttribute("id", "entry-"+ entry.id);
-				Contacts.$table.appendChild($tr);
-			},
-//=======================================================
+
 			tableAdd: function(entry) {
 				var $tr = document.createElement("tr"), $td, key;
 				for (key in entry) {
