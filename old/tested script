@@ -151,9 +151,9 @@ function SortLocalStorage(){
       for (i=0;i<localStorage.length;i++){
           localStorageArray[i] = localStorage.key(i)+localStorage.getItem(localStorage.key(i));
           console.log(77777777, localStorageArray[i])
-           //"Contacts:25{"id":"25","company":"d","address1":"1","address2":"2","city":"s","state":"y","zip":"3","notes":"fsdfsdfds","fullName":"d","dept":"w","phone":"2222","email":"werr"}"
-           console.log(99999999, window.localStorage)
-           //Contacts:21: "{"id":21,"company":"b","address1":"2","address2":"…":"s","dept":"d","phone":"2","email":"sdfgsdfds"}", Contacts:23: "{"id":23,"company":"a","address1":"3","address2":"…lName":"t","dept":"d","phone":"4","email":"jhjh"}", Contacts:24: "{"id":24,"company":"z","address1":"5","address2":"…:"b","dept":"gfhgf","phone":"3","email":"hjghjg"}", Contacts:25: "{"id":"25","company":"d","address1":"1","address2"…me":"d","dept":"w","phone":"2222","email":"werr"}", Contacts:26: "{"id":"26","company":"q","address1":"6","address2"…:"l","dept":"hy","phone":"787","email":"uhighiu"}"  
+		"Contacts:25{"id":"25","company":"d","address1":"1","address2":"2","city":"s","state":"y","zip":"3","notes":"fsdfsdfds","fullName":"d","dept":"w","phone":"2222","email":"werr"}"
+		console.log(99999999, window.localStorage)
+		Contacts:21: "{"id":21,"company":"b","address1":"2","address2":"…":"s","dept":"d","phone":"2","email":"sdfgsdfds"}", Contacts:23: "{"id":23,"company":"a","address1":"3","address2":"…lName":"t","dept":"d","phone":"4","email":"jhjh"}", Contacts:24: "{"id":24,"company":"z","address1":"5","address2":"…:"b","dept":"gfhgf","phone":"3","email":"hjghjg"}", Contacts:25: "{"id":"25","company":"d","address1":"1","address2"…me":"d","dept":"w","phone":"2222","email":"werr"}", Contacts:26: "{"id":"26","company":"q","address1":"6","address2"…:"l","dept":"hy","phone":"787","email":"uhighiu"}"  
       }
    }
    var sortedArray = localStorageArray.sort();

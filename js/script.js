@@ -156,7 +156,7 @@ var Contacts = {
 		}, true);
 	},
 
-// =============== show data ==============
+// =============== creates a tabel ==============
 		tableShow: function(entry) {
 			var $tr = document.createElement("tr"), $td, key;
 			for (key in entry) {
@@ -249,4 +249,4 @@ var Contacts = {
 			Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
 		}
 	};
-	Contacts.init();
+	Contacts.init();//starts var contacts init

@@ -1,0 +1,43 @@
+html lang="en">
+<head runat="server">
+    <title></title>
+    <script type="text/javascript">
+        function CreateTable() {
+
+            if (window.localStorage.length - 1) {
+            var contacts_list = [], i, key;
+            for (i = 0; i < window.localStorage.length; i++) {
+                key = window.localStorage.key(i);
+                if (/Contacts:\d+/.test(key)) {
+                    contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+                }
+            }
+        }console.log(contacts_list)
+
+            var tablecontents = "";
+            tablecontents = "<table border='1'>";
+
+            for (var i = 0; i < contacts_list.length; i++) {
+                tablecontents += "<tr>";
+                for (var j = 0; j < contacts_list[i].length; j++) {
+
+                    tablecontents += "<td>" + contacts_list[i][j] + "</td>";
+                }
+
+                tablecontents += "</tr>";
+            }
+            tablecontents += "</table>";
+            document.getElementById("table").innerHTML = tablecontents;
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <h1>
+        Click Here to Generate Table</h1>
+    <input type="button" value="Generate Table" onclick="CreateTable()" />
+    <p id="table">
+    </p>
+    </form>
+</body>
+</html>

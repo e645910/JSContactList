@@ -3,7 +3,13 @@
 <html>
 <body>
 
-<div id="result"></div>
+<div id="result">localStorageArray:</div>
+<hr>
+<div id="contactList">contacts_list:</div>
+<hr>
+<div id='table'>
+
+</div>
 
 <script>
 
@@ -12,16 +18,25 @@
 if (typeof(Storage) !== "undefined") {
 	function getLocalKeys() {
 			var localStorageArray = new Array();
+			var contacts_list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
 				key = window.localStorage.key(i);
 				if (/Contacts:\d+/.test(key)) {
 					localStorageArray[i] = localStorage.getItem(localStorage.key(i));
+					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
+			
+
+			
+
+
 			// var sortedArray = localStorageArray.sort();
 			// return sortedArray;
 			document.getElementById("result").innerHTML = localStorageArray;
+			document.getElementById("contactList").innerHTML = contacts_list;
 			console.log(111111111, localStorageArray)
+			console.log(222222222, localStorageArray)
 		}getLocalKeys()
     
 } else {

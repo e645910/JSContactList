@@ -4,16 +4,16 @@
 
 </head><link rel="stylesheet" type="text/css" href="fullsort.css">
 <body>
-	<div id="d1"></div>
-	<div id="d2"></div>
+<!-- 	<div id="d1"></div>
+	<div id="d2"></div> -->
 	<div id="d3"></div>
 	<div id="d4"></div>
-	<div id="d5"></div>
+	<!-- <div id="d5"></div>
 	<div id="d6"></div>
 	<div id="d7"></div>
 	<div id="d8"></div>
 	<div id="d9"></div>
-	<div id="d10"></div>
+	<div id="d10"></div> -->
 
 <script>
 function getLocalKeys() {
@@ -27,6 +27,7 @@ function getLocalKeys() {
 		
 console.log(111111111, contacts_list)		
 
+	var x = 'state';
 
 	var sortOn = function(arr, prop, reverse, numeric) {
 
@@ -41,6 +42,8 @@ console.log(111111111, contacts_list)
 				//reset a, b to the field
 				a = primer(a[field]),
 				b = primer(b[field]);
+				console.log(11,a) //value
+				console.log(22,field)// key
 				//do actual sorting, reverse as needed
 				return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
 			}
@@ -75,46 +78,48 @@ console.log(111111111, contacts_list)
     var elem = document.getElementById(elemID);
     var result = "<p>" + label + "</p>";   
     result += '<table cellpadding="10" cellspacing="5">';
-    
+    console.log(3333333, x)
     for (var i = 0; i < contacts_list.length; i++) {
         result += "<tr>";
-        result += '<td class="' + (doing == "id" ? "hot" : "cold") + '">';
-        result += contacts_list[i].id + "</td>";
+        // result += '<td class="' + (doing == "id" ? "hot" : "cold") + '">';
+        // result += contacts_list[i].id + "</td>";
         
-        result += '<td class="' + (doing == "city" ? "hot" : "cold") + '">';
-        result += contacts_list[i].city + "</td>";
-        
-        result += '<td class="' + (doing == "state" ? "hot" : "cold") + '">';
+        result += '<td class="' + (doing == x ? "hot" : "cold") + '">';
         result += contacts_list[i].state + "</td>";
+        console.log(44444444, contacts_list[i].state)
+        // result += '<td class="' + (doing == "state" ? "hot" : "cold") + '">';
+        // result += contacts_list[i].state + "</td>";
     }
 
     result += "</table>";
     result += "<br/>";   
     elem.innerHTML += result;
-
+//console.log(22222222, x)
 	}
 	// Sort ID
-	sortOn(contacts_list, 'id', false, true);
-	stringResult("d1", 'id', "ID numeric");
+	// sortOn(contacts_list, 'id', false, true);
+	// stringResult("d1", 'id', "ID numeric");
 
-	sortOn(contacts_list, 'id', true, true);
-	stringResult("d2", 'id', "ID reverse numeric");
-
+	// sortOn(contacts_list, 'id', true, true);
+	// stringResult("d2", 'id', "ID reverse numeric");
+// console.log(22222222, x)
 
 	// Sort CITY
-	sortOn(contacts_list, 'city', false, false);
-	stringResult("d3", 'city', "CITY");
+	
+	
+	sortOn(contacts_list, x, false, false);
+	stringResult("d3", x, "CITY");
 
-	sortOn(contacts_list, 'city', true, false);
-	stringResult("d4", 'city', "CITY reverse");
+	sortOn(contacts_list, x, true, false);
+	stringResult("d4", x, "CITY reverse");
 
 
-	// Sort STATE
-	sortOn(contacts_list, 'state', false, false);
-	stringResult("d5", 'state', "STATE");
+	// // Sort STATE
+	// sortOn(contacts_list, 'state', false, false);
+	// stringResult("d5", 'state', "STATE");
 
-	sortOn(contacts_list, 'state', true, false);
-	stringResult("d6", 'state', "STATE reverse");
+	// sortOn(contacts_list, 'state', true, false);
+	// stringResult("d6", 'state', "STATE reverse");
 }getLocalKeys()
     
 </script>

@@ -123,6 +123,7 @@
 							.forEach(Contacts.tableAdd);
 					}
 				}
+//==============================================				
 				Contacts.$table.addEventListener("click", function(event) {
 					var op = event.target.getAttribute("data-op");
 					if (/edit|remove/.test(op)) {
@@ -143,6 +144,8 @@
 					}
 				}, true);
 			},
+
+// =============== create, update, delete individual contacts ==============	
 
 			storeAdd: function(entry) {
 				entry.id = Contacts.index;
