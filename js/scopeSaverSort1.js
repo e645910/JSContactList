@@ -68,7 +68,7 @@ var Contacts = {
 				contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 			}
 		}
-			//initial data sort by id  
+			//populate table with data sorted by id  
 			if (contacts_list.length) {
 				contacts_list
 					.sort(function(a, b) {
@@ -76,8 +76,8 @@ var Contacts = {
 					})
 					.forEach(Contacts.tableAdd);
 
-		//preserve var table Header scope
-		function scopepreserver() {
+		//preserve table header (key) name scope
+		function scopePreserver() {
 			return function() {
 				var string = this.innerText;
 				var tableHeader = string.toLowerCase();
@@ -85,7 +85,7 @@ var Contacts = {
 
 				// sorts the data 
 				// makes the sort function dynamic
-				var x = tableHeader;
+				var keyName = tableHeader;
 
 				var sortOn = function(arr, prop, reverse, numeric) {
 						//ensure there is a property
@@ -124,27 +124,48 @@ var Contacts = {
 				}
 
 				if (window.localStorage.length - 1) {
+					var localStorageArray = new Array();
 					var contacts_list = [], i, key;
 					for (i = 0; i < window.localStorage.length; i++) {
 						key = window.localStorage.key(i);
 						if (/Contacts:\d+/.test(key)) {
+							localStorageArray[i] = localStorage.getItem(localStorage.key(i));
 							contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 						}
 					} 
-					
+					//deleted current table view
 					if (tableHeader !== 'actions') {
-						var tableHeaderRowCount = 1;
+						var tableHeaderRowCount = 1; // start index from 0
 						var table = document.getElementById('contacts-table');
-						var rowCount = table.rows.length;
-						for (var i = tableHeaderRowCount; i < rowCount; i++) {
-					    	table.deleteRow(tableHeaderRowCount);
+						var rowCount = table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
+  						for (var i = tableHeaderRowCount; i < rowCount; i++) {
+					    	table.deleteRow(tableHeaderRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
 					    }
-							//acsending order
-							sortOn(contacts_list, x, false, false);
+
+					    //determine table sort order
+
+							// if (tableHeader === 'zip'){
+								// sortOn(contacts_list, 'keyName', false, true);//numeric ascending
+								// contacts_list.forEach(Contacts.tableAdd)
+							// }
+
+							// if (tableHeader === 'company'){
+								// console.log(1111111, contacts_list)
+								// console.log(2222222, keyName)
+								// console.log(3333333, sortOn)
+							// 	sortOn(contacts_list, 'keyName', false, false);
+							// 	contacts_list.forEach(Contacts.tableAdd)
+							// }
+
+
+
+							// sortOn(localStorageArray, 'keyName', true, true);//numeric reverse - does not work
+							//sortOn(contacts_list, 'keyName', false, true);//numeric ascending - does not work
+							sortOn(contacts_list, keyName, false, false);//non-numeric ascending- works
+							//sortOn(contacts_list, keyName, true, false);// non-numeric reverse - workd
 							contacts_list.forEach(Contacts.tableAdd)
-							console.log('Sorted Array', contacts_list)
-							//reverse order
-							//sortOn(contacts_list, x, true, false);	
+							// console.log(444444445, localStorageArray)
+								
 					}
 				};
 			};
@@ -155,9 +176,10 @@ var Contacts = {
 			var titles = document.getElementsByTagName('th');
 			var rows = document.getElementsByTagName('tr');
 				for( var i = 0; i < titles.length; i++) {
-					titles[i].onclick = scopepreserver( i, rows[i]);
+					titles[i].onclick = scopePreserver( i, rows[i]);
 				}
-			};myfunction();
+			};
+			myfunction();
 		}
 	};
 //===============================================		

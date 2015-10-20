@@ -3,6 +3,11 @@
 <head>
 
 </head><link rel="stylesheet" type="text/css" href="fullsort.css">
+
+
+<div id="results">
+
+</div>
 <body>
 	<div id="d1"></div>
 	<div id="d2"></div>
@@ -18,25 +23,23 @@
 
 <script>
 
-var homes = [{
-    "id": "3",
-    "city": "Dallas",
-    "state": "TX",
-    "zip": "75201",
-    "price": "$430,876.99"
-}, {
-    "id": "4",
-    "city": "Bevery Hills",
-    "state": "CA",
-    "zip": "90210",
-    "price": "$1,120,256.00"
-}, {
-    "id": "5",
-    "city": "New York",
-    "state": "NY",
-    "zip": "00010",
-    "price": "700256.00"
-}];
+            var localStorage = new Array();
+            var contacts_list = [], i, key;
+            for (i = 0; i < window.localStorage.length; i++) {
+                key = window.localStorage.key(i);
+                if (/Contacts:\d+/.test(key)) {
+                    localStorage[i] = localStorage.getItem(localStorage.key(i));
+                    contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+                }
+            }
+document.getElementById("results").innerHTML = localStorage;
+console.log(window.localStorage)
+//window.localStorage.clear();
+
+
+var homes
+ = [{"id":1,"company":"zray","address1":"10","address2":"9","city":"helena","state":"d","zip":"9","notes":"xxxxxxxdjfsdjflkjsdff\ndfsdf\ndfsdfsdf","fullName":"Xray","dept":"vp","phone":"123","email":"fgfggfd"},{"id":2,"company":"see you","address1":"34","address2":"78","city":"arkansas","state":"j","zip":"mjhuhg","notes":"kknkl","fullName":"George","dept":"fr","phone":"568","email":"uytt87t6@.com"},{"id":3,"company":"guess who co","address1":"879","address2":"356","city":"Tucson","state":"Arizona","zip":"85739","notes":"hghgh","fullName":"Rick Wightman","dept":"09","phone":"087","email":"hkjhjkhkh@k.com"},{"id":4,"company":"Hello","address1":"576","address2":"69694","city":"kodiak","state":"Ak","zip":"888","notes":"jhjh","fullName":"Harry One","dept":"HR","phone":"567","email":"r.w@q.com"},{"id":5,"company":"winter co","address1":"11810","address2":"9534","city":"ville","state":"Arizona","zip":"85739","notes":"gkjbdj","fullName":"Michael wightman","dept":"child","phone":"765567885","email":"myyo72@gmail.com"}];
+
 
 var sortOn = function (arr, prop, reverse, numeric) {
 
@@ -112,14 +115,13 @@ function stringResult(elemID, doing, label) {
         result += '<td class="' + (doing == "zip" ? "hot" : "cold") + '">';
         result += homes[i].zip + "</td>";
         
-        result += '<td class="' + (doing == "price" ? "hot" : "cold") + '">';
-        result += homes[i].price + "</td>";
+        result += '<td class="' + (doing == "address1" ? "hot" : "cold") + '">';
+        result += homes[i].address1 + "</td>";
         result += "</tr>";
     }
     result += "</table>";
     result += "<br/>";   
     elem.innerHTML += result;
-    
     
 }
 
@@ -156,11 +158,11 @@ stringResult("d8", 'zip', "ZIP reverse numeric");
 
 
 // Sort PRICE
-sortOn(homes, 'price', false, true);
-stringResult("d9", 'price', "PRICE numeric");
+sortOn(homes, 'address1', false, true);
+stringResult("d9", 'address1', "address1 numeric");
 
-sortOn(homes, 'price', true, true);
-stringResult("d10", 'price', "PRICE reverse numeric");
+sortOn(homes, 'address1', true, true);
+stringResult("d10", 'address1', "PRICE reverse numeric");
 </script>
 </body>
 </html>
