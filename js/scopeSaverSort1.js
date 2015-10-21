@@ -69,9 +69,10 @@ var Contacts = {
 			}
 		}
 
-		var x = true;
+		var sortOrderAscending = true;
+		console.log(33333333, sortOrderAscending)
 		//primmary populate table with data sorted by id 
-		if (x = true){
+		if (sortOrderAscending = true){
 			if (contacts_list.length) {
 			contacts_list
 				.sort(function(a, b) {
@@ -103,14 +104,12 @@ var Contacts = {
 						//reset a, b to the field
 						a = primer(a[field]),
 						b = primer(b[field]);
-						//console.log(11,a) //value
-						//console.log(22,field)// key (name of value)
 						//do actual sorting, reverse as needed
-						console.log(1111111, x)
-						if (x === false){
-							return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
-						}
-							return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+						console.log(1111111, sortOrderAscending)
+							if (sortOrderAscending === false){
+								return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
+							}
+						return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
 					}
 				}
 
@@ -131,7 +130,7 @@ var Contacts = {
 				}
 			}// end of var sortOn = function(arr, prop, reverse, numeric)
 
-			//deleted current table records view
+			//deleted current table records and change to new sort order
 			if (tableHeader !== 'actions') {
 				var tableHeaderRowCount = 1; // start index from 0
 				var table = document.getElementById('contacts-table');
@@ -140,10 +139,18 @@ var Contacts = {
 			    	table.deleteRow(tableHeaderRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
 			    	}
 
-			    //determine table sort order				
-				sortOn(contacts_list, keyName, false, false);
-				contacts_list.forEach(Contacts.tableAdd)				
-				console.log(222222222, x)
+			    // sort order
+			    // Toggle Sort Order
+			    	sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
+
+			    function sortTable(){
+			    	sortOn(contacts_list, keyName, false, false);
+					contacts_list.forEach(Contacts.tableAdd)
+					console.log('sort order ran', sortOrderAscending)
+			    }sortTable();
+							
+				console.log(222222222, sortOrderAscending)
+
 			}// end of if (tableHeader !== 'actions')
 		};// end of return function()
 	}// end of function scopePreserver
