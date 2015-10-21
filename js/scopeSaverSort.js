@@ -10,19 +10,20 @@ function supports_local_storage() {
   }
 }supports_local_storage();
 
-// =================set up the DOM ==========================================
+// ==================== set up the DOM =======================================
 var Contacts = {
 	index: window.localStorage.getItem("Contacts:index"),
 	$table: document.getElementById("contacts-table"),
 	$form: document.getElementById("contacts-form"),
 	$button_save: document.getElementById("contacts-op-save"),
 	$button_discard: document.getElementById("contacts-op-discard"),
-	
+
+// ==================== initialize storage index =============================	
 	init: function() {
-// =================== initialize storage index =============================
 		if (!Contacts.index) {
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
 		}
+
 // ==================== initialize form ======================================
 		Contacts.$form.reset();
 		Contacts.$button_discard.addEventListener("click", function(event) {
@@ -58,7 +59,7 @@ var Contacts = {
 		event.preventDefault();
 		}, true);
 
-// ======================== initialize table ===================================
+// ==================== initialize table =====================================
 
 	if (window.localStorage.length - 1) {
 		var contacts_list = [], i, key;
@@ -69,9 +70,10 @@ var Contacts = {
 			}
 		}
 
+// ==================== sort contacts ========================================
+
 		var sortOrderAscending = true;
-		console.log(33333333, sortOrderAscending)
-		//primmary populate table with data sorted by id 
+		// primary sort is done by id 
 		if (sortOrderAscending = true){
 			if (contacts_list.length) {
 			contacts_list
@@ -81,7 +83,7 @@ var Contacts = {
 				.forEach(Contacts.tableAdd);
 			}
 		}
-	}
+	} 
 
 	//preserve table header (key) name scope
 	function scopePreserver() {
@@ -89,73 +91,60 @@ var Contacts = {
 		var string = this.innerText;
 		var tableHeader = string.toLowerCase();
 		var keyName = tableHeader;
-		console.log('tableHeader= ', tableHeader)
 
 		// sort the data 
 			var sortOn = function(arr, prop, reverse, numeric) {
-				//ensure there is a property
 				if (!prop || !arr) {
 					return arr;
 				}
-				//set up sort function
 				var sort_by = function (field, rev, primer) {
-					//return the required a,b function
 					return function(a, b) {
-						//reset a, b to the field
 						a = primer(a[field]),
 						b = primer(b[field]);
-						//do actual sorting, reverse as needed
-						console.log(1111111, sortOrderAscending)
+						//======= do actual sorting  =======
+
+						//ascending order
+						return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+						//descending order
 							if (sortOrderAscending === false){
 								return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
 							}
-						return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
 					}
 				}
 
 				if (numeric) {
 					//do sort "in place" with sort_by function
 					arr.sort(sort_by(prop, reverse, function(a) {
-						//force value to a string.
-						//replace any non numeric characters.
-						//parse as float to allow 0.02 values
 					return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
 					}));
 				}else {	
-					//do sort "in place" with sort_by function
 					arr.sort(sort_by(prop, reverse, function(a){
-						// - force value to string.
 					return String(a).toUpperCase();
 					}));
 				}
-			}// end of var sortOn = function(arr, prop, reverse, numeric)
+			}
 
-			//deleted current table records and change to new sort order
+			//delete current table records and change to new sort order
 			if (tableHeader !== 'actions') {
-				var tableHeaderRowCount = 1; // start index from 0
+				var tableHeaderRowCount = 1;
 				var table = document.getElementById('contacts-table');
-				var rowCount = table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
+				var rowCount = table.rows.length;
 					for (var i = tableHeaderRowCount; i < rowCount; i++) {
-			    	table.deleteRow(tableHeaderRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
+			    	table.deleteRow(tableHeaderRowCount);
 			    	}
 
-			    // sort order
 			    // Toggle Sort Order
-			    	sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
-
+			    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
+			    //resort list
 			    function sortTable(){
 			    	sortOn(contacts_list, keyName, false, false);
 					contacts_list.forEach(Contacts.tableAdd)
-					console.log('sort order ran', sortOrderAscending)
 			    }sortTable();
-							
-				console.log(222222222, sortOrderAscending)
+			}
+		};
+	}
 
-			}// end of if (tableHeader !== 'actions')
-		};// end of return function()
-	}// end of function scopePreserver
-
-			// keeps scope from being lost and starts sort based on table header selection 
+			// keeps scope from being lost and allows sort to be based on table header selection 
 			function tableContainScope() {
 			var titles = document.getElementsByTagName('th');
 			var rows = document.getElementsByTagName('tr');
@@ -164,7 +153,8 @@ var Contacts = {
 				}
 			}tableContainScope();
 
-//===============================================		
+// = add event listener then determine which callback function was triggered =
+
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
 			if (/edit|remove/.test(op)) {
@@ -192,9 +182,9 @@ var Contacts = {
 				event.preventDefault();
 			}
 		}, true);
-	},// end of init: function()
+	},
 
-// =============== show, create, update, delete individual contacts ==============	
+// ==================== create, update, delete individual entries ============
 			storeAdd: function(entry) {
 				entry.id = Contacts.index;
 				window.localStorage.setItem("Contacts:index", ++Contacts.index);
@@ -239,5 +229,5 @@ var Contacts = {
 			tableRemove: function(entry) {
 				Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
 			}
-		};// end of var Contacts = 
+		};
 Contacts.init();
