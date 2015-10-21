@@ -19,11 +19,11 @@ var Contacts = {
 	$button_discard: document.getElementById("contacts-op-discard"),
 
 // ==================== initialize storage index =============================	
+	
 	init: function() {
 		if (!Contacts.index) {
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
 		}
-
 // ==================== initialize form ======================================
 		Contacts.$form.reset();
 		Contacts.$button_discard.addEventListener("click", function(event) {
@@ -94,21 +94,23 @@ var Contacts = {
 
 		// sort the data 
 			var sortOn = function(arr, prop, reverse, numeric) {
+				//ensure there is a property
 				if (!prop || !arr) {
 					return arr;
 				}
+				//set up sort function
 				var sort_by = function (field, rev, primer) {
 					return function(a, b) {
 						a = primer(a[field]),
 						b = primer(b[field]);
-						//======= do actual sorting  =======
+						//do actual sorting
 
-						//ascending order
-						return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
 						//descending order
-							if (sortOrderAscending === false){
-								return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
-							}
+						if (sortOrderAscending === false){
+							return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
+						}
+						//ascending order	
+						return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
 					}
 				}
 
