@@ -8,7 +8,7 @@ function supports_local_storage() {
 	alert("Sorry! No native support for local storage")
     return false;
   }
-};supports_local_storage()
+}supports_local_storage();
 
 // =================set up the DOM ==========================================
 var Contacts = {
@@ -68,120 +68,95 @@ var Contacts = {
 				contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 			}
 		}
-			//populate table with data sorted by id  
+
+		var x = true;
+		//primmary populate table with data sorted by id 
+		if (x = true){
 			if (contacts_list.length) {
-				contacts_list
-					.sort(function(a, b) {
-						return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
-					})
-					.forEach(Contacts.tableAdd);
+			contacts_list
+				.sort(function(a, b) {
+					return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
+				})
+				.forEach(Contacts.tableAdd);
+			}
+		}
+	}
 
-		//preserve table header (key) name scope
-		function scopePreserver() {
-			return function() {
-				var string = this.innerText;
-				var tableHeader = string.toLowerCase();
-				console.log('tableHeader= ', tableHeader)
+	//preserve table header (key) name scope
+	function scopePreserver() {
+		return function() {
+		var string = this.innerText;
+		var tableHeader = string.toLowerCase();
+		var keyName = tableHeader;
+		console.log('tableHeader= ', tableHeader)
 
-				// sorts the data 
-				// makes the sort function dynamic
-				var keyName = tableHeader;
-
-				var sortOn = function(arr, prop, reverse, numeric) {
-						//ensure there is a property
-						if (!prop || !arr) {
-							return arr;
+		// sort the data 
+			var sortOn = function(arr, prop, reverse, numeric) {
+				//ensure there is a property
+				if (!prop || !arr) {
+					return arr;
+				}
+				//set up sort function
+				var sort_by = function (field, rev, primer) {
+					//return the required a,b function
+					return function(a, b) {
+						//reset a, b to the field
+						a = primer(a[field]),
+						b = primer(b[field]);
+						//console.log(11,a) //value
+						//console.log(22,field)// key (name of value)
+						//do actual sorting, reverse as needed
+						console.log(1111111, x)
+						if (x === false){
+							return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
 						}
-						//set up sort function
-						var sort_by = function (field, rev, primer) {
-							//return the required a,b function
-							return function(a, b) {
-								//reset a, b to the field
-								a = primer(a[field]),
-								b = primer(b[field]);
-								//console.log(11,a) //value
-								//console.log(22,field)// key (name of value)
-								//do actual sorting, reverse as needed
-								return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
-							}
-						}
-
-						if (numeric) {
-							//do sort "in place" with sort_by function
-							arr.sort(sort_by(prop, reverse, function(a) {
-								//force value to a string.
-								//replace any non numeric characters.
-								//parse as float to allow 0.02 values
-							return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
-							}));
-						}else {	
-							//do sort "in place" with sort_by function
-							arr.sort(sort_by(prop, reverse, function(a){
-								// - force value to string.
-							return String(a).toUpperCase();
-							}));
-						}
+							return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+					}
 				}
 
-				if (window.localStorage.length - 1) {
-					var localStorageArray = new Array();
-					var contacts_list = [], i, key;
-					for (i = 0; i < window.localStorage.length; i++) {
-						key = window.localStorage.key(i);
-						if (/Contacts:\d+/.test(key)) {
-							localStorageArray[i] = localStorage.getItem(localStorage.key(i));
-							contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
-						}
-					} 
-					//deleted current table view
-					if (tableHeader !== 'actions') {
-						var tableHeaderRowCount = 1; // start index from 0
-						var table = document.getElementById('contacts-table');
-						var rowCount = table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
-  						for (var i = tableHeaderRowCount; i < rowCount; i++) {
-					    	table.deleteRow(tableHeaderRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
-					    }
+				if (numeric) {
+					//do sort "in place" with sort_by function
+					arr.sort(sort_by(prop, reverse, function(a) {
+						//force value to a string.
+						//replace any non numeric characters.
+						//parse as float to allow 0.02 values
+					return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
+					}));
+				}else {	
+					//do sort "in place" with sort_by function
+					arr.sort(sort_by(prop, reverse, function(a){
+						// - force value to string.
+					return String(a).toUpperCase();
+					}));
+				}
+			}// end of var sortOn = function(arr, prop, reverse, numeric)
 
-					    //determine table sort order
+			//deleted current table records view
+			if (tableHeader !== 'actions') {
+				var tableHeaderRowCount = 1; // start index from 0
+				var table = document.getElementById('contacts-table');
+				var rowCount = table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
+					for (var i = tableHeaderRowCount; i < rowCount; i++) {
+			    	table.deleteRow(tableHeaderRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
+			    	}
 
-							// if (tableHeader === 'zip'){
-								// sortOn(contacts_list, 'keyName', false, true);//numeric ascending
-								// contacts_list.forEach(Contacts.tableAdd)
-							// }
+			    //determine table sort order				
+				sortOn(contacts_list, keyName, false, false);
+				contacts_list.forEach(Contacts.tableAdd)				
+				console.log(222222222, x)
+			}// end of if (tableHeader !== 'actions')
+		};// end of return function()
+	}// end of function scopePreserver
 
-							// if (tableHeader === 'company'){
-								// console.log(1111111, contacts_list)
-								// console.log(2222222, keyName)
-								// console.log(3333333, sortOn)
-							// 	sortOn(contacts_list, 'keyName', false, false);
-							// 	contacts_list.forEach(Contacts.tableAdd)
-							// }
-
-
-
-							// sortOn(localStorageArray, 'keyName', true, true);//numeric reverse - does not work
-							//sortOn(contacts_list, 'keyName', false, true);//numeric ascending - does not work
-							sortOn(contacts_list, keyName, false, false);//non-numeric ascending- works
-							//sortOn(contacts_list, keyName, true, false);// non-numeric reverse - workd
-							contacts_list.forEach(Contacts.tableAdd)
-							// console.log(444444445, localStorageArray)
-								
-					}
-				};
-			};
-		}
-
-			// keeps scope from being lost and starts sort based on "th" selection 
-			function myfunction() {
+			// keeps scope from being lost and starts sort based on table header selection 
+			function tableContainScope() {
 			var titles = document.getElementsByTagName('th');
 			var rows = document.getElementsByTagName('tr');
 				for( var i = 0; i < titles.length; i++) {
 					titles[i].onclick = scopePreserver( i, rows[i]);
 				}
-			};
-			myfunction();
-		}
-	};
+			}tableContainScope();
+
 //===============================================		
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
@@ -210,7 +185,7 @@ var Contacts = {
 				event.preventDefault();
 			}
 		}, true);
-	},
+	},// end of init: function()
 
 // =============== show, create, update, delete individual contacts ==============	
 			storeAdd: function(entry) {
@@ -257,5 +232,5 @@ var Contacts = {
 			tableRemove: function(entry) {
 				Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
 			}
-		};
-		Contacts.init();
+		};// end of var Contacts = 
+Contacts.init();
