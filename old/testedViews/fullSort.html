@@ -23,22 +23,26 @@
 
 <script>
 
-            var localStorage = new Array();
-            var contacts_list = [], i, key;
-            for (i = 0; i < window.localStorage.length; i++) {
-                key = window.localStorage.key(i);
-                if (/Contacts:\d+/.test(key)) {
-                    localStorage[i] = localStorage.getItem(localStorage.key(i));
-                    contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
-                }
-            }
-document.getElementById("results").innerHTML = localStorage;
+document.getElementById("results").innerHTML = window.localStorage;
 console.log(window.localStorage)
-//window.localStorage.clear();
+// window.localStorage.clear();
 
 
-var homes
- = [{"id":1,"company":"zray","address1":"10","address2":"9","city":"helena","state":"d","zip":"9","notes":"xxxxxxxdjfsdjflkjsdff\ndfsdf\ndfsdfsdf","fullName":"Xray","dept":"vp","phone":"123","email":"fgfggfd"},{"id":2,"company":"see you","address1":"34","address2":"78","city":"arkansas","state":"j","zip":"mjhuhg","notes":"kknkl","fullName":"George","dept":"fr","phone":"568","email":"uytt87t6@.com"},{"id":3,"company":"guess who co","address1":"879","address2":"356","city":"Tucson","state":"Arizona","zip":"85739","notes":"hghgh","fullName":"Rick Wightman","dept":"09","phone":"087","email":"hkjhjkhkh@k.com"},{"id":4,"company":"Hello","address1":"576","address2":"69694","city":"kodiak","state":"Ak","zip":"888","notes":"jhjh","fullName":"Harry One","dept":"HR","phone":"567","email":"r.w@q.com"},{"id":5,"company":"winter co","address1":"11810","address2":"9534","city":"ville","state":"Arizona","zip":"85739","notes":"gkjbdj","fullName":"Michael wightman","dept":"child","phone":"765567885","email":"myyo72@gmail.com"}];
+var homes 
+= [{"id":10,"company":"Fred Flintstone Inc","address1":"1 Hard Rock Bl","address2":"34 Sandy Path Rd","city":"BedRock","state":"TX","zip":"567834","notes":"Makes hard rock candy","fullName":"Fred Flintstone","dept":"Exective","phone":"(555)-345-456","email":"freddy.boy@s.com"},{"id":5,"company":"Davis Ray Co","address1":"567 E. 789 N.","address2":"931 n 890 e","city":"Orem","state":"Utah","zip":"84097","notes":"Easy peasy. Except when you try something like this ","fullName":"Fred Happy","dept":"HR","phone":"567-123-6789","email":"r.w@q.com"},{"id":6,"company":"winter co","address1":"123 Riddle lane","address2":"999 lost boy st","city":"Orem","state":"Utah","zip":"84097","notes":"This is a test!","fullName":"Joe DeSpain","dept":"IT","phone":"342-867-2345","email":"j@q.com"},{"id":8,"company":"AbC Gum Store","address1":"1 well heeled bl","address2":"5769 been there st","city":"Zebra","state":"Arizona","zip":"85739","notes":"Happy go lucky person","fullName":"John Doe","dept":"Shipping","phone":"9582671234","email":"t.j@w.com"},{"id":9,"company":"Ben Hur Chariots","address1":"759 Hello Dolly ln","address2":"","city":"Kodiak","state":"AK","zip":"99751","notes":"Small fishing community","fullName":"Joe Fisherman","dept":"Sports","phone":"(907) 887-9883","email":"kodiak@q.com"}];
+
+
+// var Contacts 
+// = ["Contacts:"1{"id":10,"company":"Fred Flintstone Inc","address1":"1 Hard Rock Bl","address2":"34 Sandy Path Rd","city":"BedRock","state":"TX","zip":"567834","notes":"Makes hard rock candy","fullName":"Fred Flintstone","dept":"Exective","phone":"(555)-345-456","email":"freddy.boy@s.com"},{"id":5,"company":"Davis Ray Co","address1":"567 E. 789 N.","address2":"931 n 890 e","city":"Orem","state":"Utah","zip":"84097","notes":"Easy peasy. Except when you try something like this ","fullName":"Fred Happy","dept":"HR","phone":"567-123-6789","email":"r.w@q.com"},{"id":6,"company":"winter co","address1":"123 Riddle lane","address2":"999 lost boy st","city":"Orem","state":"Utah","zip":"84097","notes":"This is a test!","fullName":"Joe DeSpain","dept":"IT","phone":"342-867-2345","email":"j@q.com"},{"id":8,"company":"AbC Gum Store","address1":"1 well heeled bl","address2":"5769 been there st","city":"Zebra","state":"Arizona","zip":"85739","notes":"Happy go lucky person","fullName":"John Doe","dept":"Shipping","phone":"9582671234","email":"t.j@w.com"},{"id":9,"company":"Ben Hur Chariots","address1":"759 Hello Dolly ln","address2":"","city":"Kodiak","state":"AK","zip":"99751","notes":"Small fishing community","fullName":"Joe Fisherman","dept":"Sports","phone":"(907) 887-9883","email":"kodiak@q.com"}];
+
+
+// //Put the object into storage
+// localStorage.setItem('Contacts', JSON.stringify(Contacts));
+
+// // Retrieve the object from storage
+// var retrievedObject = localStorage.getItem('Contacts');
+
+// console.log('retrievedObject: ', JSON.parse(retrievedObject));
 
 
 var sortOn = function (arr, prop, reverse, numeric) {
