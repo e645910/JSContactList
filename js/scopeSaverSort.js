@@ -10,6 +10,11 @@ function supports_local_storage() {
   }
 }supports_local_storage();
 
+// set Company Name as main focus
+	function setFocus(){
+		document.getElementById('setFocus').focus()
+	}
+
 // ==================== set up the DOM =======================================
 var Contacts = {
 	index: window.localStorage.getItem("Contacts:index"),
@@ -40,7 +45,7 @@ var Contacts = {
 				state: this.state.value,
 				zip: this.zip.value,
 				notes: this.notes.value,
-				fullName: this.fullName.value,
+				fullname: this.fullname.value,
 				dept: this.dept.value,
 				phone: this.phone.value,
 				email: this.email.value
@@ -169,14 +174,14 @@ var Contacts = {
 					Contacts.$form.state.value = entry.state;
 					Contacts.$form.zip.value = entry.zip;
 					Contacts.$form.notes.value = entry.notes;
-					Contacts.$form.fullName.value = entry.fullName;
+					Contacts.$form.fullname.value = entry.fullname;
 					Contacts.$form.dept.value = entry.dept;
 					Contacts.$form.phone.value = entry.phone;
 					Contacts.$form.email.value = entry.email;
-					Contacts.$form.idEntry.value = entry.id;
+					// Contacts.$form.idEntry.value = entry.id;
 				}
 				else if (op == "remove") {
-					if (confirm('Are you sure you want to remove "'+ entry.first_name +' '+ entry.last_name +'" from your contacts?')) {
+					if (confirm('Are you sure you want to remove "'+ entry.fullname +'" from your contacts?')) {
 						Contacts.storeRemove(entry);
 						Contacts.tableRemove(entry);
 					}
