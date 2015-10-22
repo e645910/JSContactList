@@ -11,13 +11,13 @@ function supports_local_storage() {
 }supports_local_storage();
 
 // set Company Name as main focus
-	// function setFocus(){
-	// 	document.getElementById('setFocus').focus
-	// }setFocus()
+function setFocus(){
+	document.getElementById('setFocus').focus()
+}
 
 // ==================== set up the DOM =======================================
 var Contacts = {
-	// index: window.localStorage.getItem("Contacts:index"),
+	index: window.localStorage.getItem("Contacts:index"),
 	$table: document.getElementById("contacts-table"),
 	$form: document.getElementById("contacts-form"),
 	$button_save: document.getElementById("contacts-op-save"),
@@ -26,9 +26,9 @@ var Contacts = {
 // ==================== initialize storage index =============================	
 	
 	init: function() {
-		// if (!Contacts.index) {
-		// 	window.localStorage.setItem("Contacts:index", Contacts.index = 1);
-		// }
+		if (!Contacts.index) {
+			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
+		}
 // ==================== initialize form ======================================
 		Contacts.$form.reset();
 		Contacts.$button_discard.addEventListener("click", function(event) {
@@ -37,7 +37,7 @@ var Contacts = {
 		}, true);
 		Contacts.$form.addEventListener("submit", function(event) {
 			var entry = {
-				// id: parseInt(this.idEntry.value),
+				id: parseInt(this.idEntry.value),
 				company: this.company.value,
 				address1: this.address1.value,
 				address2: this.address2.value,
@@ -74,37 +74,27 @@ var Contacts = {
 				contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 			}
 		}
+		
+	};contacts_list.forEach(Contacts.tableAdd);
 
 // ==================== sort contacts ========================================
 
-		var sortOrderAscending = true;
-		// primary sort is done by id 
-		if (sortOrderAscending = true){
-			if (contacts_list.length) {
-			contacts_list
-				.sort(function(a, b) {
-					return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
-				})
-				.forEach(Contacts.tableAdd);
-			}
-		}
-	} 
-
-	//preserve table header (key) name scope
+	//preserve table header (key) name scope for for sorting data
+	var sortOrderAscending = true;
 	function scopePreserver() {
 		return function() {
 		var string = this.innerText;
 		var tableHeader = string.toLowerCase();
 		var keyName = tableHeader;
 
-		// sort the data 
-			var sortOn = function(arr, prop, reverse, numeric) {
+			// sort the data 
+			function sortOn(arr, prop, reverse, numeric) {
 				//ensure there is a property
 				if (!prop || !arr) {
 					return arr;
 				}
 				//set up sort function
-				var sort_by = function (field, rev, primer) {
+				function sort_by(field, rev, primer) {
 					return function(a, b) {
 						a = primer(a[field]),
 						b = primer(b[field]);
@@ -129,7 +119,7 @@ var Contacts = {
 					return String(a).toUpperCase();
 					}));
 				}
-			}
+			};
 
 			//delete current table records and change to new sort order
 			if (tableHeader !== 'actions') {
@@ -142,16 +132,17 @@ var Contacts = {
 
 			    // Toggle Sort Order
 			    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
-			    //resort list
+
+			    //re-sort list
 			    function sortTable(){
 			    	sortOn(contacts_list, keyName, false, false);
 					contacts_list.forEach(Contacts.tableAdd)
 			    }sortTable();
 			}
 		};
-	}
+	};
 
-			// keeps scope from being lost and allows sort to be based on table header selection 
+			// keeps scope from being lost and allows sort to be based on DOM table header selection 
 			function tableContainScope() {
 			var titles = document.getElementsByTagName('th');
 			var rows = document.getElementsByTagName('tr');
@@ -160,8 +151,8 @@ var Contacts = {
 				}
 			}tableContainScope();
 
-// = add event listener then determine which callback function was triggered =
-
+// == add event listener then determine which callback function was triggered ==
+	
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
 			if (/edit|remove/.test(op)) {
@@ -178,16 +169,16 @@ var Contacts = {
 					Contacts.$form.dept.value = entry.dept;
 					Contacts.$form.phone.value = entry.phone;
 					Contacts.$form.email.value = entry.email;
-					// Contacts.$form.idEntry.value = entry.id;
+					Contacts.$form.idEntry.value = entry.id;
 				}
 				else if (op == "remove") {
-					if (confirm('Are you sure you want to remove "'+ entry.fullname +'" from your contacts?')) {
+					if (confirm('Are you sure you want to remove "'+ entry.fullname + ' with '+ entry.company + '" from your contacts?')) {
 						Contacts.storeRemove(entry);
 						Contacts.tableRemove(entry);
 					}
 				}
 				event.preventDefault();
-			}
+			}setFocus();
 		}, true);
 	},
 
@@ -196,13 +187,19 @@ var Contacts = {
 				entry.id = Contacts.index;
 				window.localStorage.setItem("Contacts:index", ++Contacts.index);
 				window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
+				location.reload();
+				setFocus();
 			},
 			storeEdit: function(entry) {
 				window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
+				setFocus();
 			},
 			storeRemove: function(entry) {
 				window.localStorage.removeItem("Contacts:"+ entry.id);
+				location.reload()
+				setFocus();
 			},
+
 			tableAdd: function(entry) {
 				var $tr = document.createElement("tr"), $td, key;
 				for (key in entry) {
@@ -236,4 +233,4 @@ var Contacts = {
 				Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
 			}
 		};
-		Contacts.init();
+Contacts.init();
