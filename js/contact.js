@@ -16,7 +16,7 @@ function setFocus(){
 }
 
 // ==================== set up the DOM =======================================
-var Contacts = {
+var Contacts = {//use $ in front of varible as an identifier DOM elements
 	index: window.localStorage.getItem("Contacts:index"),
 	$table: document.getElementById("contacts-table"),
 	$form: document.getElementById("contacts-form"),
@@ -93,7 +93,7 @@ var Contacts = {
 					if (!prop || !arr) {// prevents sort if there are no records
 						return arr;
 					}
-					console.log(sortOn(arr))
+
 					//set up sort function
 					function sort_by(field, rev, primer) {
 						return function(a, b) {
@@ -112,10 +112,15 @@ var Contacts = {
 					if (tableHeader === 'id') {
 						//do sort "in place" with sort_by function
 						arr.sort(sort_by(prop, reverse, function(a) {
+							//force value to a string.
+							//replace any non numeric characters.
+							//parse as float to allow 0.02 values
 						return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));// parseFloat determines if the first character in the specified string is a number.
 						}));
 					}else {	
+						//do sort "in place" with sort_by function
 						arr.sort(sort_by(prop, reverse, function(a){
+						// - force value to string.
 						return String(a).toUpperCase();
 						}));
 					}
@@ -123,11 +128,11 @@ var Contacts = {
 
 				//delete current table records and change to new sort order
 				if (tableHeader !== 'actions') {
-					var tableHeaderRowCount = 1;
+					var tableHeaderRowCount = 1;// start index from 0
 					var table = document.getElementById('contacts-table');
-					var rowCount = table.rows.length;
+					var rowCount = table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
 						for (var i = tableHeaderRowCount; i < rowCount; i++) {
-				    	table.deleteRow(tableHeaderRowCount);
+				    	table.deleteRow(tableHeaderRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
 				    	}
 
 				    // Toggle Sort Order
@@ -142,7 +147,7 @@ var Contacts = {
 			};
 		};
 
-			// keeps scope from being lost and allows sort to be based on DOM table header selection 
+		// keeps scope from being lost and allows sort to be based on DOM table header selection 
 		function tableContainScope() {
 		var titles = document.getElementsByTagName('th');
 		var rows = document.getElementsByTagName('tr');
@@ -151,11 +156,12 @@ var Contacts = {
 			}
 		}tableContainScope();
 
-// == add event listener then determine which callback function was triggered ==
+// == add event listener then determine which callback function was triggered ======
 	
-		Contacts.$table.addEventListener("click", function(event) {// wait until you click
-			var op = event.target.getAttribute("data-op"); //event.target refers to the element that triggered the event, wich is getAttribute("data-op") 
-			if (/edit|remove/.test(op)) {// .test is looking for 
+		Contacts.$table.addEventListener("click", function(event) {// wait until you click on some
+			var op = event.target.getAttribute("data-op"); //event.target refers to the element that triggered the event, which is getAttribute("data-op")
+			console.log(op)
+			if (/edit|remove/.test(op)) {// The test(op) method tests for a match in a string equal to op.
 				var entry = JSON.parse(window.localStorage.getItem("Contacts:"+ event.target.getAttribute("data-id")));
 				if (op == "edit") {
 					Contacts.$form.company.value = entry.company;
@@ -210,7 +216,7 @@ var Contacts = {
 					}
 				}
 				$td = document.createElement("td");
-				$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
+				$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';//add edit/remove action to each row
 				$tr.appendChild($td);
 				$tr.setAttribute("id", "entry-"+ entry.id);
 				Contacts.$table.appendChild($tr);
