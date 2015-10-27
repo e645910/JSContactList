@@ -78,6 +78,29 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			}
 			contacts_list.forEach(Contacts.tableAdd);
 		};
+
+
+		console.log('contacts_list', contacts_list)
+
+		var newList = [], key;
+		// var newList = {
+		// 	newTable: []
+		// };
+
+		for (var key in contacts_list) {
+			var item = contacts_list[key];
+			if (contacts_list.hasOwnProperty(key)){
+				newList.push({
+					"fullname"	: item.fullname,
+					"dept"		: item.dept,
+					"phone"		: item.phone,
+					"email"		: item.email
+				})
+				//console.log('keyinloop', contacts_list[key]["fullname"]+ ' ,' + contacts_list[key]["dept"])
+				
+			}
+		}console.log(newList)
+
 // ==================== sort contacts ========================================
 
 		//preserve table header (key) name scope for for sorting data
@@ -99,7 +122,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 						return function(a, b) {
 							a = primer(a[field]),
 							b = primer(b[field]);
-							//do actual sorting
+							//=== do actual sorting ========
 
 							//descending order
 							if (sortOrderAscending === false){
@@ -156,11 +179,11 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			}
 		}tableContainScope();
 
+
 // == add event listener then determine which callback function was triggered ======
 	
 		Contacts.$table.addEventListener("click", function(event) {// wait until you click on some
 			var op = event.target.getAttribute("data-op"); //event.target refers to the element that triggered the event, which is getAttribute("data-op")
-			console.log(op)
 			if (/edit|remove/.test(op)) {// The test(op) method tests for a match in a string equal to op.
 				var entry = JSON.parse(window.localStorage.getItem("Contacts:"+ event.target.getAttribute("data-id")));
 				if (op == "edit") {
@@ -206,17 +229,28 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 				setFocus();
 			},
 
+// =============================== table build =====================================
+
+newTable: function(newList) {
+				console.log(111111111, newList)
+			},
+
+
+// =============================== table build =====================================
 			tableAdd: function(entry) {
-				var $tr = document.createElement("tr"), $td, key;
-				for (key in entry) {
-					if (entry.hasOwnProperty(key)) {
+				// console.log(111111111, entry)
+				var $tr = document.createElement("tr"), $td, key;//create a standard tr cell for data to be put into
+				for (key in entry) {//key = table header names
+					if (entry.hasOwnProperty(key)) {//best practice for the for-"in"-loop prevents the loop from enumerating over any inherited properties on the object
+						//console.log(222222222, entry[key])
 						$td = document.createElement("td");
 						$td.appendChild(document.createTextNode(entry[key]));
 						$tr.appendChild($td);
+						// console.log(333333333, entry[key]["fullname"]+ ' ,' + entry[key]["dept"])
 					}
 				}
-				$td = document.createElement("td");
-				$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';//add edit/remove action to each row
+				$td = document.createElement("td");//create a standard td cell for data to be put into
+				$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';//adds edit/remove action to each row via innerHTML
 				$tr.appendChild($td);
 				$tr.setAttribute("id", "entry-"+ entry.id);
 				Contacts.$table.appendChild($tr);
