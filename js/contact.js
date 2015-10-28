@@ -79,7 +79,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			contacts_list.forEach(Contacts.tableAdd);
 		};
 
-
+//===========================================================================
 		console.log('contacts_list', contacts_list)
 
 		var newList = [], key;
@@ -231,9 +231,8 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 
 // =============================== table build =====================================
 
-newTable: function(newList) {
-				console.log(111111111, newList)
-			},
+
+
 
 
 // =============================== table build =====================================
