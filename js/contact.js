@@ -27,7 +27,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 	
 	init: function() {
 		if (!Contacts.index) {
-			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
+			window.localStorage.setItem("Contacts:index", Contacts.index = 1);// adds Contacts: index number.
 		}
 
 // ==================== initialize form ======================================
@@ -35,6 +35,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 		Contacts.$button_discard.addEventListener("click", function(event) {//listen for when the Clear button is then resets the form back to its orginal state and setting
 			Contacts.$form.reset();
 			Contacts.$form.idEntry.value = 0;
+			setFocus();
 		}, true);
 		Contacts.$form.addEventListener("submit", function(event) {
 			// var entry = {// listens for when the save button is selected then either saves the data entered as a new record or updates an existing record  
@@ -52,7 +53,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 				phone: this.phone.value,
 				email: this.email.value
 			};
-		if (entry.id == 0) {
+		if (entry.id === 0) {
 			Contacts.storeAdd(entry);
 			Contacts.tableAdd(entry);
 		}
@@ -69,37 +70,30 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 // ==================== initialize table =====================================
 
 		if (window.localStorage.length - 1) {
-			var contacts_list = [], i, key;
-			for (i = 0; i < window.localStorage.length; i++) {
-				key = window.localStorage.key(i);
-				if (/Contacts:\d+/.test(key)) {
-					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
-				}
+		var contacts_list = [], i, key;
+		for (i = 0; i < window.localStorage.length; i++) {
+			key = window.localStorage.key(i);
+			if (/Contacts:\d+/.test(key)) {
+				contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 			}
-			contacts_list.forEach(Contacts.tableAdd);
-		};
+		}
+	};
 
-//===========================================================================
-		console.log('contacts_list', contacts_list)
-
-		var newList = [], key;
-		// var newList = {
-		// 	newTable: []
-		// };
-
-		for (var key in contacts_list) {
-			var item = contacts_list[key];
-			if (contacts_list.hasOwnProperty(key)){
-				newList.push({
-					"fullname"	: item.fullname,
-					"dept"		: item.dept,
-					"phone"		: item.phone,
-					"email"		: item.email
-				})
-				//console.log('keyinloop', contacts_list[key]["fullname"]+ ' ,' + contacts_list[key]["dept"])
-				
-			}
-		}console.log(newList)
+	var newList = [], key;
+	for (var i = 0 ; i < contacts_list.length; i++){
+	}
+	for (var key in contacts_list) {
+		var item = contacts_list[key];
+		if (contacts_list.hasOwnProperty(key)){
+			newList.push({
+				"fullname"	: item.fullname,
+				"dept"		: item.dept,
+				"phone"		: item.phone,
+				"email"		: item.email
+			})
+		}
+	}
+	newList.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ========================================
 
@@ -163,8 +157,8 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 
 				    //re-sort list
 				    function sortTable(){
-				    	sortOn(contacts_list, tableHeader, false, false);// see function sortOn(arr, prop, reverse, numeric) { arr = contacts_list, prop = tableHeader, reverse = false, numeric = false
-						contacts_list.forEach(Contacts.tableAdd)
+				    	sortOn(newList, tableHeader, false, false);// see function sortOn(arr, prop, reverse, numeric) { arr = contacts_list, prop = tableHeader, reverse = false, numeric = false
+						newList.forEach(Contacts.tableAdd)
 				    }sortTable();
 				}
 			};
@@ -183,10 +177,10 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 // == add event listener then determine which callback function was triggered ======
 	
 		Contacts.$table.addEventListener("click", function(event) {// wait until you click on some
-			var op = event.target.getAttribute("data-op"); //event.target refers to the element that triggered the event, which is getAttribute("data-op")
+			var op = event.target.getAttribute("data-op"); //event.target refers to the element that triggered the event, which is getAttribute("data-op") or on the edit/remove button
 			if (/edit|remove/.test(op)) {// The test(op) method tests for a match in a string equal to op.
 				var entry = JSON.parse(window.localStorage.getItem("Contacts:"+ event.target.getAttribute("data-id")));
-				if (op == "edit") {
+				if (op === "edit") {
 					Contacts.$form.company.value = entry.company;
 					Contacts.$form.address1.value = entry.address1;
 					Contacts.$form.address2.value = entry.address2;
@@ -200,76 +194,72 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 					Contacts.$form.email.value = entry.email;
 					Contacts.$form.idEntry.value = entry.id;
 				}
-				else if (op == "remove") {
+				else if (op === "remove") {
 					if (confirm('Are you sure you want to remove "'+ entry.fullname + ' with '+ entry.company + '" from your contacts?')) {
 						Contacts.storeRemove(entry);
 						Contacts.tableRemove(entry);
 					}
 				}
 				event.preventDefault();
-				}setFocus();
-			}, true);
-		},
+			}
+			setFocus();
+		}, true);
+	},
 
 // ==================== create, update, delete individual entries ============
-			storeAdd: function(entry) {
-				entry.id = Contacts.index;
-				window.localStorage.setItem("Contacts:index", ++Contacts.index);
-				window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-				location.reload();
-				setFocus();
-			},
-			storeEdit: function(entry) {
-				window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-				setFocus();
-			},
-			storeRemove: function(entry) {
-				window.localStorage.removeItem("Contacts:"+ entry.id);
-				location.reload()
-				setFocus();
-			},
+		storeAdd: function(entry) {
+			entry.id = Contacts.index;
+			window.localStorage.setItem("Contacts:index", ++Contacts.index);
+			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
+			location.reload();
+			setFocus();
+		},
+		storeEdit: function(entry) {
+			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
+			location.reload();
+			setFocus();
+		},
+		storeRemove: function(entry) {
+			window.localStorage.removeItem("Contacts:"+ entry.id);
+			location.reload()
+			setFocus();
+		},
 
 // =============================== table build =====================================
-
-
-
-
-
-// =============================== table build =====================================
-			tableAdd: function(entry) {
-				// console.log(111111111, entry)
-				var $tr = document.createElement("tr"), $td, key;//create a standard tr cell for data to be put into
-				for (key in entry) {//key = table header names
-					if (entry.hasOwnProperty(key)) {//best practice for the for-"in"-loop prevents the loop from enumerating over any inherited properties on the object
-						//console.log(222222222, entry[key])
-						$td = document.createElement("td");
-						$td.appendChild(document.createTextNode(entry[key]));
-						$tr.appendChild($td);
-						// console.log(333333333, entry[key]["fullname"]+ ' ,' + entry[key]["dept"])
-					}
+		tableAdd: function(entry) {
+			// console.log(44444444, entry)
+			var $tr = document.createElement("tr"), $td, key;//create a standard tr cell for data to be put into
+			for (key in entry) {//key = table header names
+				if (entry.hasOwnProperty(key)) {//best practice for the for-"in"-loop prevents the loop from enumerating over any inherited properties on the object
+					// console.log("Key is " + key + ", value is " + entry[key])
+					$td = document.createElement("td");
+					$td.appendChild(document.createTextNode(entry[key]));
+					$tr.appendChild($td);
+					// console.log(55555555, entry[key]["fullname"]+ ' ,' + entry[key]["dept"])
 				}
-				$td = document.createElement("td");//create a standard td cell for data to be put into
-				$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';//adds edit/remove action to each row via innerHTML
-				$tr.appendChild($td);
-				$tr.setAttribute("id", "entry-"+ entry.id);
-				Contacts.$table.appendChild($tr);
-			},
-			tableEdit: function(entry) {
-				var $tr = document.getElementById("entry-"+ entry.id), $td, key;
-				$tr.innerHTML = "";
-				for (key in entry) {
-					if (entry.hasOwnProperty(key)) {
-						$td = document.createElement("td");
-						$td.appendChild(document.createTextNode(entry[key]));
-						$tr.appendChild($td);
-					}
-				}
-				$td = document.createElement("td");
-				$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
-				$tr.appendChild($td);
-			},
-			tableRemove: function(entry) {
-				Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
 			}
-		};
+			$td = document.createElement("td");//create a standard td cell for data to be put into
+			$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';//adds edit/remove action to each row via innerHTML
+			$tr.appendChild($td);
+			$tr.setAttribute("id", "entry-"+ entry.id);
+			Contacts.$table.appendChild($tr);
+		},
+		tableEdit: function(entry) {
+			var $tr = document.getElementById("entry-"+ entry.id), $td, key;
+			$tr.innerHTML = "";
+			for (key in entry) {
+				if (entry.hasOwnProperty(key)) {
+					$td = document.createElement("td");
+					$td.appendChild(document.createTextNode(entry[key]));
+					$tr.appendChild($td);
+				}
+			}
+			$td = document.createElement("td");
+			$td.innerHTML = '<a data-op="edit" data-id="'+ entry.id +'">Edit</a> | <a data-op="remove" data-id="'+ entry.id +'">Remove</a>';
+			$tr.appendChild($td);
+		},
+		tableRemove: function(entry) {
+			Contacts.$table.removeChild(document.getElementById("entry-"+ entry.id));
+		}
+};
 Contacts.init();
