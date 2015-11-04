@@ -26,6 +26,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 // ==================== initialize storage index =============================	
 	
 	init: function() {
+		setFocus()
 		if (!Contacts.index) {
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);// adds Contacts: index number.
 		}
