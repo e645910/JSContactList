@@ -50,11 +50,11 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 				company: this.company.value.capitalize(),
 				address1: this.address1.value,
 				address2: this.address2.value,
-				city: this.city.value,
-				state: this.state.value,
+				city: this.city.value.capitalize(),
+				state: this.state.value.capitalize(),
 				zip: this.zip.value,
 				notes: this.notes.value,
-				fullname: this.fullname.value,
+				fullname: this.fullname.value.capitalize(),
 				dept: this.dept.value,
 				phone: this.phone.value,
 				email: this.email.value
@@ -76,28 +76,28 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 // ==================== initialize table =====================================
 
 		if (window.localStorage.length - 1) {
-		var contacts_list = [], i, key;
-		for (i = 0; i < window.localStorage.length; i++) {
-			key = window.localStorage.key(i);
-			if (/Contacts:\d+/.test(key)) {
-				contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+			var contacts_list = [], i, key;
+			for (i = 0; i < window.localStorage.length; i++) {
+				key = window.localStorage.key(i);
+				if (/Contacts:\d+/.test(key)) {
+					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
+				}
 			}
-		}
-	};
+		};
 
-	var newList = [], key;
-	for (var key in contacts_list) {
-		var item = contacts_list[key];
-		if (contacts_list.hasOwnProperty(key)){
-			newList.push({
-				"fullname"	: item.fullname,
-				"dept"		: item.dept,
-				"phone"		: item.phone,
-				"email"		: item.email
-			})
-		}
-	}
-	newList.forEach(Contacts.tableAdd)
+		var newList = [], key;
+		for (var key in contacts_list) {
+			var item = contacts_list[key];
+			if (contacts_list.hasOwnProperty(key)){
+				newList.push({
+					"fullname"	: item.fullname,
+					"dept"		: item.dept,
+					"phone"		: item.phone,
+					"email"		: item.email
+				})
+			}
+		};
+		newList.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ========================================
 
