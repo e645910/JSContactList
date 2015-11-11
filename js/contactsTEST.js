@@ -20,6 +20,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 	index: window.localStorage.getItem("Contacts:index"),
 	$table: document.getElementById("contacts-table"),
 	$form: document.getElementById("contacts-form"),
+	$select: document.getElementById("companyNameDropdown"),
 	$button_save: document.getElementById("contacts-op-save"),
 	$button_discard: document.getElementById("contacts-op-discard"),
 
@@ -73,7 +74,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 		event.preventDefault();//stops the default action of an element from happening
 		}, true);
 
-// ==================== initialize table =====================================
+// ==================== initialize the Dom table and dropdown =====================================
 
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
@@ -84,20 +85,55 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 				}
 			}
 		};
-
-		var newList = [], key;
-		for (var key in contacts_list) {
-			var item = contacts_list[key];
-			if (contacts_list.hasOwnProperty(key)){
-				newList.push({
-					"fullname"	: item.fullname,
-					"dept"		: item.dept,
-					"phone"		: item.phone,
-					"email"		: item.email
-				})
+		//clear out all table info
+		function removeTableRows(){// start index from 0
+		var tableRowCount = 1;
+		var rowCount = Contacts.$table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
+			for (var i = tableRowCount; i < rowCount; i++){
+				Contacts.$table.deleteRow(tableRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
 			}
-		}
-		newList.forEach(Contacts.tableAdd)
+		};
+
+// populate the dropdown list 
+		function getCompanyName(names){
+			var companyName = [];
+			names.forEach(function(query){
+				companyName.push(query.company);
+			})
+			Contacts.$select.add( new Option(''));//create a single null value, the sort() then puts it at the top of the dropdown selection initializing dropdown and allow the selection below the null to run as soon as seleted.
+			return companyName.sort().filter(function(item, position, array){//sorts the array then removes the value if it is equal to the preceding one
+				return !position || item != array[position - 1];
+			});
+		};
+		var companyName = getCompanyName(contacts_list);
+		// create list of company names for dropdown
+			for(name in companyName) {
+			Contacts.$select.add( new Option(companyName[name]));
+			}
+
+// company name selection for parameter 
+		Contacts.$select.onchange = function(){
+    	var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
+    	removeTableRows();//remove previous company employee info
+
+//========================== create filtered array linked to dropdown ===   
+		    function getSelectedCompany(company){
+				var selectedInfo = [];
+				company.forEach(function(query) {
+					if (query.company === selectCompany)
+						selectedInfo.push({
+							"id"		: query.id,
+							"fullname"	: query.fullname,
+							"dept"		: query.dept,
+							"phone"		: query.phone,
+							"email"		: query.email
+						});
+				})
+				return selectedInfo;
+			}
+		var selectedInfo = getSelectedCompany(contacts_list);
+    	selectedInfo.forEach(Contacts.tableAdd)
+		};
 
 // ==================== sort contacts ========================================
 
@@ -149,20 +185,15 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 
 				//delete current table records and change to new sort order
 				if (tableHeader !== 'actions') {
-					var tableHeaderRowCount = 1;// start index from 0
-					var table = document.getElementById('contacts-table');
-					var rowCount = table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
-						for (var i = tableHeaderRowCount; i < rowCount; i++) {
-				    	table.deleteRow(tableHeaderRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
-				    	}
-
+					removeTableRows();
+		
 				    // Toggle Sort Order
 				    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
 
 				    //re-sort list
 				    function sortTable(){
-				    	sortOn(newList, tableHeader, false, false);// see function sortOn(arr, prop, reverse, numeric) { arr = contacts_list, prop = tableHeader, reverse = false, numeric = false
-						newList.forEach(Contacts.tableAdd)
+				    	sortOn(selectedInfo, tableHeader, false, false);// see function sortOn(arr, prop, reverse, numeric) { arr = contacts_list, prop = tableHeader, reverse = false, numeric = false
+						selectedInfo.forEach(Contacts.tableAdd)
 				    }sortTable();
 				}
 			};
@@ -231,7 +262,6 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 
 // =============================== table build =====================================
 		tableAdd: function(entry) {
-			// console.log(44444444, entry)
 			var $tr = document.createElement("tr"), $td, key;//create a standard tr cell for data to be put into
 			for (key in entry) {//key = table header names
 				if (entry.hasOwnProperty(key)) {//best practice for the for-"in"-loop prevents the loop from enumerating over any inherited properties on the object

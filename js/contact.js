@@ -224,7 +224,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			setFocus();
 		},
 		storeRemove: function(entry) {
-			window.localStorage.removeItem("Contacts:"+ entry.id);
+			window.localStorage.removeItem("Contacts:"+ entry.id);//The removeItem() method of the Storage interface, when passed a key name, will remove that key from the storage. ..
 			location.reload()
 			setFocus();
 		},
