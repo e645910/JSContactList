@@ -111,103 +111,103 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			Contacts.$select.add( new Option(companyName[name]));
 			}
 
-// company name selection for parameter 
+	// company name selection for parameter 
 		Contacts.$select.onchange = function(){
-    	var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
-    	removeTableRows();//remove previous company employee info
+    		var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
+    		removeTableRows();//remove previous company employee info
 
 //========================== create filtered array linked to dropdown ===   
 		    function getSelectedCompany(company){
 				var selectedInfo = [];
 				company.forEach(function(query) {
-					if (query.company === selectCompany)
+					if (query.company === selectCompany) {
 						selectedInfo.push({
 							"id"		: query.id,
 							"fullname"	: query.fullname,
 							"dept"		: query.dept,
 							"phone"		: query.phone,
 							"email"		: query.email
-						});
+						})
+					}
 				})
 				return selectedInfo;
-			}
-		var selectedInfo = getSelectedCompany(contacts_list);
-    	selectedInfo.forEach(Contacts.tableAdd)
-		};
+			};
+			var selectedInfo = getSelectedCompany(contacts_list);
+	    	selectedInfo.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ========================================
 
-		//preserve table header (key) name scope for for sorting data
-		var sortOrderAscending = true;
-		function scopePreserver() {
-			return function() {
-			var string = this.innerText;// table header name
-			var tableHeader = string.toLowerCase();
+			//preserve table header (key) name scope for for sorting data
+			var sortOrderAscending = true;
+			function scopePreserver() {
+				return function() {
+				var string = this.innerText;// table header name
+				var tableHeader = string.toLowerCase();
 
-				// sort the data 
-				function sortOn(arr, prop, reverse) {
-					//ensure there is a property
-					if (!prop || !arr) {// prevents sort if there are no records
-						return arr;
-					}
-
-					//set up sort function
-					function sort_by(field, rev, primer) {
-						return function(a, b) {
-							a = primer(a[field]),
-							b = primer(b[field]);
-							//=== do actual sorting ========
-
-							//descending order
-							if (sortOrderAscending === false){
-								return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
-							}
-							//ascending order	
-							return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+					// sort the data 
+					function sortOn(arr, prop, reverse) {
+						//ensure there is a property
+						if (!prop || !arr) {// prevents sort if there are no records
+							return arr;
 						}
-					}
-					if (tableHeader === 'id') {
-						//do sort "in place" with sort_by function
-						arr.sort(sort_by(prop, reverse, function(a) {
-							//force value to a string.
-							//replace any non numeric characters.
-							//parse as float to allow 0.02 values
-						return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));// parseFloat determines if the first character in the specified string is a number.
-						}));
-					}else {	
-						//do sort "in place" with sort_by function
-						arr.sort(sort_by(prop, reverse, function(a){
-						// - force value to string.
-						return String(a).toUpperCase();
-						}));
+
+						//set up sort function
+						function sort_by(field, rev, primer) {
+							return function(a, b) {
+								a = primer(a[field]),
+								b = primer(b[field]);
+								//=== do actual sorting ========
+
+								//descending order
+								if (sortOrderAscending === false){
+									return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
+								}
+								//ascending order	
+								return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+							}
+						}
+						if (tableHeader === 'id') {
+							//do sort "in place" with sort_by function
+							arr.sort(sort_by(prop, reverse, function(a) {
+								//force value to a string.
+								//replace any non numeric characters.
+								//parse as float to allow 0.02 values
+							return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));// parseFloat determines if the first character in the specified string is a number.
+							}));
+						}else {	
+							//do sort "in place" with sort_by function
+							arr.sort(sort_by(prop, reverse, function(a){
+							// - force value to string.
+							return String(a).toUpperCase();
+							}));
+						}
+					};
+
+					//delete current table records and change to new sort order
+					if (tableHeader !== 'actions') {
+						removeTableRows();
+			
+					    // Toggle Sort Order
+					    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
+
+					    //re-sort list
+					    function sortTable(){
+					    	sortOn(selectedInfo, tableHeader, false, false);// see function sortOn(arr, prop, reverse, numeric) { arr = contacts_list, prop = tableHeader, reverse = false, numeric = false
+							selectedInfo.forEach(Contacts.tableAdd)
+					    }sortTable();
 					}
 				};
-
-				//delete current table records and change to new sort order
-				if (tableHeader !== 'actions') {
-					removeTableRows();
-		
-				    // Toggle Sort Order
-				    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
-
-				    //re-sort list
-				    function sortTable(){
-				    	sortOn(selectedInfo, tableHeader, false, false);// see function sortOn(arr, prop, reverse, numeric) { arr = contacts_list, prop = tableHeader, reverse = false, numeric = false
-						selectedInfo.forEach(Contacts.tableAdd)
-				    }sortTable();
-				}
 			};
-		};
 
-		// keeps scope from being lost and allows sort to be based on DOM table header selection 
-		function tableContainScope() {
-		var titles = document.getElementsByTagName('th');
-		var rows = document.getElementsByTagName('tr');
-			for( var i = 0; i < titles.length; i++) {
-				titles[i].onclick = scopePreserver( i, rows[i]);
-			}
-		}tableContainScope();
-
+			// keeps scope from being lost and allows sort to be based on DOM table header selection 
+			function tableContainScope() {
+			var titles = document.getElementsByTagName('th');
+			var rows = document.getElementsByTagName('tr');
+				for( var i = 0; i < titles.length; i++) {
+					titles[i].onclick = scopePreserver( i, rows[i]);
+				}
+			}tableContainScope();
+		};// end of Contacts.$select.onchange = function(){
 
 // == add event listener then determine which callback function was triggered ======
 	
@@ -246,17 +246,17 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			entry.id = Contacts.index;
 			window.localStorage.setItem("Contacts:index", ++Contacts.index);
 			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-			location.reload();
+			render();
 			setFocus();
 		},
 		storeEdit: function(entry) {
 			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-			location.reload();
+			render();
 			setFocus();
 		},
 		storeRemove: function(entry) {
 			window.localStorage.removeItem("Contacts:"+ entry.id);
-			location.reload()
+			render();
 			setFocus();
 		},
 

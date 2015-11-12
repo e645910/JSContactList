@@ -90,6 +90,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			var item = contacts_list[key];
 			if (contacts_list.hasOwnProperty(key)){
 				newList.push({
+					"id"		: item.id,
 					"fullname"	: item.fullname,
 					"dept"		: item.dept,
 					"phone"		: item.phone,
@@ -215,17 +216,18 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			entry.id = Contacts.index;
 			window.localStorage.setItem("Contacts:index", ++Contacts.index);
 			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-			location.reload();
+			render();
 			setFocus();
 		},
 		storeEdit: function(entry) {
 			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-			location.reload();
+			render();
 			setFocus();
 		},
 		storeRemove: function(entry) {
 			window.localStorage.removeItem("Contacts:"+ entry.id);//The removeItem() method of the Storage interface, when passed a key name, will remove that key from the storage. ..
-			location.reload()
+			render();
+
 			setFocus();
 		},
 
