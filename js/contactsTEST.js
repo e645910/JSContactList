@@ -74,7 +74,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 		event.preventDefault();//stops the default action of an element from happening
 		}, true);
 
-// ==================== initialize the Dom table and dropdown =====================================
+// ==================== initialize the Dom table =====================================
 
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
@@ -117,9 +117,9 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
     		removeTableRows();//remove previous company employee info
 
 //========================== create filtered array linked to dropdown ===   
-		    function getSelectedCompany(company){
+		    function getSelectedCompany(info){
 				var selectedInfo = [];
-				company.forEach(function(query) {
+				info.forEach(function(query) {
 					if (query.company === selectCompany) {
 						selectedInfo.push({
 							"id"		: query.id,
@@ -128,7 +128,15 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 							"phone"		: query.phone,
 							"email"		: query.email
 						})
+					Contacts.$form.company.value = query.company;
+					Contacts.$form.address1.value = query.address1;
+					Contacts.$form.address2.value = query.address2;
+					Contacts.$form.city.value = query.city;
+					Contacts.$form.state.value = query.state;
+					Contacts.$form.zip.value = query.zip;
+					Contacts.$form.notes.value = query.notes;
 					}
+
 				})
 				return selectedInfo;
 			};
