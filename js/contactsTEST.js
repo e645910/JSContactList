@@ -128,6 +128,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 							"phone"		: query.phone,
 							"email"		: query.email
 						})
+					//populate the input fields with info from the company Drop down selection	
 					Contacts.$form.company.value = query.company;
 					Contacts.$form.address1.value = query.address1;
 					Contacts.$form.address2.value = query.address2;
