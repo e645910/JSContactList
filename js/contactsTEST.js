@@ -10,17 +10,12 @@ function supports_local_storage() {
   }
 }supports_local_storage();
 
-// set Company Name as main focus
-function setFocus(){
-	document.getElementById('setFocus').focus()
-}
-
 // ==================== set up the DOM =======================================
 var Contacts = {//use $ in front of varible as an identifier DOM elements
 	index: window.localStorage.getItem("Contacts:index"),
 	$table: document.getElementById("contacts-table"),
 	$form: document.getElementById("contacts-form"),
-	$select: document.getElementById("companyNameDropdown"),
+	$select: document.getElementById("contacts-dropdown"),
 	$button_save: document.getElementById("contacts-op-save"),
 	$button_discard: document.getElementById("contacts-op-discard"),
 
@@ -31,14 +26,34 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);// adds Contacts: index number.
 		}
 
-// ==================== initialize form ======================================
-		Contacts.$form.reset(); //restore forms default value
-		Contacts.$button_discard.addEventListener("click", function(event) {//listen for when the Clear button is then resets the form back to its orginal state and setting
-			Contacts.$form.reset();
+		// sets Company Name in form as default input field
+		function setFocus(){
+			document.getElementById('setFocus').focus()
+		}
+
+		// removes table info
+		function removeTableRows(){// start index from 0
+			var tableRowCount = 1;
+			var rowCount = Contacts.$table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
+				for (var i = tableRowCount; i < rowCount; i++){
+					Contacts.$table.deleteRow(tableRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
+				}
+		};
+		function resetValues(){//reset form fields
+			Contacts.$form.reset();//restore forms default value
+			Contacts.$select.value = '';//sets dropdown value to null
+			removeTableRows();//remove table info
 			Contacts.$form.idEntry.value = 0;
+		}
+
+// ==================== initialize form ======================================
+		resetValues(); 
+		Contacts.$button_discard.addEventListener("click", function(event) {//listen for when the Clear button is then resets the form back to its orginal state and setting
+			resetValues();
 			setFocus();
 		}, true);
 		Contacts.$form.addEventListener("submit", function(event) {
+			//forces string to propercase
 			String.prototype.capitalize = function() {
     		return this.replace(/(?:^|\s)\S/g, 
     			function(a) { 
@@ -85,16 +100,8 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 				}
 			}
 		};
-		//clear out all table info
-		function removeTableRows(){// start index from 0
-		var tableRowCount = 1;
-		var rowCount = Contacts.$table.rows.length;// take row count first since row length will keep changes as row is deleted preventing odd or even rows only getting deleted
-			for (var i = tableRowCount; i < rowCount; i++){
-				Contacts.$table.deleteRow(tableRowCount);// deleteRow is fixed to prevent errors/exceptions when deleted
-			}
-		};
 
-// populate the dropdown list 
+// ==================== initialize the dropdown list ================================= 
 		function getCompanyName(names){
 			var companyName = [];
 			names.forEach(function(query){
@@ -135,7 +142,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 					Contacts.$form.city.value = query.city;
 					Contacts.$form.state.value = query.state;
 					Contacts.$form.zip.value = query.zip;
-					Contacts.$form.notes.value = query.notes;
+					Contacts.$form.notes.value = '';
 					}
 
 				})
@@ -255,17 +262,14 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 			entry.id = Contacts.index;
 			window.localStorage.setItem("Contacts:index", ++Contacts.index);
 			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-			render();
 			setFocus();
 		},
 		storeEdit: function(entry) {
 			window.localStorage.setItem("Contacts:"+ entry.id, JSON.stringify(entry));
-			render();
 			setFocus();
 		},
 		storeRemove: function(entry) {
 			window.localStorage.removeItem("Contacts:"+ entry.id);
-			render();
 			setFocus();
 		},
 

@@ -80,30 +80,13 @@ formContainer label {
 }
 
 /* company */
-
 .formCompany {
 	position: absolute;
 	width: 40%;
 	height: 70%;
 }
 
-/* notes */
-
-.formCompanyNotesContainer {
-    position: absolute;
-    top: calc(75% - 1em);
-    left: calc(3% - 1em);
-    width: 40%;
-    height: 40%;
-}
-
-.formCompanyNotesContainer textarea{
-	width: 90%;
-	height: 9vh;
-	border: 1px solid #000;
-}
 /*personal info*/
-
 .formPersonContainer {
 	position: absolute;
 	top: calc(6.5% - 1em);
@@ -112,15 +95,21 @@ formContainer label {
 	height: 46%;
 }
 
+.notes textarea{
+	width: 90%;
+	height: 9vh;
+	border: 1px solid #000;
+}
+
 /*--------- buttons  -------------*/
 .buttonContainer {
 	position: absolute;
-    top: calc(80% - 1em);
-    left: calc(70% - 1em);
+    top: calc(83% - 1em);
+    left: calc(72% - 1em);
     border: 2px solid #FF0;
     width: 20%;
     height: 10%;
-    padding: 2%;
+    padding: 1% 0 2% 2%;
 }
 
 .itemButton input {
