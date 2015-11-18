@@ -86,7 +86,7 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 		// reset the form input back to blank
 		this.reset();
 		this.idEntry.value = 0;
-		event.preventDefault();//stops the default action of an element from happening
+		event.preventDefault();//stops the default action of an element from happening, without stopping further propagation of the event.
 		}, true);
 
 // ==================== initialize the Dom table =====================================
@@ -133,7 +133,8 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 							"fullname"	: query.fullname,
 							"dept"		: query.dept,
 							"phone"		: query.phone,
-							"email"		: query.email
+							"email"		: query.email,
+							"notes"		: query.notes
 						})
 					//populate the input fields with info from the company Drop down selection	
 					Contacts.$form.company.value = query.company;
@@ -249,6 +250,8 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 					if (confirm('Are you sure you want to remove "'+ entry.fullname + ' with '+ entry.company + '" from your contacts?')) {
 						Contacts.storeRemove(entry);
 						Contacts.tableRemove(entry);
+						resetValues(); 
+						setFocus();
 					}
 				}
 				event.preventDefault();
@@ -270,7 +273,6 @@ var Contacts = {//use $ in front of varible as an identifier DOM elements
 		},
 		storeRemove: function(entry) {
 			window.localStorage.removeItem("Contacts:"+ entry.id);
-			setFocus();
 		},
 
 // =============================== table build =====================================
