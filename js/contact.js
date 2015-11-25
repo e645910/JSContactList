@@ -1,3 +1,4 @@
+
 // detect if browser supports HTML5 local storage
 function supports_local_storage() {
   try {
@@ -104,16 +105,16 @@ var Contacts = {
 				}
 				var tableTest = [];
 				testList.forEach(function(query){
-				if (Contacts.$select.value === query.company) {
-					tableTest.push({ 
-						"id"		: query.id,
-						"fullname"	: query.fullname,
-						"dept"		: query.dept,
-						"phone"		: query.phone,
-						"email"		: query.email,
-						"notes"		: query.notes
-				    });
-				}
+					if (Contacts.$select.value === query.company) {
+						tableTest.push({ 
+							"id"		: query.id,
+							"fullname"	: query.fullname,
+							"dept"		: query.dept,
+							"phone"		: query.phone,
+							"email"		: query.email,
+							"notes"		: query.notes
+					    });
+					}
 				})
 			}
 			removeTableRows();
