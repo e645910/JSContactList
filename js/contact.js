@@ -82,7 +82,35 @@ var Contacts = {
 			event.preventDefault();
 		}, true);
 
-// ==================== initialize the DOM table =====================================
+// ==================== create the DOM table =====================================
+		function newTableList(){
+			var testList = [], i, key;
+			for (i = 0; i < window.localStorage.length; i++) {
+				key = window.localStorage.key(i);
+				if (/Contacts:\d+/.test(key)) {
+					testList.push(JSON.parse(window.localStorage.getItem(key)));
+				}
+			}
+			var tableTest = [];
+			testList.forEach(function(query){
+				if (Contacts.$select.value === query.company) {
+					tableTest.push({ 
+						"id"		: query.id,
+						"fullname"	: query.fullname,
+						"dept"		: query.dept,
+						"phone"		: query.phone,
+						"email"		: query.email,
+						"notes"		: query.notes
+				    });
+				}
+			})
+		removeTableRows();
+		tableTest.forEach(Contacts.tableAdd)
+		};
+
+
+// ==================== initialize the dropdown list ================================= 
+
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
@@ -93,36 +121,6 @@ var Contacts = {
 			}
 		};
 
-//============================================
-		function newTableList(){
-			if (window.localStorage.length - 1) {
-				var testList = [], i, key;
-				for (i = 0; i < window.localStorage.length; i++) {
-					key = window.localStorage.key(i);
-					if (/Contacts:\d+/.test(key)) {
-						testList.push(JSON.parse(window.localStorage.getItem(key)));
-					}
-				}
-				var tableTest = [];
-				testList.forEach(function(query){
-					if (Contacts.$select.value === query.company) {
-						tableTest.push({ 
-							"id"		: query.id,
-							"fullname"	: query.fullname,
-							"dept"		: query.dept,
-							"phone"		: query.phone,
-							"email"		: query.email,
-							"notes"		: query.notes
-					    });
-					}
-				})
-			}
-			removeTableRows();
-			tableTest.forEach(Contacts.tableAdd)
-		};
-
-
-// ==================== initialize the dropdown list ================================= 
 		function getCompanyName(names) {
 			var companyName = [];
 			names.forEach(function(query) {
@@ -144,21 +142,33 @@ var Contacts = {
     		removeTableRows();
 
 //================= create filtered array for dropdown and show list in table ======== 
-		    function getSelectedCompany(info) {
+		    function getSelectedCompany(info){
+				var selectedInfo = [];
 				info.forEach(function(query) {
 					if (query.company === selectCompany) {
-						Contacts.$form.company.value = query.company;
-						Contacts.$form.address1.value = query.address1;
-						Contacts.$form.address2.value = query.address2;
-						Contacts.$form.city.value = query.city;
-						Contacts.$form.state.value = query.state;
-						Contacts.$form.zip.value = query.zip;
-						Contacts.$form.notes.value = '';
-				 	}
+						selectedInfo.push({
+							"id"		: query.id,
+							"fullname"	: query.fullname,
+							"dept"		: query.dept,
+							"phone"		: query.phone,
+							"email"		: query.email,
+							"notes"		: query.notes
+						})
+					//populate the input fields with info from the company Drop down selection	
+					Contacts.$form.company.value = query.company;
+					Contacts.$form.address1.value = query.address1;
+					Contacts.$form.address2.value = query.address2;
+					Contacts.$form.city.value = query.city;
+					Contacts.$form.state.value = query.state;
+					Contacts.$form.zip.value = query.zip;
+					Contacts.$form.notes.value = '';
+					}
+
 				})
+				return selectedInfo;
 			};
-			getSelectedCompany(contacts_list);
-			newTableList();
+			var selectedInfo = getSelectedCompany(contacts_list);
+	    	selectedInfo.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ================================================
 			var sortOrderAscending = true;
@@ -276,20 +286,6 @@ var Contacts = {
 			$tr.appendChild($td);
 			$tr.setAttribute("id", "newTable-"+ newTable.id);
 			Contacts.$table.appendChild($tr);
-		},
-		tableEdit: function(newTable) {
-			var $tr = document.getElementById("newTable-"+ newTable.id), $td, key;
-			$tr.innerHTML = "";
-			for (key in newTable) {
-				if (newTable.hasOwnProperty(key)) {
-					$td = document.createElement("td");
-					$td.appendChild(document.createTextNode(newTable[key]));
-					$tr.appendChild($td);
-				}
-			}
-			$td = document.createElement("td");
-			$td.innerHTML = '<a data-op="edit" data-id="'+ newTable.id +'">Edit</a> | <a data-op="remove" data-id="'+ newTable.id +'">Remove</a>';
-			$tr.appendChild($td);
 		},
 		tableRemove: function(newTable) {
 			Contacts.$table.removeChild(document.getElementById("newTable-"+ newTable.id));
