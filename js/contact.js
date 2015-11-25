@@ -9,7 +9,7 @@ function supports_local_storage() {
   }
 }supports_local_storage();
 
-// ==================== set up the DOM =======================================
+// ==================== set up the DOM ===============================================
 var Contacts = {
 	index: window.localStorage.getItem("Contacts:index"),
 	$table: document.getElementById("contacts-table"),
@@ -18,7 +18,7 @@ var Contacts = {
 	$button_save: document.getElementById("contacts-op-save"),
 	$button_discard: document.getElementById("contacts-op-discard"),
 
-// ==================== initialize storage index =============================	
+// ==================== initialize storage index =====================================
 	
 	init: function() {
 		if (!Contacts.index) {
@@ -30,7 +30,6 @@ var Contacts = {
 		}
 
 		function removeTableRows(){
-			// console.log('removeTable Rows ran')
 			var tableRowCount = 1;
 			var rowCount = Contacts.$table.rows.length;
 				for (var i = tableRowCount; i < rowCount; i++){
@@ -38,7 +37,7 @@ var Contacts = {
 				}
 		};
 
-// ==================== initialize form ======================================
+// ==================== initialize form ==============================================
 		Contacts.$form.reset();
 		Contacts.$button_discard.addEventListener("click", function(event) {
 			Contacts.$form.reset();
@@ -68,43 +67,21 @@ var Contacts = {
 				phone: this.phone.value,
 				email: this.email.value
 			};
-			function getTableEntry(newEntry) {
-				var newTable = [];
-				newEntry.forEach(function(query) {
-					if (companyName === query.company) {
-					 	newTable.push({
-							"id"		: query.id,
-							"fullname"	: query.fullname,
-							"dept"		: query.dept,
-							"phone"		: query.phone,
-							"email"		: query.email,
-							"notes"		: query.notes
-						})
-					}
-				})
-				removeTableRows();
-				return newTable;
-			};
-			var companyName = this.company.value;
-			var newTable = getTableEntry(contacts_list);
 
-			if (entry.id == 0) {
+			if (this.company.value !== '') {
+				if (entry.id == 0) {
 					Contacts.storeAdd(entry);
-					newTable.forEach(Contacts.tableAdd)
+					newTableList();
 					}
-			else { 
-				Contacts.storeEdit(entry);
-				newTable.forEach(Contacts.tableEdit)
+				else { 
+					Contacts.storeEdit(entry);
+					newTableList();
+				}
 			}
-			this.reset();
-			Contacts.$select.value = '';
-			this.idEntry.value = 0;
-			setFocus();
 			event.preventDefault();
 		}, true);
 
 // ==================== initialize the DOM table =====================================
-
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
@@ -114,6 +91,35 @@ var Contacts = {
 				}
 			}
 		};
+
+//============================================
+		function newTableList(){
+			if (window.localStorage.length - 1) {
+				var testList = [], i, key;
+				for (i = 0; i < window.localStorage.length; i++) {
+					key = window.localStorage.key(i);
+					if (/Contacts:\d+/.test(key)) {
+						testList.push(JSON.parse(window.localStorage.getItem(key)));
+					}
+				}
+				var tableTest = [];
+				testList.forEach(function(query){
+				if (Contacts.$select.value === query.company) {
+					tableTest.push({ 
+						"id"		: query.id,
+						"fullname"	: query.fullname,
+						"dept"		: query.dept,
+						"phone"		: query.phone,
+						"email"		: query.email,
+						"notes"		: query.notes
+				    });
+				}
+				})
+			}
+			removeTableRows();
+			tableTest.forEach(Contacts.tableAdd)
+		};
+
 
 // ==================== initialize the dropdown list ================================= 
 		function getCompanyName(names) {
@@ -126,8 +132,8 @@ var Contacts = {
 				return !position || item != array[position - 1];
 			});
 		};
-
 		var companyName = getCompanyName(contacts_list);
+		
 			for(name in companyName) {
 			Contacts.$select.add( new Option(companyName[name]));
 			}
@@ -136,34 +142,24 @@ var Contacts = {
     		var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
     		removeTableRows();
 
-//========================== create filtered array linked to dropdown ===   
+//================= create filtered array for dropdown and show list in table ======== 
 		    function getSelectedCompany(info) {
-				var selectedInfo = [];
 				info.forEach(function(query) {
 					if (query.company === selectCompany) {
-						selectedInfo.push({
-							"id"		: query.id,
-							"fullname"	: query.fullname,
-							"dept"		: query.dept,
-							"phone"		: query.phone,
-							"email"		: query.email,
-							"notes"		: query.notes
-						})
-					Contacts.$form.company.value = query.company;
-					Contacts.$form.address1.value = query.address1;
-					Contacts.$form.address2.value = query.address2;
-					Contacts.$form.city.value = query.city;
-					Contacts.$form.state.value = query.state;
-					Contacts.$form.zip.value = query.zip;
-					Contacts.$form.notes.value = '';
-					}
+						Contacts.$form.company.value = query.company;
+						Contacts.$form.address1.value = query.address1;
+						Contacts.$form.address2.value = query.address2;
+						Contacts.$form.city.value = query.city;
+						Contacts.$form.state.value = query.state;
+						Contacts.$form.zip.value = query.zip;
+						Contacts.$form.notes.value = '';
+				 	}
 				})
-				return selectedInfo;
 			};
-			var selectedInfo = getSelectedCompany(contacts_list);
-	    	selectedInfo.forEach(Contacts.tableAdd)
+			getSelectedCompany(contacts_list);
+			newTableList();
 
-// ==================== sort contacts ========================================
+// ==================== sort contacts ================================================
 			var sortOrderAscending = true;
 			function scopePreserver() {
 				return function() {
@@ -219,7 +215,7 @@ var Contacts = {
 			}tableContainScope();
 		};
 
-// == add event listener then determine which callback function was triggered ======
+// ==== add event listener then determine which callback function was triggered ======
 	
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
@@ -251,7 +247,7 @@ var Contacts = {
 		}, true);
 	},
 
-// ==================== create, update, delete individual entries ============
+// ==================== create, update, delete individual entries ====================
 		storeAdd: function(entry) {
 			entry.id = Contacts.index;
 			window.localStorage.setItem("Contacts:index", ++Contacts.index);
@@ -263,8 +259,8 @@ var Contacts = {
 		storeRemove: function(entry) {
 			window.localStorage.removeItem("Contacts:"+ entry.id);
 		},
-
-// =============================== table build =====================================
+ 
+// ==================== table build ==================================================
 		tableAdd: function(newTable) {
 			var $tr = document.createElement("tr"), $td, key;
 			for (key in newTable) {
