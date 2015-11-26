@@ -30,7 +30,7 @@ var Contacts = {
 		}
 
 		function removeTableRows(){
-			// console.log('removeTableRows ran')
+			console.log('removeTableRows ran')
 			var tableRowCount = 1;
 			var rowCount = Contacts.$table.rows.length;
 				for (var i = tableRowCount; i < rowCount; i++){
@@ -72,97 +72,101 @@ var Contacts = {
 			if (this.company.value !== '') {
 				if (entry.id == 0) {
 					Contacts.storeAdd(entry);
-					newTableList();
+					employeeInfoTable();
 					}
 				else { 
 					Contacts.storeEdit(entry);
-					newTableList();
+					employeeInfoTable();
 				}
 			}
 			event.preventDefault();
 		}, true);
 
-// ==================== create save, edit and remove table =========================
-		function newTableList(){
+// ==================== Show employee info after it is added or edited ==============
+		function employeeInfoTable(){
 			var list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
 				key = window.localStorage.key(i);
 				if (/Contacts:\d+/.test(key)) {
 					list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
+			}
 
-				var tableTest = [];
-				list.forEach(function(query){
+				var employeeList = [];
+					list.forEach(function(query){
+						if (Contacts.$select.value === query.company) {
+							employeeList.push({
+								"id"		: query.id,
+								"fullname"	: query.fullname,
+								"dept"		: query.dept,
+								"phone"		: query.phone,
+								"email"		: query.email,
+								"notes"		: query.notes
+						    });
+						}
+					})
+				removeTableRows();
+	    		employeeList.forEach(Contacts.tableAdd);
+		};
+
+// ==================== initialize the dropdown list ================================= 
+			if (window.localStorage.length - 1) {
+				var dropdownList = [], i, key;
+				for (i = 0; i < window.localStorage.length; i++) {
+					key = window.localStorage.key(i);
+					if (/Contacts:\d+/.test(key)) {
+						dropdownList.push(JSON.parse(window.localStorage.getItem(key)));
+					}
+				}
+			};
+
+			function getCompanyName(names){
+			    var companyName = [];
+			    names.forEach(function(query){
+			        if (companyName.indexOf(query.company) === -1){
+			            companyName.push(query.company)
+			        }
+			    });
+			    Contacts.$select.add( new Option(''));
+			    return companyName.sort();
+			}
+			var companyName = getCompanyName(dropdownList);
+
+			for(key in companyName) {
+				if (companyName.hasOwnProperty(key)){
+					Contacts.$select.add( new Option(companyName[key]));
+				}
+			}
+
+//================= create filtered array for dropdown and show list in table ======== 
+		Contacts.$select.onchange = function() {
+		    function getSelectedCompany(info){
+				var selectedInfo = [];
+				info.forEach(function(query) {
 					if (Contacts.$select.value === query.company) {
-						tableTest.push({ 
+						selectedInfo.push({
 							"id"		: query.id,
 							"fullname"	: query.fullname,
 							"dept"		: query.dept,
 							"phone"		: query.phone,
 							"email"		: query.email,
 							"notes"		: query.notes
-					    });
+						})
+					Contacts.$form.company.value = query.company;
+					Contacts.$form.address1.value = query.address1;
+					Contacts.$form.address2.value = query.address2;
+					Contacts.$form.city.value = query.city;
+					Contacts.$form.state.value = query.state;
+					Contacts.$form.zip.value = query.zip;
+					Contacts.$form.notes.value = '';
 					}
+
 				})
-			}
-		};
-
-// ==================== initialize the dropdown list ================================= 
-		if (window.localStorage.length - 1) {
-			var dropdownList = [], i, key;
-			for (i = 0; i < window.localStorage.length; i++) {
-				key = window.localStorage.key(i);
-				if (/Contacts:\d+/.test(key)) {
-					dropdownList.push(JSON.parse(window.localStorage.getItem(key)));
-				}
-			}
-		};
-
-		function getCompanyName(names){
-		    var companyName = [];
-		    names.forEach(function(query){
-		        if (companyName.indexOf(query.company) === -1){
-		            companyName.push(query.company)
-		        }
-		    })
-		    Contacts.$select.add( new Option(''));
-		    return companyName.sort();
-		}
-		var companyName = getCompanyName(dropdownList)
-
-		for(name in companyName) {
-			Contacts.$select.add( new Option(companyName[name]));
-		}
-
-//================= create table showing employees working for company in dropdown ======== 
-		Contacts.$select.onchange = function() {
-			var selectedInfo = [];
-			dropdownList.forEach(function(query) {
-				if (Contacts.$select.value === query.company) {
-					selectedInfo.push({
-						"id"		: query.id,
-						"fullname"	: query.fullname,
-						"dept"		: query.dept,
-						"phone"		: query.phone,
-						"email"		: query.email,
-						"notes"		: query.notes
-					})
-				//populate the input fields with info from the company Drop down selection	
-				Contacts.$form.company.value = query.company;
-				Contacts.$form.address1.value = query.address1;
-				Contacts.$form.address2.value = query.address2;
-				Contacts.$form.city.value = query.city;
-				Contacts.$form.state.value = query.state;
-				Contacts.$form.zip.value = query.zip;
-				Contacts.$form.notes.value = '';
-				}
-
-			})
-			return selectedInfo;
-
+				return selectedInfo;
+			};
 			removeTableRows();
 			var selectedInfo = getSelectedCompany(dropdownList);
-			selectedInfo.forEach(Contacts.tableAdd)
+	    	selectedInfo.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ================================================
 			var sortOrderAscending = true;
