@@ -134,7 +134,7 @@ var Contacts = {
 			Contacts.$select.add( new Option(companyName[name]));
 		}
 
-//================= create filtered array for dropdown and show list in table ======== 
+//================= create table showing employees working for company in dropdown ======== 
 		Contacts.$select.onchange = function() {
 			var selectedInfo = [];
 			dropdownList.forEach(function(query) {
