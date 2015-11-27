@@ -30,7 +30,7 @@ var Contacts = {
 		}
 
 		function removeTableRows(){
-			console.log('removeTableRows ran')
+			// console.log('removeTableRows ran')
 			var tableRowCount = 1;
 			var rowCount = Contacts.$table.rows.length;
 				for (var i = tableRowCount; i < rowCount; i++){
@@ -72,18 +72,19 @@ var Contacts = {
 			if (this.company.value !== '') {
 				if (entry.id == 0) {
 					Contacts.storeAdd(entry);
-					employeeInfoTable();
+
+					// employeeInfoTable();
 					}
 				else { 
 					Contacts.storeEdit(entry);
-					employeeInfoTable();
+					// employeeInfoTable();
 				}
 			}
 			event.preventDefault();
 		}, true);
 
-// ==================== Show employee info after it is added or edited ==============
-		function employeeInfoTable(){
+// ==================== initialize table =============================================
+		function employeeInfoTable() {
 			var list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
 				key = window.localStorage.key(i);
@@ -91,52 +92,48 @@ var Contacts = {
 					list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
-
-				var employeeList = [];
-					list.forEach(function(query){
-						if (Contacts.$select.value === query.company) {
-							employeeList.push({
-								"id"		: query.id,
-								"fullname"	: query.fullname,
-								"dept"		: query.dept,
-								"phone"		: query.phone,
-								"email"		: query.email,
-								"notes"		: query.notes
-						    });
-						}
-					})
-				removeTableRows();
-	    		employeeList.forEach(Contacts.tableAdd);
+			return list;
 		};
+		employeeInfoTable();
+		var employeeInfo = employeeInfoTable()
+
+// ==================== Show employee info after it is added or edited ===============
+		// function employeeInfoTable(){
+		// 	var employeeList = [];
+		// 		employeeInfo.forEach(function(query){
+		// 			if (Contacts.$select.value === query.company) {
+		// 				employeeList.push({
+		// 					"id"		: query.id,
+		// 					"fullname"	: query.fullname,
+		// 					"dept"		: query.dept,
+		// 					"phone"		: query.phone,
+		// 					"email"		: query.email,
+		// 					"notes"		: query.notes
+		// 			    });
+		// 			}
+		// 		})
+		// 	removeTableRows();
+  //   		employeeList.forEach(Contacts.tableAdd);
+		// };
 
 // ==================== initialize the dropdown list ================================= 
-			if (window.localStorage.length - 1) {
-				var dropdownList = [], i, key;
-				for (i = 0; i < window.localStorage.length; i++) {
-					key = window.localStorage.key(i);
-					if (/Contacts:\d+/.test(key)) {
-						dropdownList.push(JSON.parse(window.localStorage.getItem(key)));
-					}
-				}
-			};
+		function getCompanyName(names) {
+		    var companyName = [];
+		    names.forEach(function(query) {
+		        if (companyName.indexOf(query.company) === -1) {
+		            companyName.push(query.company)
+		        }
+		    });
+		    Contacts.$select.add( new Option(''));
+		    return companyName.sort();
+		};
+		var companyName = getCompanyName(employeeInfo);
 
-			function getCompanyName(names){
-			    var companyName = [];
-			    names.forEach(function(query){
-			        if (companyName.indexOf(query.company) === -1){
-			            companyName.push(query.company)
-			        }
-			    });
-			    Contacts.$select.add( new Option(''));
-			    return companyName.sort();
+		for(key in companyName) {
+			if (companyName.hasOwnProperty(key)) {
+				Contacts.$select.add( new Option(companyName[key]));
 			}
-			var companyName = getCompanyName(dropdownList);
-
-			for(key in companyName) {
-				if (companyName.hasOwnProperty(key)){
-					Contacts.$select.add( new Option(companyName[key]));
-				}
-			}
+		};
 
 //================= create filtered array for dropdown and show list in table ======== 
 		Contacts.$select.onchange = function() {
@@ -165,7 +162,7 @@ var Contacts = {
 				return selectedInfo;
 			};
 			removeTableRows();
-			var selectedInfo = getSelectedCompany(dropdownList);
+			var selectedInfo = getSelectedCompany(employeeInfo);
 	    	selectedInfo.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ================================================
@@ -221,7 +218,8 @@ var Contacts = {
 				for( var i = 0; i < titles.length; i++) {
 					titles[i].onclick = scopePreserver( i, rows[i]);
 				}
-			}tableContainScope();
+			};
+			tableContainScope();
 		};
 
 // ==== add event listener then determine which callback function was triggered ======
