@@ -1,3 +1,4 @@
+
 // detect if browser supports HTML5 local storage
 function supports_local_storage() {
   try {
@@ -29,8 +30,7 @@ var Contacts = {
 			document.getElementById('setFocus').focus()
 		}
 
-		function removeTableRows(){
-			// console.log('removeTableRows ran')
+		function removeTableRow(){
 			var tableRowCount = 1;
 			var rowCount = Contacts.$table.rows.length;
 				for (var i = tableRowCount; i < rowCount; i++){
@@ -44,7 +44,7 @@ var Contacts = {
 			Contacts.$form.reset();
 			Contacts.$select.value = '';
 			Contacts.$form.idEntry.value = 0;
-			removeTableRows();
+			removeTableRow();
 			setFocus();
 		}, true);
 		Contacts.$form.addEventListener("submit", function(event) {
@@ -72,75 +72,79 @@ var Contacts = {
 			if (this.company.value !== '') {
 				if (entry.id == 0) {
 					Contacts.storeAdd(entry);
-
-					// employeeInfoTable();
 					}
 				else { 
 					Contacts.storeEdit(entry);
-					// employeeInfoTable();
+					newTableList();
 				}
 			}
 			event.preventDefault();
 		}, true);
 
+
 // ==================== initialize table =============================================
-		function employeeInfoTable() {
-			var list = [], i, key;
+	function newTableList(){
+		var employeeList = [], i, key;
+		for (i = 0; i < window.localStorage.length; i++) {
+			key = window.localStorage.key(i);
+			if (/Contacts:\d+/.test(key)) {
+				employeeList.push(JSON.parse(window.localStorage.getItem(key)));
+			}
+		}
+		var tableUpdate = [];
+		employeeList.forEach(function(query){
+			if (Contacts.$select.value === query.company) {
+				tableUpdate.push({ 
+					"id"		: query.id,
+					"fullname"	: query.fullname,
+					"dept"		: query.dept,
+					"phone"		: query.phone,
+					"email"		: query.email,
+					"notes"		: query.notes
+			    });
+			}
+		})
+	removeTableRow();
+	tableUpdate.forEach(Contacts.tableAdd)
+	};
+
+// ==================== initialize the dropdown list ================================= 
+
+		if (window.localStorage.length - 1) {
+			var contacts_list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
 				key = window.localStorage.key(i);
 				if (/Contacts:\d+/.test(key)) {
-					list.push(JSON.parse(window.localStorage.getItem(key)));
+					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
-			return list;
 		};
-		employeeInfoTable();
-		var employeeInfo = employeeInfoTable()
 
-// ==================== Show employee info after it is added or edited ===============
-		// function employeeInfoTable(){
-		// 	var employeeList = [];
-		// 		employeeInfo.forEach(function(query){
-		// 			if (Contacts.$select.value === query.company) {
-		// 				employeeList.push({
-		// 					"id"		: query.id,
-		// 					"fullname"	: query.fullname,
-		// 					"dept"		: query.dept,
-		// 					"phone"		: query.phone,
-		// 					"email"		: query.email,
-		// 					"notes"		: query.notes
-		// 			    });
-		// 			}
-		// 		})
-		// 	removeTableRows();
-  //   		employeeList.forEach(Contacts.tableAdd);
-		// };
-
-// ==================== initialize the dropdown list ================================= 
 		function getCompanyName(names) {
-		    var companyName = [];
-		    names.forEach(function(query) {
-		        if (companyName.indexOf(query.company) === -1) {
-		            companyName.push(query.company)
-		        }
-		    });
-		    Contacts.$select.add( new Option(''));
-		    return companyName.sort();
+			var companyName = [];
+			names.forEach(function(query) {
+				companyName.push(query.company);
+			})
+			Contacts.$select.add( new Option(''));
+			return companyName.sort().filter(function(item, position, array) {
+				return !position || item != array[position - 1];
+			});
 		};
-		var companyName = getCompanyName(employeeInfo);
-
-		for(key in companyName) {
-			if (companyName.hasOwnProperty(key)) {
-				Contacts.$select.add( new Option(companyName[key]));
+		var companyName = getCompanyName(contacts_list);
+		
+			for(name in companyName) {
+			Contacts.$select.add( new Option(companyName[name]));
 			}
-		};
+
+		Contacts.$select.onchange = function() {
+    		var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
+    		removeTableRow();
 
 //================= create filtered array for dropdown and show list in table ======== 
-		Contacts.$select.onchange = function() {
 		    function getSelectedCompany(info){
 				var selectedInfo = [];
 				info.forEach(function(query) {
-					if (Contacts.$select.value === query.company) {
+					if (query.company === selectCompany) {
 						selectedInfo.push({
 							"id"		: query.id,
 							"fullname"	: query.fullname,
@@ -161,8 +165,7 @@ var Contacts = {
 				})
 				return selectedInfo;
 			};
-			removeTableRows();
-			var selectedInfo = getSelectedCompany(employeeInfo);
+			var selectedInfo = getSelectedCompany(contacts_list);
 	    	selectedInfo.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ================================================
@@ -200,7 +203,7 @@ var Contacts = {
 					};
 
 					if (tableHeader !== 'actions') {
-						removeTableRows();
+						removeTableRow();
 						
 					    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
 
@@ -218,8 +221,7 @@ var Contacts = {
 				for( var i = 0; i < titles.length; i++) {
 					titles[i].onclick = scopePreserver( i, rows[i]);
 				}
-			};
-			tableContainScope();
+			}tableContainScope();
 		};
 
 // ==== add event listener then determine which callback function was triggered ======
@@ -282,20 +284,6 @@ var Contacts = {
 			$tr.appendChild($td);
 			$tr.setAttribute("id", "newTable-"+ newTable.id);
 			Contacts.$table.appendChild($tr);
-		},
-		tableEdit: function(newTable) {
-			var $tr = document.getElementById("newTable-"+ newTable.id), $td, key;
-			$tr.innerHTML = "";
-			for (key in newTable) {
-				if (newTable.hasOwnProperty(key)) {
-					$td = document.createElement("td");
-					$td.appendChild(document.createTextNode(newTable[key]));
-					$tr.appendChild($td);
-				}
-			}
-			$td = document.createElement("td");
-			$td.innerHTML = '<a data-op="edit" data-id="'+ newTable.id +'">Edit</a> | <a data-op="remove" data-id="'+ newTable.id +'">Remove</a>';
-			$tr.appendChild($td);
 		},
 		tableRemove: function(newTable) {
 			Contacts.$table.removeChild(document.getElementById("newTable-"+ newTable.id));
