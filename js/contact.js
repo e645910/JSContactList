@@ -75,51 +75,29 @@ var Contacts = {
 					}
 				else { 
 					Contacts.storeEdit(entry);
-					newTableList();
+					removeTableRow();
 					var employeeInfo = employeeInfoTable();
+					var selectedInfo = getSelectedCompany(employeeInfo);
+			    	selectedInfo.forEach(Contacts.tableAdd);
 				}
 			}
 			event.preventDefault();
 		}, true);
 
-// ==================== initialize table =============================================
+// ==================== initialize table info ========================================
 		function employeeInfoTable() {
-			var list = [], i, key;
-			for (i = 0; i < window.localStorage.length; i++) {
-				key = window.localStorage.key(i);
-				if (/Contacts:\d+/.test(key)) {
-					list.push(JSON.parse(window.localStorage.getItem(key)));
+			if (window.localStorage.length - 1) {
+				var list = [], i, key;
+				for (i = 0; i < window.localStorage.length; i++) {
+					key = window.localStorage.key(i);
+					if (/Contacts:\d+/.test(key)) {
+						list.push(JSON.parse(window.localStorage.getItem(key)));
+					}
 				}
+				return list;
 			}
-			return list;
 		};
 		var employeeInfo = employeeInfoTable();
-
-// ==================== Update table =============================================
-	function newTableList(){
-		var employeeList = [], i, key;
-		for (i = 0; i < window.localStorage.length; i++) {
-			key = window.localStorage.key(i);
-			if (/Contacts:\d+/.test(key)) {
-				employeeList.push(JSON.parse(window.localStorage.getItem(key)));
-			}
-		}
-		var tableUpdate = [];
-		employeeList.forEach(function(query){
-			if (Contacts.$select.value === query.company) {
-				tableUpdate.push({ 
-					"id"		: query.id,
-					"fullname"	: query.fullname,
-					"dept"		: query.dept,
-					"phone"		: query.phone,
-					"email"		: query.email,
-					"notes"		: query.notes
-			    });
-			}
-		})
-		removeTableRow();
-		tableUpdate.forEach(Contacts.tableAdd);
-	};
 
 // ==================== initialize the dropdown list ================================= 
 		function getCompanyName(names) {
@@ -146,9 +124,8 @@ var Contacts = {
 	    	selectedInfo.forEach(Contacts.tableAdd);
     		};
 
-//================= create filtered array for dropdown and show list in table ======== 
+//=============== dropdown filtered array to show company info and employee list =====
 		    function getSelectedCompany(info){
-
 				var selectedInfo = [];
 				info.forEach(function(query) {
 					if (query.company === Contacts.$select.value) {
@@ -228,7 +205,6 @@ var Contacts = {
 				}
 			}tableContainScope();
 		
-
 // ==== add event listener then determine which callback function was triggered ======
 	
 		Contacts.$table.addEventListener("click", function(event) {
