@@ -27,15 +27,15 @@ var Contacts = {
 		}
 
 		function setFocus(){
-			document.getElementById('setFocus').focus()
-		}
+			document.getElementById('setFocus').focus();
+		};
 
 		function removeTableRow(){
-			var tableRowCount = 1;
-			var rowCount = Contacts.$table.rows.length;
-				for (var i = tableRowCount; i < rowCount; i++){
-					Contacts.$table.deleteRow(tableRowCount);
-				}
+		var tableRowCount = 1;
+		var rowCount = Contacts.$table.rows.length;
+			for (var i = tableRowCount; i < rowCount; i++){
+				Contacts.$table.deleteRow(tableRowCount);
+			}
 		};
 
 // ==================== initialize form ==============================================
@@ -110,100 +110,100 @@ var Contacts = {
 				return !position || item != array[position - 1];
 			});
 		};
+		var employeeInfo = employeeInfoTable();
 		var companyName = getCompanyName(employeeInfo);
 		
-			for(name in companyName) {
-			Contacts.$select.add( new Option(companyName[name]));
-			}
+		for(name in companyName) {
+		Contacts.$select.add( new Option(companyName[name]));
+		}
 
 		Contacts.$select.onchange = function() {
     		var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
-    		removeTableRow();
     		var employeeInfo = employeeInfoTable();
 			var selectedInfo = getSelectedCompany(employeeInfo);
+			removeTableRow();
 	    	selectedInfo.forEach(Contacts.tableAdd);
-    		};
+    	};
 
 //=============== dropdown filtered array to show company info and employee list =====
-		    function getSelectedCompany(info){
-				var selectedInfo = [];
-				info.forEach(function(query) {
-					if (query.company === Contacts.$select.value) {
-						selectedInfo.push({
-							"id"		: query.id,
-							"fullname"	: query.fullname,
-							"dept"		: query.dept,
-							"phone"		: query.phone,
-							"email"		: query.email,
-							"notes"		: query.notes
-						})
-					Contacts.$form.company.value = query.company;
-					Contacts.$form.address1.value = query.address1;
-					Contacts.$form.address2.value = query.address2;
-					Contacts.$form.city.value = query.city;
-					Contacts.$form.state.value = query.state;
-					Contacts.$form.zip.value = query.zip;
-					Contacts.$form.notes.value = '';
-					}
-
-				})
-				return selectedInfo;
-			};
+	    function getSelectedCompany(info){
+			var selectedInfo = [];
+			info.forEach(function(query) {
+				if (query.company === Contacts.$select.value) {
+					selectedInfo.push({
+						"id"		: query.id,
+						"fullname"	: query.fullname,
+						"dept"		: query.dept,
+						"phone"		: query.phone,
+						"email"		: query.email,
+						"notes"		: query.notes
+					});
+				Contacts.$form.company.value = query.company;
+				Contacts.$form.address1.value = query.address1;
+				Contacts.$form.address2.value = query.address2;
+				Contacts.$form.city.value = query.city;
+				Contacts.$form.state.value = query.state;
+				Contacts.$form.zip.value = query.zip;
+				Contacts.$form.notes.value = '';
+				}
+			});
+			return selectedInfo;
+		};
 
 // ==================== sort contacts ================================================
-			var sortOrderAscending = true;
-			function scopePreserver() {
-				return function() {
-				var string = this.innerText;
-				var tableHeader = string.toLowerCase();
+		var sortOrderAscending = true;
+		function scopePreserver() {
+			return function() {
+			var string = this.innerText;
+			var tableHeader = string.toLowerCase();
 
-					function sortOn(arr, prop, reverse) {
-						if (!prop || !arr) {
-							return arr;
-						}
+				function sortOn(arr, prop, reverse) {
+					if (!prop || !arr) {
+						return arr;
+					}
 
-						function sort_by(field, rev, primer) {
-							return function(a, b) {
-								a = primer(a[field]),
-								b = primer(b[field]);
+					function sort_by(field, rev, primer) {
+						return function(a, b) {
+							a = primer(a[field]),
+							b = primer(b[field]);
 
-								if (sortOrderAscending === false) {
-									return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
-								}
-								return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+							if (sortOrderAscending === false) {
+								return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
 							}
-						}
-						if (tableHeader === 'id') {
-							arr.sort(sort_by(prop, reverse, function(a) {
-							return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
-							}));
-						}else {	
-							arr.sort(sort_by(prop, reverse, function(a) {
-							return String(a).toUpperCase();
-							}));
+							return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
 						}
 					};
-
-					if (tableHeader !== 'actions') {
-						removeTableRow();
-					    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
-					    function sortTable() {
-					    	var employeeInfo = employeeInfoTable();
-							var selectedInfo = getSelectedCompany(employeeInfo);
-					    	sortOn(selectedInfo, tableHeader, false, false);
-							selectedInfo.forEach(Contacts.tableAdd);
-					    }sortTable();
+					if (tableHeader === 'id') {
+						arr.sort(sort_by(prop, reverse, function(a) {
+						return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
+						}));
+					}else {	
+						arr.sort(sort_by(prop, reverse, function(a) {
+						return String(a).toUpperCase();
+						}));
 					}
 				};
-			};
 
-			function tableContainScope() {
-			var titles = document.getElementsByTagName('th');
-			var rows = document.getElementsByTagName('tr');
-				for( var i = 0; i < titles.length; i++) {
-					titles[i].onclick = scopePreserver( i, rows[i]);
+				if (tableHeader !== 'actions') {
+					removeTableRow();
+				    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
+				    function sortTable() {
+				    	var employeeInfo = employeeInfoTable();
+						var selectedInfo = getSelectedCompany(employeeInfo);
+				    	sortOn(selectedInfo, tableHeader, false, false);
+						selectedInfo.forEach(Contacts.tableAdd);
+				    }sortTable();
 				}
-			}tableContainScope();
+			};
+		};
+
+		function tableContainScope() {
+		var titles = document.getElementsByTagName('th');
+		var rows = document.getElementsByTagName('tr');
+			for( var i = 0; i < titles.length; i++) {
+				titles[i].onclick = scopePreserver( i, rows[i]);
+			}
+		}tableContainScope();
 		
 // ==== add event listener then determine which callback function was triggered ======
 	
