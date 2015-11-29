@@ -82,6 +82,18 @@ var Contacts = {
 			event.preventDefault();
 		}, true);
 
+// ==================== initialize table =============================================
+		function employeeInfoTable() {
+			var list = [], i, key;
+			for (i = 0; i < window.localStorage.length; i++) {
+				key = window.localStorage.key(i);
+				if (/Contacts:\d+/.test(key)) {
+					list.push(JSON.parse(window.localStorage.getItem(key)));
+				}
+			}
+			return list;
+		};
+		var employeeInfo = employeeInfoTable();
 
 // ==================== Update table =============================================
 	function newTableList(){
@@ -109,32 +121,7 @@ var Contacts = {
 		tableUpdate.forEach(Contacts.tableAdd);
 	};
 
-// ==================== initialize table =============================================
-		function employeeInfoTable() {
-			var list = [], i, key;
-			for (i = 0; i < window.localStorage.length; i++) {
-				key = window.localStorage.key(i);
-				if (/Contacts:\d+/.test(key)) {
-					list.push(JSON.parse(window.localStorage.getItem(key)));
-				}
-			}console.log('employeeInfoTable ran 1111', list)
-			return list;
-		};
-		var employeeInfo = employeeInfoTable();
-		console.log('localStorage Array ran 22222', employeeInfo);
-
-
 // ==================== initialize the dropdown list ================================= 
-		if (window.localStorage.length - 1) {
-			var contacts_list = [], i, key;
-			for (i = 0; i < window.localStorage.length; i++) {
-				key = window.localStorage.key(i);
-				if (/Contacts:\d+/.test(key)) {
-					contacts_list.push(JSON.parse(window.localStorage.getItem(key)));
-				}
-			}
-		};
-
 		function getCompanyName(names) {
 			var companyName = [];
 			names.forEach(function(query) {
@@ -225,9 +212,7 @@ var Contacts = {
 					    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
 					    function sortTable() {
 					    	var employeeInfo = employeeInfoTable();
-							console.log('employeeInfo Ran 33333', employeeInfo);
 							var selectedInfo = getSelectedCompany(employeeInfo);
-					    	console.log('selectedinfo Ran 33333', selectedInfo);
 					    	sortOn(selectedInfo, tableHeader, false, false);
 							selectedInfo.forEach(Contacts.tableAdd);
 					    }sortTable();
