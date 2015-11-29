@@ -76,13 +76,14 @@ var Contacts = {
 				else { 
 					Contacts.storeEdit(entry);
 					newTableList();
+					var employeeInfo = employeeInfoTable();
 				}
 			}
 			event.preventDefault();
 		}, true);
 
 
-// ==================== initialize table =============================================
+// ==================== Update table =============================================
 	function newTableList(){
 		var employeeList = [], i, key;
 		for (i = 0; i < window.localStorage.length; i++) {
@@ -104,12 +105,26 @@ var Contacts = {
 			    });
 			}
 		})
-	removeTableRow();
-	tableUpdate.forEach(Contacts.tableAdd)
+		removeTableRow();
+		tableUpdate.forEach(Contacts.tableAdd);
 	};
 
-// ==================== initialize the dropdown list ================================= 
+// ==================== initialize table =============================================
+		function employeeInfoTable() {
+			var list = [], i, key;
+			for (i = 0; i < window.localStorage.length; i++) {
+				key = window.localStorage.key(i);
+				if (/Contacts:\d+/.test(key)) {
+					list.push(JSON.parse(window.localStorage.getItem(key)));
+				}
+			}console.log('employeeInfoTable ran 1111', list)
+			return list;
+		};
+		var employeeInfo = employeeInfoTable();
+		console.log('localStorage Array ran 22222', employeeInfo);
 
+
+// ==================== initialize the dropdown list ================================= 
 		if (window.localStorage.length - 1) {
 			var contacts_list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
@@ -130,7 +145,7 @@ var Contacts = {
 				return !position || item != array[position - 1];
 			});
 		};
-		var companyName = getCompanyName(contacts_list);
+		var companyName = getCompanyName(employeeInfo);
 		
 			for(name in companyName) {
 			Contacts.$select.add( new Option(companyName[name]));
@@ -139,12 +154,17 @@ var Contacts = {
 		Contacts.$select.onchange = function() {
     		var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
     		removeTableRow();
+    		var employeeInfo = employeeInfoTable();
+			var selectedInfo = getSelectedCompany(employeeInfo);
+	    	selectedInfo.forEach(Contacts.tableAdd);
+    		};
 
 //================= create filtered array for dropdown and show list in table ======== 
 		    function getSelectedCompany(info){
+
 				var selectedInfo = [];
 				info.forEach(function(query) {
-					if (query.company === selectCompany) {
+					if (query.company === Contacts.$select.value) {
 						selectedInfo.push({
 							"id"		: query.id,
 							"fullname"	: query.fullname,
@@ -165,8 +185,6 @@ var Contacts = {
 				})
 				return selectedInfo;
 			};
-			var selectedInfo = getSelectedCompany(contacts_list);
-	    	selectedInfo.forEach(Contacts.tableAdd)
 
 // ==================== sort contacts ================================================
 			var sortOrderAscending = true;
@@ -204,12 +222,14 @@ var Contacts = {
 
 					if (tableHeader !== 'actions') {
 						removeTableRow();
-						
 					    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
-
 					    function sortTable() {
+					    	var employeeInfo = employeeInfoTable();
+							console.log('employeeInfo Ran 33333', employeeInfo);
+							var selectedInfo = getSelectedCompany(employeeInfo);
+					    	console.log('selectedinfo Ran 33333', selectedInfo);
 					    	sortOn(selectedInfo, tableHeader, false, false);
-							selectedInfo.forEach(Contacts.tableAdd)
+							selectedInfo.forEach(Contacts.tableAdd);
 					    }sortTable();
 					}
 				};
@@ -222,7 +242,7 @@ var Contacts = {
 					titles[i].onclick = scopePreserver( i, rows[i]);
 				}
 			}tableContainScope();
-		};
+		
 
 // ==== add event listener then determine which callback function was triggered ======
 	
