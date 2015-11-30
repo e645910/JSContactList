@@ -72,6 +72,7 @@ var Contacts = {
 			if (this.company.value !== '') {
 				if (entry.id == 0) {
 					Contacts.storeAdd(entry);
+					addCompanyNames();
 					}
 				else { 
 					Contacts.storeEdit(entry);
@@ -79,6 +80,7 @@ var Contacts = {
 					var employeeInfo = employeeInfoTable();
 					var selectedInfo = getSelectedCompany(employeeInfo);
 			    	selectedInfo.forEach(Contacts.tableAdd);
+			    	addCompanyNames();
 				}
 			}
 			event.preventDefault();
@@ -105,20 +107,22 @@ var Contacts = {
 			names.forEach(function(query) {
 				companyName.push(query.company);
 			})
-			Contacts.$select.add( new Option(''));
 			return companyName.sort().filter(function(item, position, array) {
 				return !position || item != array[position - 1];
 			});
 		};
-		var employeeInfo = employeeInfoTable();
-		var companyName = getCompanyName(employeeInfo);
 		
-		for(name in companyName) {
-		Contacts.$select.add( new Option(companyName[name]));
-		}
-
+		function addCompanyNames() {
+			var employeeInfo = employeeInfoTable();
+			var companyName = getCompanyName(employeeInfo);
+			Contacts.$select.options.length = 0;
+			Contacts.$select.add( new Option(''));
+			for(name in companyName) {
+			Contacts.$select.add( new Option(companyName[name]));
+			}
+		}addCompanyNames();
+		
 		Contacts.$select.onchange = function() {
-    		var selectCompany = Contacts.$select.options[Contacts.$select.selectedIndex].value;
     		var employeeInfo = employeeInfoTable();
 			var selectedInfo = getSelectedCompany(employeeInfo);
 			removeTableRow();
@@ -144,7 +148,6 @@ var Contacts = {
 				Contacts.$form.city.value = query.city;
 				Contacts.$form.state.value = query.state;
 				Contacts.$form.zip.value = query.zip;
-				Contacts.$form.notes.value = '';
 				}
 			});
 			return selectedInfo;
@@ -229,6 +232,8 @@ var Contacts = {
 					if (confirm('Are you sure you want to remove "'+ record.fullname + ' with '+ record.company + '" from your contacts?')) {
 						Contacts.storeRemove(record);
 						Contacts.tableRemove(record);
+						addCompanyNames();
+						Contacts.$form.reset();
 					}
 				}
 				event.preventDefault();
