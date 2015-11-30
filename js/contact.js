@@ -26,19 +26,11 @@ var Contacts = {
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
 		}
 
+// ==================== initialize form ==============================================
 		function setFocus(){
 			document.getElementById('setFocus').focus();
 		};
 
-		function removeTableRow(){
-		var tableRowCount = 1;
-		var rowCount = Contacts.$table.rows.length;
-			for (var i = tableRowCount; i < rowCount; i++){
-				Contacts.$table.deleteRow(tableRowCount);
-			}
-		};
-
-// ==================== initialize form ==============================================
 		Contacts.$form.reset();
 		Contacts.$button_discard.addEventListener("click", function(event) {
 			Contacts.$form.reset();
@@ -62,31 +54,45 @@ var Contacts = {
 				city: this.city.value.capitalize(),
 				state: this.state.value.capitalize(),
 				zip: this.zip.value,
-				notes: this.notes.value,
 				fullname: this.fullname.value.capitalize(),
 				dept: this.dept.value,
 				phone: this.phone.value,
-				email: this.email.value
+				email: this.email.value,
+				notes: this.notes.value
 			};
 
-			if (this.company.value !== '') {
-				if (entry.id == 0) {
-					Contacts.storeAdd(entry);
-					addCompanyNames();
-					}
-				else { 
-					Contacts.storeEdit(entry);
-					removeTableRow();
-					var employeeInfo = employeeInfoTable();
-					var selectedInfo = getSelectedCompany(employeeInfo);
-			    	selectedInfo.forEach(Contacts.tableAdd);
-			    	addCompanyNames();
+			this.company.value === '' && this.fullname.value === '' ? alert('Please enter company name or employee name.'): 0;
+			if (entry.id == 0) {
+				Contacts.storeAdd(entry);
+				addCompanyNames();
+				Contacts.$form.reset();
 				}
+			else { 
+				Contacts.storeEdit(entry);
+				var employeeInfo = employeeInfoTable();
+				var selectedInfo = getSelectedCompany(employeeInfo);
+				removeTableRow();
+				selectedInfo.forEach(Contacts.tableAdd);
+		    	Contacts.$form.fullname.value = '';
+				Contacts.$form.dept.value = '';
+				Contacts.$form.phone.value = '';
+				Contacts.$form.email.value = '';
+				Contacts.$form.idEntry.value = '';
+				Contacts.$form.notes.value = '';
+		    	addCompanyNames();
 			}
 			event.preventDefault();
 		}, true);
 
 // ==================== initialize table info ========================================
+		function removeTableRow(){
+		var tableRowCount = 1;
+		var rowCount = Contacts.$table.rows.length;
+			for (var i = tableRowCount; i < rowCount; i++){
+				Contacts.$table.deleteRow(tableRowCount);
+			}
+		};
+
 		function employeeInfoTable() {
 			if (window.localStorage.length - 1) {
 				var list = [], i, key;
@@ -221,12 +227,12 @@ var Contacts = {
 					Contacts.$form.city.value = record.city;
 					Contacts.$form.state.value = record.state;
 					Contacts.$form.zip.value = record.zip;
-					Contacts.$form.notes.value = record.notes;
 					Contacts.$form.fullname.value = record.fullname;
 					Contacts.$form.dept.value = record.dept;
 					Contacts.$form.phone.value = record.phone;
 					Contacts.$form.email.value = record.email;
 					Contacts.$form.idEntry.value = record.id;
+					Contacts.$form.notes.value = record.notes;
 				}
 				else if (op === "remove") {
 					if (confirm('Are you sure you want to remove "'+ record.fullname + ' with '+ record.company + '" from your contacts?')) {
