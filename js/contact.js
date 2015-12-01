@@ -61,25 +61,24 @@ var Contacts = {
 				notes: this.notes.value
 			};
 
-			this.company.value === '' && this.fullname.value === '' ? alert('Please enter company name or employee name.'): 0;
-			if (entry.id == 0) {
-				Contacts.storeAdd(entry);
-				addCompanyNames();
-				Contacts.$form.reset();
+			this.company.value === '' || this.fullname.value === '' ? alert('Please enter company name or employee name.') : 0;
+			if (this.company.value !== '') {
+				if (entry.id == 0) {
+					Contacts.storeAdd(entry);
+					updateTableInfo();
+					Contacts.$select.value === '' ? addCompanyNames() : 0;
+					this.company.value === '' ? Contacts.$form.reset() : 0;
+					}
+				else { 
+					Contacts.storeEdit(entry);
+					updateTableInfo();
+			    	Contacts.$form.fullname.value = '';
+					Contacts.$form.dept.value = '';
+					Contacts.$form.phone.value = '';
+					Contacts.$form.email.value = '';
+					Contacts.$form.idEntry.value = '';
+					Contacts.$form.notes.value = '';
 				}
-			else { 
-				Contacts.storeEdit(entry);
-				var employeeInfo = employeeInfoTable();
-				var selectedInfo = getSelectedCompany(employeeInfo);
-				removeTableRow();
-				selectedInfo.forEach(Contacts.tableAdd);
-		    	Contacts.$form.fullname.value = '';
-				Contacts.$form.dept.value = '';
-				Contacts.$form.phone.value = '';
-				Contacts.$form.email.value = '';
-				Contacts.$form.idEntry.value = '';
-				Contacts.$form.notes.value = '';
-		    	addCompanyNames();
 			}
 			event.preventDefault();
 		}, true);
@@ -129,14 +128,11 @@ var Contacts = {
 		}addCompanyNames();
 		
 		Contacts.$select.onchange = function() {
-    		var employeeInfo = employeeInfoTable();
-			var selectedInfo = getSelectedCompany(employeeInfo);
-			removeTableRow();
-	    	selectedInfo.forEach(Contacts.tableAdd);
+    		updateTableInfo();
     	};
 
-//=============== dropdown filtered array to show company info and employee list =====
-	    function getSelectedCompany(info){
+//===================== dropdown filtered array and form update ======================
+		function getSelectedCompany(info){
 			var selectedInfo = [];
 			info.forEach(function(query) {
 				if (query.company === Contacts.$select.value) {
@@ -159,6 +155,14 @@ var Contacts = {
 			return selectedInfo;
 		};
 
+// ==================== create new table employee list ===============================
+		function updateTableInfo(){
+			var employeeInfo = employeeInfoTable();
+			var selectedInfo = getSelectedCompany(employeeInfo);
+			removeTableRow();
+			selectedInfo.forEach(Contacts.tableAdd);
+		};
+	    
 // ==================== sort contacts ================================================
 		var sortOrderAscending = true;
 		function scopePreserver() {
