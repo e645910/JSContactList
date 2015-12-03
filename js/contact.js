@@ -35,7 +35,6 @@ var Contacts = {
 		Contacts.$button_discard.addEventListener("click", function(event) {
 			Contacts.$form.reset();
 			Contacts.$select.value = '';
-			Contacts.$form.idEntry.value = 0;
 			removeTableRow();
 			setFocus();
 		}, true);
