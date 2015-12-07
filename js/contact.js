@@ -20,7 +20,6 @@ var Contacts = {
 	$button_discard: document.getElementById("contacts-op-discard"),
 
 // ==================== initialize storage index =====================================
-	
 	init: function() {
 		if (!Contacts.index) {
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
@@ -92,16 +91,14 @@ var Contacts = {
 		};
 
 		function employeeInfoTable() {
-			if (window.localStorage.length - 1) {
-				var list = [], i, key;
-				for (i = 0; i < window.localStorage.length; i++) {
-					key = window.localStorage.key(i);
-					if (/Contacts:\d+/.test(key)) {
-						list.push(JSON.parse(window.localStorage.getItem(key)));
-					}
+			var list = [], i, key;
+			for (i = 0; i < window.localStorage.length; i++) {
+				key = window.localStorage.key(i);
+				if (/Contacts:\d+/.test(key)) {
+					list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
-				return list;
 			}
+			return list;
 		};
 		var employeeInfo = employeeInfoTable();
 
@@ -218,7 +215,6 @@ var Contacts = {
 		}tableContainScope();
 		
 // ==== add event listener then determine which callback function was triggered ======
-	
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
 			if (/edit|remove/.test(op)) {
