@@ -23,4 +23,3 @@ LocalStorage comes with the idea of storing data locally, without transmitting i
 Saving your data locallyt is useful in cases where the browser crashes accidently, user closes the browser accidently or the internet connection is lost.
 
 One of the best features is that localstorage is supported by most browsers (IE 8+, Chrome, Opera, Safari,Firefox).
->>>>>>> branch
