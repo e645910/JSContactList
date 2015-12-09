@@ -1,8 +1,5 @@
 var express = require('express');
 var app = express();
- 
-localStorage.setItem('myFirstKey', 'myFirstValue');
-console.log(localStorage.getItem('myFirstKey'));
 
 app.set('port', (process.env.PORT || 6000));
 
