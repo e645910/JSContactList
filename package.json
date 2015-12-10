@@ -4,7 +4,7 @@
   "description": "uses localstorage to store company contact",
   "main": "server.js",
   "dependencies": {
-    // "express": "^4.13.3",
+    "express": "^4.13.3",
     "node-localstorage": "^0.6.0",
     "test": "^0.6.0"
   },
