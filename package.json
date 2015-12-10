@@ -1,45 +1,17 @@
-// {
-//   "name": "contactmanager",
-//   "version": "1.0.0",
-//   "description": "uses localstorage to store company contacts",
-//   "main": "server.js",
-//   "dependencies": {
-//     "express": "^4.13.3"
-//   },
-//   "devDependencies": {},
-//   "scripts": {
-//     "test": "echo \"Error: no test specified\" && exit 1",
-//     "start": "node server.js"
-//   },
-//   "repository": {
-//     "type": "git",
-//     "url": "git+https://github.com/e645910/JSContactList.git"
-//   },
-//   "keywords": [
-//     "localstorage",
-//     "node",
-//     "express"
-//   ],
-//   "author": "rick wightman",
-//   "license": "ISC",
-//   "bugs": {
-//     "url": "https://github.com/e645910/JSContactList/issues"
-//   },
-//   "homepage": "https://github.com/e645910/JSContactList#readme"
-// }
 {
   "name": "contactmanager",
-  "version": "0.1.5",
-  "description": "A sample Node.js app using Express 4",
+  "version": "1.0.0",
+  "description": "uses localstorage to store company contact",
   "main": "server.js",
-  // "scripts": {
-  //   "start": "node server.js"
-  // },
   "dependencies": {
-    "express": "~4.9.x",
-},
-  "engines": {
-    "node": "0.12.7"
+    // "express": "^4.13.3",
+    "node-localstorage": "^0.6.0",
+    "test": "^0.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -47,8 +19,13 @@
   },
   "keywords": [
     "node",
-    "heroku",
+    "localstorage",
     "express"
   ],
-  "license": "MIT"
+  "author": "Rick Wightman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/e645910/JSContactList/issues"
+  },
+  "homepage": "https://github.com/e645910/JSContactList#readme"
 }
