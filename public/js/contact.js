@@ -98,7 +98,7 @@ var Contacts = {
 					list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
-			return list;
+		return list;
 		};
 		var employeeInfo = employeeInfoTable();
 
@@ -148,7 +148,7 @@ var Contacts = {
 				Contacts.$form.zip.value = query.zip;
 				}
 			});
-			return selectedInfo;
+		return selectedInfo;
 		};
 
 // ==================== create new table employee list ===============================
