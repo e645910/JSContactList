@@ -66,6 +66,7 @@ var Contacts = {
 					updateTableInfo();
 					Contacts.$select.value === '' ? addCompanyNames() : 0;
 					this.company.value === '' ? Contacts.$form.reset() : 0;
+					window.localStorage.length - 1 ? Contacts.$form.reset() : 0;
 					}
 				else { 
 					Contacts.storeEdit(entry);
