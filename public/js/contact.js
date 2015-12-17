@@ -196,7 +196,13 @@ var Contacts = {
 
 				if (tableHeader !== 'actions') {
 					removeTableRow();
-				    sortOrderAscending === true ? sortOrderAscending = false: sortOrderAscending = true;
+				    if (sortOrderAscending === true) {
+				    	sortOrderAscending = false
+				    	document.getElementById('contacts-table').setAttribute('class', 'sort-asc');
+				    }else {
+				    	sortOrderAscending = true;
+				    	document.getElementById('contacts-table').setAttribute('class', 'sort-dsc');
+				    	}
 				    function sortTable() {
 				    	var employeeInfo = employeeInfoTable();
 						var selectedInfo = getSelectedCompany(employeeInfo);
