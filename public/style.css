@@ -1,10 +1,11 @@
-
 body {
 	margin: 0 auto; 
 	max-width: 600px;
+	height: 100%;
+	width: 100%;
 	padding: 0; 
 	border: 0; 
-	font-family: fantasy, Times;
+	font-family: arial, Times;
 	background-image: url("./img/green_Background.png");
 	background-size: cover;
 	z-index: 0;
@@ -31,20 +32,41 @@ body {
 }
 
 .header h1 {
-	font-family: fantasy;
 	font-size: 50px;
-	font-size: 2vw;
+	font-size: 1.8vw;
 }
-/*--------- dropdowbn ---------*/
+
+span {position: relative;
+	left: calc(35% - 1em);
+	font-size: 20px;
+	font-size: 1vw;
+}
+/*--------- dropdown ---------*/
+.dropdownContainer {
+	position: absolute;
+	top: 10%;
+	left: 11%;
+	width: 20%;
+	height: 7%;
+	color: #000;
+}
+
+.dropdownContainer h2 {
+	position: relative;
+	top: calc(6% - 1em);
+	left: calc(7% - 1em);
+	text-decoration: underline;
+	font-size: 10px;
+	font-size: 1vw;
+}
 
 .dropdown {
 	position: absolute;
-	top: calc(16% - 1em);
-	left: calc(14% - 1em);
-	width: 20%;
-	font-size: 25px;
-	font-size: 2.5vw;
-	font-family: Times;
+	top: calc(85% - 1em);
+	left: calc(8% - 1em);
+	width: 90%;
+	font-size: 15px;
+	font-size: 1.5vw;
 }
 
 /*--------- form  -------------*/
@@ -55,14 +77,13 @@ body {
 	width: 70%;
 	height: 55%;
 	padding: 1%;
-	border: 2px solid blue;
+	border: 2px solid #0000FF;
 	}
 
-formContainer label {
+.formContainer label {
+	display : inline-block;
 	font-size: 15px;
 	font-size: 1.2vw;
-	font-family: Times;
-	font-weight: bold;
 }
 
 .formContainer input {
@@ -70,7 +91,6 @@ formContainer label {
 	height: 100%;
 	font-size: 10px;
 	font-size: 1vw;
-	font-family: Times;
 	border: 1px solid #000;
 }
 
@@ -83,16 +103,24 @@ formContainer label {
 .formCompany {
 	position: absolute;
 	width: 40%;
-	height: 70%;
+	height: 75%;
+}
+
+.formCompany label {
+	padding: 1% 1%;
 }
 
 /*personal info*/
-.formPersonContainer {
+.formEmployeeContainer {
 	position: absolute;
 	top: calc(6.5% - 1em);
 	left: calc(58% - 1em);
 	width: 40%;
-	height: 46%;
+	height: 75%;
+}
+
+.formEmployeeContainer label {
+	padding: 1% 1%;
 }
 
 .notes textarea{
@@ -131,111 +159,73 @@ formContainer label {
 }
 
 /*--------- table  -------------*/
+
 .tableContainer {
 	position: absolute;
-	bottom: calc(8% - 1em);
+	bottom: calc(12% - 1em);
 	left: calc(3% - 1em);
-	border-collapse: collapse;
-	width: 95%;
-	height: auto;
-	padding: 1%;
-	border: 2px solid #000;
+    width: 93%;
+    height: 13%;
 }
 
-.tableContainer th {
-	text-align:center;
-	font-weight: bold; 
-	font-size: 14px; 
-	font-size: 1.2vw;
-	font-family: fantasy;
-	color:#000;
-	border: 2px solid #000;
-}
-
-.tableContainer tr {
-	color: #000;
+.tableContainer h3 {
+	text-align: center;
+	text-decoration: underline;
 	font-size: 10px;
 	font-size: 1vw;
-	font-family: Times;
-	text-align: left; 
 }
 
-.tableContainer tr:nth-child(2n) {
+.scrolltable {
+    overflow-x: scroll;
+    height: 100%;
+    display: flex;
+    display: -webkit-flex;
+ 	flex-direction: column;
+    -webkit-flex-direction: column;
+}
+
+.scrolltable > .tableHeader {
+}
+
+.scrolltable > .body {
+	word-break: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+    width: -webkit-fit-content;
+    overflow-y: scroll;
+    flex: 2;
+    -webkit-flex: 2;
+}
+
+th, td {
+    min-width: 188px;
+    border: 1px solid #000;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #0000FF;
+    color: #FFFF00;
+    border: 1px solid #000;
+}
+
+tr:nth-child(2n) {
 	background: #E8EDFF;
+	border: 1px solid #000;
 }
 
 /*-------- sort arrows ----------*/
 .sort-asc th::after{
   	content: "\2191";
+  	padding: 3%;
   }
-
-.sort-asc {
-	position: absolute;
-	bottom: calc(8% - 1em);
-	left: calc(3% - 1em);
-	border-collapse: collapse;
-	width: 95%;
-	height: auto;
-	padding: 1%;
-	border: 2px solid #000;
-}
-
-.sort-asc th {
-	text-align:center;
-	font-weight: bold; 
-	font-size: 14px; 
-	font-size: 1.2vw;
-	font-family: fantasy;
-	color:#000;
-	border: 2px solid #000;
-}
-
-.sort-asc tr {
-	color: #000;
-	font-size: 10px;
-	font-size: 1vw;
-	font-family: Times;
-	text-align: left; 
-}
-
-.sort-asc tr:nth-child(2n) {
-	background: #E8EDFF;
-}
 
 .sort-dsc th::after{
   	content: "\2193";
+  	padding: 3%;
   }
-  
-.sort-dsc {
-	position: absolute;
-	bottom: calc(8% - 1em);
-	left: calc(3% - 1em);
-	border-collapse: collapse;
-	width: 95%;
-	height: auto;
-	padding: 1%;
-	border: 2px solid #000;
-}
-
-.sort-dsc th {
-	text-align:center;
-	font-weight: bold; 
-	font-size: 14px; 
-	font-size: 1.2vw;
-	font-family: fantasy;
-	color:#000;
-	border: 2px solid #000;
-}
-
-.sort-dsc tr {
-	color: #000;
-	font-size: 10px;
-	font-size: 1vw;
-	font-family: Times;
-	text-align: left; 
-}
-
-.sort-dsc tr:nth-child(2n) {
-	background: #E8EDFF;
-}
-

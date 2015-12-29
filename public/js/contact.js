@@ -30,7 +30,6 @@ var Contacts = {
 			document.getElementById('setFocus').focus();
 		};
 
-		Contacts.$form.reset();
 		Contacts.$button_discard.addEventListener("click", function(event) {
 			Contacts.$form.reset();
 			Contacts.$select.value = '';
@@ -59,28 +58,32 @@ var Contacts = {
 				notes: this.notes.value
 			};
 
-			this.company.value === '' || this.fullname.value === '' ? alert('Please enter company name or employee name.') : 0;
 			if (this.company.value !== '') {
 				if (entry.id == 0) {
 					Contacts.storeAdd(entry);
-					updateTableInfo();
+					clearEmployeeFormInput();
+					updateEmployeeInfoTable();
 					Contacts.$select.value === '' ? addCompanyNames() : 0;
-					this.company.value === '' ? Contacts.$form.reset() : 0;
-					window.localStorage.length - 1 ? Contacts.$form.reset() : 0;
-					}
-				else { 
+					objCount <= 1 ? Contacts.$form.reset() : 0;
+					Contacts.$form.idEntry.value = '0';
+
+				}else { 
 					Contacts.storeEdit(entry);
-					updateTableInfo();
-			    	Contacts.$form.fullname.value = '';
-					Contacts.$form.dept.value = '';
-					Contacts.$form.phone.value = '';
-					Contacts.$form.email.value = '';
-					Contacts.$form.idEntry.value = '';
-					Contacts.$form.notes.value = '';
+					updateEmployeeInfoTable();
+			    	clearEmployeeFormInput();
 				}
 			}
 			event.preventDefault();
 		}, true);
+
+		function clearEmployeeFormInput() {
+			Contacts.$form.fullname.value = '';
+			Contacts.$form.dept.value = '';
+			Contacts.$form.phone.value = '';
+			Contacts.$form.email.value = '';
+			Contacts.$form.idEntry.value = '';
+			Contacts.$form.notes.value = '';
+		};
 
 // ==================== initialize table info ========================================
 		function removeTableRow(){
@@ -120,12 +123,12 @@ var Contacts = {
 			Contacts.$select.options.length = 0;
 			Contacts.$select.add( new Option(''));
 			for(name in companyName) {
-			Contacts.$select.add( new Option(companyName[name]));
+				Contacts.$select.add( new Option(companyName[name]));
 			}
 		}addCompanyNames();
 		
 		Contacts.$select.onchange = function() {
-    		updateTableInfo();
+    		updateEmployeeInfoTable();
     	};
 
 //===================== dropdown filtered array and form update ======================
@@ -152,11 +155,14 @@ var Contacts = {
 		return selectedInfo;
 		};
 
-// ==================== create new table employee list ===============================
-		function updateTableInfo(){
+// ==================== update employee table ========================================
+		function updateEmployeeInfoTable(){
+			removeTableRow();
 			var employeeInfo = employeeInfoTable();
 			var selectedInfo = getSelectedCompany(employeeInfo);
-			removeTableRow();
+			selectedInfo.forEach(function() {
+				return objCount = selectedInfo.length;
+			});
 			selectedInfo.forEach(Contacts.tableAdd);
 		};
 	    
@@ -197,11 +203,11 @@ var Contacts = {
 				if (tableHeader !== 'actions') {
 					removeTableRow();
 				    if (sortOrderAscending === true) {
-				    	sortOrderAscending = false
-				    	document.getElementById('contacts-table').setAttribute('class', 'sort-asc');
+				    	sortOrderAscending = false;
+				    	document.getElementById('sortIcon').setAttribute('class', 'sort-asc');
 				    }else {
 				    	sortOrderAscending = true;
-				    	document.getElementById('contacts-table').setAttribute('class', 'sort-dsc');
+				    	document.getElementById('sortIcon').setAttribute('class', 'sort-dsc');
 				    	}
 				    function sortTable() {
 				    	var employeeInfo = employeeInfoTable();
@@ -241,17 +247,23 @@ var Contacts = {
 					Contacts.$form.notes.value = record.notes;
 				}
 				else if (op === "remove") {
-					if (confirm('Are you sure you want to remove "'+ record.fullname + ' with '+ record.company + '" from your contacts?')) {
-						Contacts.storeRemove(record);
-						Contacts.tableRemove(record);
-						addCompanyNames();
-						Contacts.$form.reset();
+					if (Contacts.$form.company.value !== '') {
+						if (confirm('Are you sure you want to remove "'+ record.fullname + ' with '+ record.company + '" from your contacts?')) {
+							Contacts.storeRemove(record);
+							Contacts.tableRemove(record);
+							updateEmployeeInfoTable();
+							Contacts.$select.value === '' ? addCompanyNames() : 0;
+							 if (objCount <= 1) {
+							 	Contacts.$form.reset();
+							 	Contacts.$select.value = '';
+							 }
+						}
 					}
 				}
-				event.preventDefault();
 			}
-			setFocus();
+			event.preventDefault();
 		}, true);
+	setFocus();
 	},
 
 // ==================== create, update, delete individual entries ====================

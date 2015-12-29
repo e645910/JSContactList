@@ -8,14 +8,17 @@
 <body>
 	<div class="headerContainer">
 		<div class="header">
-			<h1>Company Contacts App using Windows LocalStorage written in vanilla Javascript, CSS, and HTML</h1>
+			<h1>Company Contacts App: <span>(A Windows LocalStorage App written in vanilla Javascript, CSS, and HTML)</span> </h1>
 		</div>
 	</div>
 	
-	<select class="dropdown" id="contacts-dropdown"></select>
+	<div class="dropdownContainer">
+		<h2>Company Search</h2>
+		<select class="dropdown" id="contacts-dropdown"></select>
+	</div>
+	
 
 	<form class="formContainer" id="contacts-form">
-
 		<div class="formCompanyContainer">
 			<div class="formCompany">
 				<div>
@@ -45,7 +48,7 @@
 			</div>
 		</div>
 
-		<div class="formPersonContainer">
+		<div class="formEmployeeContainer" id="contacts-employee">
 			<div class="formPersonal">
 				<div>
 					<label>Name:</label>
@@ -79,20 +82,32 @@
 				</div>
 			</div>
 			<input type="hidden" name="idEntry" value="0" />
-
 	</form>
 
-	<table class="tableContainer" id="contacts-table">
-			<tr>
-				<th>ID</th>
-				<th>FullName</th>
-				<th>Dept</th>
-				<th>Phone</th>
-				<th>Email</th>
-				<th>Notes</th>
-				<th>Actions</th>
-			</tr>
-	</table>
+	<div class="tableContainer">
+		<h3>Employee Info</h3>
+	    <div class="scrolltable">
+	        <table class="tableHeader">
+		        <thead id="sortIcon">
+					<th>ID</th>
+					<th>FullName</th>
+					<th>Dept</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Notes</th>
+					<th>Actions</th>
+		        </thead>
+	        </table>
+	        <div class="body">
+	            <table>
+	                <tbody id="contacts-table">
+						<tr>
+						</tr>
+	 				</tbody>
+	            </table>
+	        </div>
+	    </div>
+	</div>
 
 <script src="js/contact.js"></script>
 
