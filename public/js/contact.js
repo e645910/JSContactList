@@ -254,7 +254,7 @@ var Contacts = {
 
 							if (objCount == 0) {
 							 	Contacts.$form.reset();
-							 	Contacts.$select.value = '';
+							 	addCompanyNames();
 							}
 						}
 					}
