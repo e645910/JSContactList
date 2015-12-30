@@ -64,7 +64,7 @@ var Contacts = {
 					clearEmployeeFormInput();
 					updateEmployeeInfoTable();
 					Contacts.$select.value === '' ? addCompanyNames() : 0;
-					objCount <= 1 ? Contacts.$form.reset() : 0;
+					objCount == 0 ? Contacts.$form.reset() : 0;
 					Contacts.$form.idEntry.value = '0';
 
 				}else { 
@@ -102,7 +102,7 @@ var Contacts = {
 					list.push(JSON.parse(window.localStorage.getItem(key)));
 				}
 			}
-		return list;
+			return list;
 		};
 		var employeeInfo = employeeInfoTable();
 
@@ -152,7 +152,7 @@ var Contacts = {
 				Contacts.$form.zip.value = query.zip;
 				}
 			});
-		return selectedInfo;
+			return selectedInfo;
 		};
 
 // ==================== update employee table ========================================
@@ -160,18 +160,16 @@ var Contacts = {
 			removeTableRow();
 			var employeeInfo = employeeInfoTable();
 			var selectedInfo = getSelectedCompany(employeeInfo);
-			selectedInfo.forEach(function() {
-				return objCount = selectedInfo.length;
-			});
 			selectedInfo.forEach(Contacts.tableAdd);
+			return objCount = selectedInfo.length;
 		};
 	    
 // ==================== sort contacts ================================================
 		var sortOrderAscending = true;
 		function scopePreserver() {
 			return function() {
-			var string = this.innerText;
-			var tableHeader = string.toLowerCase();
+				var string = this.innerText;
+				var tableHeader = string.toLowerCase();
 
 				function sortOn(arr, prop, reverse) {
 					if (!prop || !arr) {
@@ -253,10 +251,11 @@ var Contacts = {
 							Contacts.tableRemove(record);
 							updateEmployeeInfoTable();
 							Contacts.$select.value === '' ? addCompanyNames() : 0;
-							 if (objCount <= 1) {
+
+							if (objCount == 0) {
 							 	Contacts.$form.reset();
 							 	Contacts.$select.value = '';
-							 }
+							}
 						}
 					}
 				}
