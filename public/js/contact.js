@@ -243,8 +243,7 @@ var Contacts = {
 					Contacts.$form.email.value = record.email;
 					Contacts.$form.idEntry.value = record.id;
 					Contacts.$form.notes.value = record.notes;
-				}
-				else if (op === "remove") {
+				}else if (op === "remove") {
 					if (Contacts.$form.company.value !== '') {
 						if (confirm('Are you sure you want to remove "'+ record.fullname + ' with '+ record.company + '" from your contacts?')) {
 							Contacts.storeRemove(record);
