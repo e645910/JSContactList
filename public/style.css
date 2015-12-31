@@ -200,7 +200,9 @@ span {position: relative;
 }
 
 th, td {
-    min-width: 188px;
+/*	max-width: 188px;
+    min-width: 188px;*/
+    width: 188px;
     border: 1px solid #000;
 }
 
