@@ -188,27 +188,18 @@ span {position: relative;
 }
 
 .scrolltable > .body {
-	display: -webkit-flex;
-  	display: flex;
-
-  	/* Warning: Needed for oldIE support, but words are broken up letter-by-letter */
-	-ms-word-break: break-all;
-    word-break: break-all;
-
-    /* Non standard for webkit */
-    word-break: break-word;
-
-	-webkit-hyphens: auto;
-   	-moz-hyphens: auto;
+	word-break: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
     hyphens: auto;
-
     width: -webkit-fit-content;
+    overflow-y: scroll;
     flex: 2;
     -webkit-flex: 2;
 }
 
 th, td {
-	max-width: 188px;
     min-width: 188px;
     border: 1px solid #000;
 }
