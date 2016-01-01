@@ -163,6 +163,7 @@ span {position: relative;
 .tableContainer {
 	position: absolute;
 	bottom: calc(12% - 1em);
+	left: 3%;
 	left: calc(3% - 1em);
     width: 93%;
     height: 13%;
@@ -200,8 +201,6 @@ span {position: relative;
 }
 
 th, td {
-/*	max-width: 188px;
-    min-width: 188px;*/
     width: 188px;
     border: 1px solid #000;
 }
