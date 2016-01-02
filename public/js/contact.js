@@ -1,23 +1,22 @@
-
 // detect if browser supports HTML5 local storage
-function supports_local_storage() {
+function supportsLocalStorage() {
   try {
-    return 'localStorage' in window && window['localStorage'] !== null;
+    return 'localStorage' in window && window.localStorage !== null;
   } catch(e){
 
-	alert("Sorry! No native support for local storage")
+    alert("Sorry! No native support for local storage");
     return false;
   }
-}supports_local_storage();
+}supportsLocalStorage();
 
 // ==================== set up the DOM ===============================================
 var Contacts = {
-	index: window.localStorage.getItem("Contacts:index"),
-	$table: document.getElementById("contacts-table"),
-	$form: document.getElementById("contacts-form"),
-	$select: document.getElementById("contacts-dropdown"),
-	$button_save: document.getElementById("contacts-op-save"),
-	$button_discard: document.getElementById("contacts-op-discard"),
+    index: window.localStorage.getItem("Contacts:index"),
+    $table: document.getElementById("contacts-table"),
+    $form: document.getElementById("contacts-form"),
+    $select: document.getElementById("contacts-dropdown"),
+    $button_save: document.getElementById("contacts-op-save"),
+    $button_discard: document.getElementById("contacts-op-discard"),
 
 // ==================== initialize storage index =====================================
 	init: function() {
@@ -27,8 +26,8 @@ var Contacts = {
 
 // ==================== initialize form ==============================================
 		function setFocus(){
-			document.getElementById('setFocus').focus();
-		};
+			document.getElementById('set-focus').focus();
+		}
 
 		Contacts.$button_discard.addEventListener("click", function(event) {
 			Contacts.$form.reset();
@@ -39,8 +38,8 @@ var Contacts = {
 		Contacts.$form.addEventListener("submit", function(event) {
 			String.prototype.capitalize = function() {
     		return this.replace(/(?:^|\s)\S/g, 
-    			function(a) { 
-    				return a.toUpperCase(); 
+    			function(firstLetter) { 
+    				return firstLetter.toUpperCase(); 
     			});
 			};
 			var entry = {
@@ -59,19 +58,21 @@ var Contacts = {
 			};
 
 			if (this.company.value !== '') {
-				if (entry.id == 0) {
+				if (entry.id === 0) {
 					Contacts.storeAdd(entry);
 					clearEmployeeFormInput();
 					updateEmployeeInfoTable();
-					Contacts.$select.value === '' ? addCompanyNames() : 0;
-					objCount == 0 ? Contacts.$form.reset() : 0;
-					Contacts.$form.idEntry.value = '0';
+					if (Contacts.$table.rows.length === 1) {
+						Contacts.$form.reset();
+						addCompanyNames();
+					}
 
 				}else { 
 					Contacts.storeEdit(entry);
 					updateEmployeeInfoTable();
 			    	clearEmployeeFormInput();
 				}
+			Contacts.$form.idEntry.value = '0';
 			}
 			event.preventDefault();
 		}, true);
@@ -83,7 +84,7 @@ var Contacts = {
 			Contacts.$form.email.value = '';
 			Contacts.$form.idEntry.value = '';
 			Contacts.$form.notes.value = '';
-		};
+		}
 
 // ==================== initialize table info ========================================
 		function removeTableRow(){
@@ -92,9 +93,10 @@ var Contacts = {
 			for (var i = tableRowCount; i < rowCount; i++){
 				Contacts.$table.deleteRow(tableRowCount);
 			}
-		};
+			return rowCount;
+		}
 
-		function employeeInfoTable() {
+		function storedContactData() {
 			var list = [], i, key;
 			for (i = 0; i < window.localStorage.length; i++) {
 				key = window.localStorage.key(i);
@@ -103,27 +105,28 @@ var Contacts = {
 				}
 			}
 			return list;
-		};
-		var employeeInfo = employeeInfoTable();
+		}storedContactData();
 
 // ==================== initialize the dropdown list ================================= 
 		function getCompanyName(names) {
 			var companyName = [];
 			names.forEach(function(query) {
 				companyName.push(query.company);
-			})
+			});
 			return companyName.sort().filter(function(item, position, array) {
 				return !position || item != array[position - 1];
 			});
-		};
+		}
 		
 		function addCompanyNames() {
-			var employeeInfo = employeeInfoTable();
-			var companyName = getCompanyName(employeeInfo);
+			var dataRetrieval = storedContactData();
+			var companyName = getCompanyName(dataRetrieval);
 			Contacts.$select.options.length = 0;
 			Contacts.$select.add( new Option(''));
-			for(name in companyName) {
-				Contacts.$select.add( new Option(companyName[name]));
+			for(var name in companyName) {
+				if (companyName.hasOwnProperty(name)) {
+					Contacts.$select.add( new Option(companyName[name]));
+				}
 			}
 		}addCompanyNames();
 		
@@ -153,16 +156,15 @@ var Contacts = {
 				}
 			});
 			return selectedInfo;
-		};
+		}
 
 // ==================== update employee table ========================================
 		function updateEmployeeInfoTable(){
 			removeTableRow();
-			var employeeInfo = employeeInfoTable();
-			var selectedInfo = getSelectedCompany(employeeInfo);
+			var dataRetrieval = storedContactData();
+			var selectedInfo = getSelectedCompany(dataRetrieval);
 			selectedInfo.forEach(Contacts.tableAdd);
-			return objCount = selectedInfo.length;
-		};
+		}
 	    
 // ==================== sort contacts ================================================
 		var sortOrderAscending = true;
@@ -178,15 +180,16 @@ var Contacts = {
 
 					function sort_by(field, rev, primer) {
 						return function(a, b) {
-							a = primer(a[field]),
+							a = primer(a[field]);
 							b = primer(b[field]);
 
 							if (sortOrderAscending === false) {
 								return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
 							}
 							return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
-						}
-					};
+						};
+					}
+
 					if (tableHeader === 'id') {
 						arr.sort(sort_by(prop, reverse, function(a) {
 						return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
@@ -196,26 +199,29 @@ var Contacts = {
 						return String(a).toUpperCase();
 						}));
 					}
-				};
+				}
 
 				if (tableHeader !== 'actions') {
 					removeTableRow();
+					sortTable();
 				    if (sortOrderAscending === true) {
 				    	sortOrderAscending = false;
-				    	document.getElementById('sortIcon').setAttribute('class', 'sort-asc');
+				    	document.getElementById('sort-icon').setAttribute('class', 'sort-asc');
 				    }else {
 				    	sortOrderAscending = true;
-				    	document.getElementById('sortIcon').setAttribute('class', 'sort-dsc');
-				    	}
-				    function sortTable() {
-				    	var employeeInfo = employeeInfoTable();
-						var selectedInfo = getSelectedCompany(employeeInfo);
-				    	sortOn(selectedInfo, tableHeader, false, false);
-						selectedInfo.forEach(Contacts.tableAdd);
-				    }sortTable();
+				    	document.getElementById('sort-icon').setAttribute('class', 'sort-dsc');
+				    }
 				}
+
+				function sortTable() {
+			    	var dataRetrieval = storedContactData();
+					var selectedInfo = getSelectedCompany(dataRetrieval);
+			    	sortOn(selectedInfo, tableHeader, false, false);
+					selectedInfo.forEach(Contacts.tableAdd);
+				 }
+
 			};
-		};
+		}
 
 		function tableContainScope() {
 		var titles = document.getElementsByTagName('th');
@@ -249,11 +255,12 @@ var Contacts = {
 							Contacts.storeRemove(record);
 							Contacts.tableRemove(record);
 							updateEmployeeInfoTable();
-							Contacts.$select.value === '' ? addCompanyNames() : 0;
-
-							if (objCount == 0) {
-							 	Contacts.$form.reset();
-							 	addCompanyNames();
+							if (Contacts.$select.value === '') {
+								addCompanyNames();
+							}
+							if (Contacts.$table.rows.length === 1) {
+								Contacts.$form.reset();
+								addCompanyNames();
 							}
 						}
 					}
@@ -261,7 +268,6 @@ var Contacts = {
 			}
 			event.preventDefault();
 		}, true);
-	setFocus();
 	},
 
 // ==================== create, update, delete individual entries ====================
@@ -277,7 +283,7 @@ var Contacts = {
 			window.localStorage.removeItem("Contacts:"+ entry.id);
 		},
  
-// ==================== table build ==================================================
+// ==================== table build/remove ============================================
 		tableAdd: function(newTable) {
 			var $tr = document.createElement("tr"), $td, key;
 			for (key in newTable) {
