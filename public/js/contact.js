@@ -25,7 +25,7 @@ var Contacts = {
 		}
 
 // ==================== initialize form ==============================================
-		function setFocus(){
+		function setFocus() {
 			document.getElementById('set-focus').focus();
 		}
 
@@ -87,10 +87,10 @@ var Contacts = {
 		}
 
 // ==================== initialize table info ========================================
-		function removeTableRow(){
+		function removeTableRow() {
 		var tableRowCount = 1;
 		var rowCount = Contacts.$table.rows.length;
-			for (var i = tableRowCount; i < rowCount; i++){
+			for (var i = tableRowCount; i < rowCount; i++) {
 				Contacts.$table.deleteRow(tableRowCount);
 			}
 			return rowCount;
@@ -135,7 +135,7 @@ var Contacts = {
     	};
 
 //===================== dropdown filtered array and form update ======================
-		function getSelectedCompany(info){
+		function getSelectedCompany(info) {
 			var selectedInfo = [];
 			info.forEach(function(query) {
 				if (query.company === Contacts.$select.value) {
@@ -159,7 +159,7 @@ var Contacts = {
 		}
 
 // ==================== update employee table ========================================
-		function updateEmployeeInfoTable(){
+		function updateEmployeeInfoTable() {
 			removeTableRow();
 			var dataRetrieval = storedContactData();
 			var selectedInfo = getSelectedCompany(dataRetrieval);

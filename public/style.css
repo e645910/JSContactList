@@ -94,7 +94,7 @@ span {position: relative;
 	border: 1px solid #000;
 }
 
-.formContainer div input{
+.formContainer div input {
 	width: 90%;
 	height: 3vh;
 }
@@ -123,7 +123,7 @@ span {position: relative;
 	padding: 1% 1%;
 }
 
-.notes textarea{
+.notes textarea {
 	width: 90%;
 	height: 9vh;
 	border: 1px solid #000;
@@ -148,12 +148,12 @@ span {position: relative;
 	margin-bottom: 4%;
 }
 
-.itemButton input[type="button"]:hover{
+.itemButton input[type="button"]:hover {
 	background:#FF0000;
 	color: #000;
 }
 
-.itemButton input[type="submit"]:hover{
+.itemButton input[type="submit"]:hover {
 	background:#FF0000;
 	color: #000;
 }
@@ -221,12 +221,14 @@ tr:nth-child(2n) {
 }
 
 /*-------- sort arrows ----------*/
-.sort-asc th::after{
+.sort-asc th::after {
   	content: "\2191";
+  	color: black;
   	padding: 3%;
   }
 
-.sort-dsc th::after{
+.sort-dsc th::after {
   	content: "\2193";
+  	color: black;
   	padding: 3%;
   }
