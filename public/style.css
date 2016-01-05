@@ -24,7 +24,7 @@ body {
 
 .header {
 	position: relative;
-	top: calc(26% - 1em);
+	top: calc(29% - 1em);
 	left: calc(2% - 1em);
 	background-image: url("./img/logo.png");
 	background-repeat: no-repeat;
