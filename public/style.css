@@ -18,29 +18,29 @@ body {
 	left: calc(3% - 1em);
 	width: 95%;
 	height: 8%;
-	background: #F0F0F0;
 	color: #000000;
 	border: 2px solid #000;
 	}
 
 .header {
 	position: relative;
-	top: calc(20% - 1em);
+	top: calc(26% - 1em);
 	left: calc(2% - 1em);
-	width: auto;
-	font-weight: bold;
+	background-image: url("./img/logo.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 50%;
+	width: 30%;
 }
 
-.header h1 {
-	font-size: 50px;
-	font-size: 1.8vw;
-}
-
-span {position: relative;
-	left: calc(35% - 1em);
-	font-size: 20px;
+span {
+	float: left;
+	color: #FFF;
+	font-size: 10px;
 	font-size: 1vw;
+	padding: 1% 0 0 1%;
 }
+
 /*--------- dropdown ---------*/
 .dropdownContainer {
 	position: absolute;
@@ -56,6 +56,7 @@ span {position: relative;
 	top: calc(6% - 1em);
 	left: calc(7% - 1em);
 	text-decoration: underline;
+	color: #FFFF00;
 	font-size: 10px;
 	font-size: 1vw;
 }
@@ -171,6 +172,7 @@ span {position: relative;
 
 .tableContainer h3 {
 	text-align: center;
+	color: #FFFF00;
 	text-decoration: underline;
 	font-size: 10px;
 	font-size: 1vw;
@@ -179,10 +181,10 @@ span {position: relative;
 .scrolltable {
     overflow-x: scroll;
     height: 100%;
-    display: flex;
     display: -webkit-flex;
- 	flex-direction: column;
+    display: flex;
     -webkit-flex-direction: column;
+ 	flex-direction: column;
 }
 
 .scrolltable > .tableHeader {
@@ -194,10 +196,13 @@ span {position: relative;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     hyphens: auto;
-    width: -webkit-fit-content;
-    overflow-y: scroll;
+	overflow-y: scroll;
+    -webkit-flex: auto;
+	flex: auto;
+
+    /*width: -webkit-fit-content;
     flex: 2;
-    -webkit-flex: 2;
+    -webkit-flex: 2;*/
 }
 
 th, td {
@@ -211,7 +216,7 @@ table {
 
 th {
     background-color: #0000FF;
-    color: #FFFF00;
+    color: #FFF;
     border: 1px solid #000;
 }
 
