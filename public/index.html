@@ -9,42 +9,39 @@
 	<div class="headerContainer">
 		<div class="header">
 		</div>
-		<span>A Windows LocalStorage App written in vanilla Javascript, CSS, and HTML</span>
+		<span>A Windows LocalStorage App written in vanilla Javascript, CSS, and HTML (Employee Info is sortable & scrolls)</span>
 	</div>
-	
+
 	<div class="dropdownContainer">
-		<h2>Company Search</h2>
+		<label>Company Search</label>
 		<select class="dropdown" id="contacts-dropdown"></select>
 	</div>
-	
 
 	<form class="formContainer" id="contacts-form">
-		<div class="formCompanyContainer">
-			<div class="formCompany">
-				<div>
-					<label>Company:</label>
-					<div><input type="text" name="company" id="set-focus" autofocus/></div>
-				</div>
-				<div>
-					<label>Address 1:</label>
-					<div><input type="text" name="address1" /></div>
-				</div>
-				<div>
-					<label>Address 2:</label>
-					<div><input type="text" name="address2" /></div>
-				</div>		
-				<div>
-					<label>City:</label>
-					<div><input type="text" name="city" /></div>
-				</div>
-				<div>
-					<label>State:</label>
-					<div><input type="text" name="state" /></div>
-				</div>
-				<div>
-					<label>Zip Code:</label>
-					<div><input type="number" name="zip" /></div>
-				</div>
+		<div class="formCompany">
+			<div>
+				<label>Company:</label>
+				<div><input type="text" name="company" id="set-focus" autofocus/></div>
+			</div>
+			<div>
+				<label>Address 1:</label>
+				<div><input type="text" name="address1" /></div>
+			</div>
+			<div>
+				<label>Address 2:</label>
+				<div><input type="text" name="address2" /></div>
+			</div>		
+			<div>
+				<label>City:</label>
+				<div><input type="text" name="city" /></div>
+			</div>
+			<div>
+				<label>State:</label>
+				<div><input type="text" name="state" /></div>
+			</div>
+			<div>
+				<label>Zip Code:</label>
+				<div><input type="number" name="zip" /></div>
 			</div>
 		</div>
 
@@ -81,11 +78,12 @@
 					<div><input type="submit" id="contacts-op-save" value="Save" /></div>
 				</div>
 			</div>
+
 			<input type="hidden" name="idEntry" value="0" />
 	</form>
 
 	<div class="tableContainer">
-		<h3>Employee Info</h3>
+		<p>Employee Info</p>
 	    <div class="scrolltable">
 	        <table class="tableHeader">
 		        <thead id="sort-icon">

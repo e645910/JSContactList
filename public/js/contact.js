@@ -1,4 +1,4 @@
-// detect if browser supports HTML5 local storage
+/* detect if browser supports HTML5 local storage */
 function supportsLocalStorage() {
   try {
     return 'localStorage' in window && window.localStorage !== null;
@@ -9,14 +9,15 @@ function supportsLocalStorage() {
   }
 }supportsLocalStorage();
 
-// *****************************/ Credits /****************************** 
+/*------------------------------- Credits -----------------------------------------*/
 
-// Logo created using Interface graphic by <a href="http://www.simpleicon.com">Simpleicon</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>
+/* Logo created using Interface graphic by <a href="http://www.simpleicon.com">Simpleicon</a> from <a 
+href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/
+licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com"
+title="Logo Maker">Logo Maker</a> */
 
-// *****************************/ Credits /****************************** 
 
-
-// ==================== set up the DOM ===============================================
+/*------------------------- set up the DOM -----------------------------------------*/
 var Contacts = {
     index: window.localStorage.getItem("Contacts:index"),
     $table: document.getElementById("contacts-table"),
@@ -25,13 +26,13 @@ var Contacts = {
     $button_save: document.getElementById("contacts-op-save"),
     $button_discard: document.getElementById("contacts-op-discard"),
 
-// ==================== initialize storage index =====================================
+/*------------------------- initialize storage index --------------------------------*/
 	init: function() {
 		if (!Contacts.index) {
 			window.localStorage.setItem("Contacts:index", Contacts.index = 1);
 		}
 
-// ==================== initialize form ==============================================
+/*------------------------- initialize form -----------------------------------------*/
 		function setFocus() {
 			document.getElementById('set-focus').focus();
 		}
@@ -93,7 +94,7 @@ var Contacts = {
 			Contacts.$form.notes.value = '';
 		}
 
-// ==================== initialize table info ========================================
+/*--------------------- initialize table info ----------------------------------------*/
 		function removeTableRow() {
 		var tableRowCount = 1;
 		var rowCount = Contacts.$table.rows.length;
@@ -114,7 +115,7 @@ var Contacts = {
 			return list;
 		}storedContactData();
 
-// ==================== initialize the dropdown list ================================= 
+/*--------------------- initialize the dropdown list --------------------------------*/
 		function getCompanyName(names) {
 			var companyName = [];
 			names.forEach(function(query) {
@@ -141,7 +142,7 @@ var Contacts = {
     		updateEmployeeInfoTable();
     	};
 
-//===================== dropdown filtered array and form update ======================
+/*--------------------- dropdown filtered array and form update --------------------*/
 		function getSelectedCompany(info) {
 			var selectedInfo = [];
 			info.forEach(function(query) {
@@ -165,15 +166,15 @@ var Contacts = {
 			return selectedInfo;
 		}
 
-// ==================== update employee table ========================================
+/*--------------------- update employee table --------------------------------------*/
 		function updateEmployeeInfoTable() {
 			removeTableRow();
 			var dataRetrieval = storedContactData();
 			var selectedInfo = getSelectedCompany(dataRetrieval);
 			selectedInfo.forEach(Contacts.tableAdd);
 		}
-	    
-// ==================== sort contacts ================================================
+
+/*-------------------------- sort contacts -----------------------------------------*/	    
 		var sortOrderAscending = true;
 		function scopePreserver() {
 			return function() {
@@ -237,8 +238,8 @@ var Contacts = {
 				titles[i].onclick = scopePreserver( i, rows[i]);
 			}
 		}tableContainScope();
-		
-// ==== add event listener then determine which callback function was triggered ======
+
+/*----- add event listener then determine which callback function was triggered ----*/		
 		Contacts.$table.addEventListener("click", function(event) {
 			var op = event.target.getAttribute("data-op");
 			if (/edit|remove/.test(op)) {
@@ -277,7 +278,7 @@ var Contacts = {
 		}, true);
 	},
 
-// ==================== create, update, delete individual entries ====================
+/*--------------------- create, update, delete individual entries ------------------*/
 		storeAdd: function(entry) {
 			entry.id = Contacts.index;
 			window.localStorage.setItem("Contacts:index", ++Contacts.index);
@@ -289,8 +290,8 @@ var Contacts = {
 		storeRemove: function(entry) {
 			window.localStorage.removeItem("Contacts:"+ entry.id);
 		},
- 
-// ==================== table build/remove ============================================
+
+/*---------------------- table build/remove -----------------------------------------*/
 		tableAdd: function(newTable) {
 			var $tr = document.createElement("tr"), $td, key;
 			for (key in newTable) {
