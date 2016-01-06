@@ -115,6 +115,14 @@ var Contacts = {
 			return list;
 		}storedContactData();
 
+/*--------------------- update employee table --------------------------------------*/
+		function updateEmployeeInfoTable() {
+			removeTableRow();
+			var dataRetrieval = storedContactData();
+			var selectedInfo = getSelectedCompany(dataRetrieval);
+			selectedInfo.forEach(Contacts.tableAdd);
+		}		
+
 /*--------------------- initialize the dropdown list --------------------------------*/
 		function getCompanyName(names) {
 			var companyName = [];
@@ -164,14 +172,6 @@ var Contacts = {
 				}
 			});
 			return selectedInfo;
-		}
-
-/*--------------------- update employee table --------------------------------------*/
-		function updateEmployeeInfoTable() {
-			removeTableRow();
-			var dataRetrieval = storedContactData();
-			var selectedInfo = getSelectedCompany(dataRetrieval);
-			selectedInfo.forEach(Contacts.tableAdd);
 		}
 
 /*-------------------------- sort contacts -----------------------------------------*/	    
