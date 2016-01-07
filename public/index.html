@@ -7,9 +7,8 @@
 	</head>
 <body>
 	<div class="headerContainer">
-		<div class="header">
-		</div>
-		<span>A Windows LocalStorage App written in vanilla Javascript, CSS, and HTML (Employee Info is sortable and scrolls)</span>
+		<div class="header"></div>
+		<p>An app written in Javascript, CSS, and HTML that uses Window's localStorage API (<span>Employee Info </span>is sortable with record scrolling)</p>
 	</div>
 
 	<div class="dropdownContainer">
@@ -84,9 +83,8 @@
 
 	<div class="tableContainer">
 		<p>Employee Info</p>
-	    <div class="scrolltable">
-	        <table class="tableHeader">
-		        <thead id="sort-icon">
+	        <table class="scrollTable">
+		        <thead class="fixedHeader" id="sort-icon">
 		        	<tr>
 		        		<th>ID</th>
 						<th>FullName</th>
@@ -97,15 +95,13 @@
 						<th>Actions</th>
 		        	</tr>
 		        </thead>
-	        </table>
-	        <div class="body">
-	            <table>
-	                <tbody id="contacts-table">
-						<tr></tr>
-	 				</tbody>
-	            </table>
-	        </div>
-	    </div>
+	        </table class="scrollTable">
+
+            <table>
+                <tbody class="scrollContent" id="contacts-table">
+					<tr></tr>
+ 				</tbody>
+            </table>
 	</div>
 
 <script src="js/contact.js"></script>

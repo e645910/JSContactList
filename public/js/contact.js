@@ -95,6 +95,17 @@ var Contacts = {
 		}
 
 /*--------------------- initialize table info ----------------------------------------*/
+		function localStorageData() {
+			var list = [], i, key;
+			for (i = 0; i < window.localStorage.length; i++) {
+				key = window.localStorage.key(i);
+				if (/Contacts:\d+/.test(key)) {
+					list.push(JSON.parse(window.localStorage.getItem(key)));
+				}
+			}
+			return list;
+		}localStorageData();
+
 		function removeTableRow() {
 		var tableRowCount = 1;
 		var rowCount = Contacts.$table.rows.length;
@@ -104,21 +115,9 @@ var Contacts = {
 			return rowCount;
 		}
 
-		function storedContactData() {
-			var list = [], i, key;
-			for (i = 0; i < window.localStorage.length; i++) {
-				key = window.localStorage.key(i);
-				if (/Contacts:\d+/.test(key)) {
-					list.push(JSON.parse(window.localStorage.getItem(key)));
-				}
-			}
-			return list;
-		}storedContactData();
-
-/*--------------------- update employee table --------------------------------------*/
 		function updateEmployeeInfoTable() {
 			removeTableRow();
-			var dataRetrieval = storedContactData();
+			var dataRetrieval = localStorageData();
 			var selectedInfo = getSelectedCompany(dataRetrieval);
 			selectedInfo.forEach(Contacts.tableAdd);
 		}		
@@ -135,7 +134,7 @@ var Contacts = {
 		}
 		
 		function addCompanyNames() {
-			var dataRetrieval = storedContactData();
+			var dataRetrieval = localStorageData();
 			var companyName = getCompanyName(dataRetrieval);
 			Contacts.$select.options.length = 0;
 			Contacts.$select.add( new Option(''));
@@ -222,7 +221,7 @@ var Contacts = {
 				}
 
 				function sortTable() {
-			    	var dataRetrieval = storedContactData();
+			    	var dataRetrieval = localStorageData();
 					var selectedInfo = getSelectedCompany(dataRetrieval);
 			    	sortOn(selectedInfo, tableHeader, false, false);
 					selectedInfo.forEach(Contacts.tableAdd);
