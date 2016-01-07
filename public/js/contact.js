@@ -40,6 +40,12 @@ var Contacts = {
 		Contacts.$button_discard.addEventListener("click", function(event) {
 			Contacts.$form.reset();
 			Contacts.$select.value = '';
+			if ( document.getElementById('sort-icon').className.match(/(?:^|\s)sort-asc(?!\S)/)) {
+				document.getElementById('sort-icon').className = document.getElementById('sort-icon').className.replace( /(?:^|\s)sort-asc(?!\S)/g , '' );
+			}
+			if ( document.getElementById('sort-icon').className.match(/(?:^|\s)sort-dsc(?!\S)/)) {
+				document.getElementById('sort-icon').className = document.getElementById('sort-icon').className.replace( /(?:^|\s)sort-dsc(?!\S)/g , '' );
+			}
 			removeTableRow();
 			setFocus();
 		}, true);
@@ -213,10 +219,10 @@ var Contacts = {
 					sortTable();
 				    if (sortOrderAscending === true) {
 				    	sortOrderAscending = false;
-				    	document.getElementById('sort-icon').setAttribute('class', 'sort-asc');
+				    	document.getElementById('sort-icon').className = 'sort-asc';
 				    }else {
 				    	sortOrderAscending = true;
-				    	document.getElementById('sort-icon').setAttribute('class', 'sort-dsc');
+				    	document.getElementById('sort-icon').className = 'sort-dsc';
 				    }
 				}
 
