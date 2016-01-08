@@ -266,6 +266,10 @@ th + th + th + th + th + th + th {
     hyphens: auto;
 }
 
+.scrollContent tr {
+	background-color: #77d42a;
+}
+
 .scrollContent td {
 	border: 1px solid #808080;
 }
@@ -301,7 +305,6 @@ th + th + th + th + th + th + th {
 table {
 	height: 100%;
     border-collapse: collapse;
-	background-color: #77d42a;
 }
 
 tr:nth-child(2n) {
