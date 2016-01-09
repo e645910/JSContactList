@@ -302,9 +302,12 @@ th + th + th + th + th + th + th {
 	width: 10vw;
 }
 
-table {
+.scrollTable {
 	height: 100%;
-    border-collapse: collapse;
+}
+
+table {
+	border-collapse: collapse;
 }
 
 tr:nth-child(2n) {
