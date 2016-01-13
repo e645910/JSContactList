@@ -74,8 +74,6 @@ var Contacts = {
 			if (this.company.value !== '') {
 				if (entry.id === 0) {
 					Contacts.storeAdd(entry);
-					clearEmployeeFormInput();
-					updateEmployeeInfoTable();
 					if (Contacts.$table.rows.length === 1) {
 						Contacts.$form.reset();
 						addCompanyNames();
@@ -83,22 +81,21 @@ var Contacts = {
 
 				}else { 
 					Contacts.storeEdit(entry);
-					updateEmployeeInfoTable();
-			    	clearEmployeeFormInput();
-				}
-			Contacts.$form.idEntry.value = '0';
-			}
-			event.preventDefault();
-		}, true);
+					}
 
-		function clearEmployeeFormInput() {
+			updateEmployeeInfoTable();		
 			Contacts.$form.fullname.value = '';
 			Contacts.$form.dept.value = '';
 			Contacts.$form.phone.value = '';
 			Contacts.$form.email.value = '';
 			Contacts.$form.idEntry.value = '';
 			Contacts.$form.notes.value = '';
-		}
+			Contacts.$form.idEntry.value = '0';
+			}
+			event.preventDefault();
+		}, true);
+
+		
 
 /*--------------------- initialize table info ----------------------------------------*/
 		function localStorageData() {
@@ -179,70 +176,64 @@ var Contacts = {
 			return selectedInfo;
 		}
 
-/*-------------------------- sort contacts -----------------------------------------*/	    
+/*-------------------------- sort contacts -----------------------------------------*/	
 		var sortOrderAscending = true;
-		function scopePreserver() {
-			return function() {
-				var string = this.innerText;
-				var tableHeader = string.toLowerCase();
+		function tableHeaderSort(){
+			var titles = document.getElementsByTagName('th');
+			var rows = document.getElementsByTagName('tr');
+			for(var i = 0; i < titles.length; i++) {
+				titles[i].onclick = (function(){
+					return function(){
+						var string = this.textContent;
+						var tableHeader = string.toLowerCase();
+							function sortOn(arr, prop, reverse) {
+								if (!prop || !arr) {
+									return arr;
+								}
 
-				function sortOn(arr, prop, reverse) {
-					if (!prop || !arr) {
-						return arr;
-					}
+							function sort_by(field, rev, primer) {
+								return function(a, b) {
+									a = primer(a[field]);
+									b = primer(b[field]);
 
-					function sort_by(field, rev, primer) {
-						return function(a, b) {
-							a = primer(a[field]);
-							b = primer(b[field]);
-
-							if (sortOrderAscending === false) {
-								return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
+									if (sortOrderAscending === false) {
+										return ((a < b) ? 1 : ((a > b) ? -1 : 0)) * (rev ? 1 : 1);
+									}
+									return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
+								};
 							}
-							return ((a < b) ? -1 : ((a > b) ? 1 : 0)) * (rev ? -1 : 1);
-						};
-					}
 
-					if (tableHeader === 'id') {
-						arr.sort(sort_by(prop, reverse, function(a) {
-						return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
-						}));
-					}else {	
-						arr.sort(sort_by(prop, reverse, function(a) {
-						return String(a).toUpperCase();
-						}));
-					}
-				}
+							if (tableHeader === 'id') {
+								arr.sort(sort_by(prop, reverse, function(a) {
+								return parseFloat(String(a).replace(/[^0-9.-]+/g, ''));
+								}));
+							}else {	
+								arr.sort(sort_by(prop, reverse, function(a) {
+								return String(a).toUpperCase();
+								}));
+							}
+						}
 
-				if (tableHeader !== 'actions') {
-					removeTableRow();
-					sortTable();
-				    if (sortOrderAscending === true) {
-				    	sortOrderAscending = false;
-				    	document.getElementById('sort-icon').className = 'sort-asc';
-				    }else {
-				    	sortOrderAscending = true;
-				    	document.getElementById('sort-icon').className = 'sort-dsc';
-				    }
-				}
+						if (tableHeader !== 'actions') {
+							removeTableRow();
+							var dataRetrieval = localStorageData();
+							var selectedInfo = getSelectedCompany(dataRetrieval);
+					    	sortOn(selectedInfo, tableHeader, false, false);
+							selectedInfo.forEach(Contacts.tableAdd);
 
-				function sortTable() {
-			    	var dataRetrieval = localStorageData();
-					var selectedInfo = getSelectedCompany(dataRetrieval);
-			    	sortOn(selectedInfo, tableHeader, false, false);
-					selectedInfo.forEach(Contacts.tableAdd);
-				 }
-
-			};
-		}
-
-		function tableContainScope() {
-		var titles = document.getElementsByTagName('th');
-		var rows = document.getElementsByTagName('tr');
-			for( var i = 0; i < titles.length; i++) {
-				titles[i].onclick = scopePreserver( i, rows[i]);
+						    if (sortOrderAscending === true) {
+						    	sortOrderAscending = false;
+						    	document.getElementById('sort-icon').className = 'sort-asc';
+						    }else {
+						    	sortOrderAscending = true;
+						    	document.getElementById('sort-icon').className = 'sort-dsc';
+						    }
+						}
+					};
+				})(i, rows[i]);
 			}
-		}tableContainScope();
+		}tableHeaderSort();
+
 
 /*----- add event listener then determine which callback function was triggered ----*/		
 		Contacts.$table.addEventListener("click", function(event) {
