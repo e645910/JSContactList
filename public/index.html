@@ -1,110 +1,139 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Company Contacts</title>
-		<link rel="stylesheet" type="text/css" href="style.css">
-	</head>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Company Contacts</title>
+    <meta name="description" content="Contact manager" />
+    <link rel="shortcut icon" href="img/cm-icon.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
 <body>
-	<div class="headerContainer">
-		<div class="header"></div>
-		<p>An app written in Javascript, CSS, and HTML that uses Window's localStorage API (<span>Employee Info </span>is sortable with record scrolling)</p>
-	</div>
+    <div class="headerContainer">
+        <div class="header"></div>
+        <p>An app written in Javascript, CSS, and HTML that uses Window's localStorage API (<span>Employee Info </span>is sortable with record scrolling)</p>
+    </div>
 
-	<div class="dropdownContainer">
-		<label>Company Search</label>
-		<select class="dropdown" id="contacts-dropdown"></select>
-	</div>
+    <div class="dropdownContainer">
+        <label>Company Search</label>
+        <select class="dropdown" id="contacts-dropdown"></select>
+    </div>
 
-	<form class="formContainer" id="contacts-form">
-		<div class="formCompany">
-			<div>
-				<label>Company:</label>
-				<div><input type="text" name="company" id="set-focus" autofocus/></div>
-			</div>
-			<div>
-				<label>Address 1:</label>
-				<div><input type="text" name="address1" /></div>
-			</div>
-			<div>
-				<label>Address 2:</label>
-				<div><input type="text" name="address2" /></div>
-			</div>		
-			<div>
-				<label>City:</label>
-				<div><input type="text" name="city" /></div>
-			</div>
-			<div>
-				<label>State:</label>
-				<div><input type="text" name="state" /></div>
-			</div>
-			<div>
-				<label>Zip Code:</label>
-				<div><input type="number" name="zip" /></div>
-			</div>
-		</div>
+    <form class="formContainer" id="contacts-form">
+        <div class="formCompany">
+            <div>
+                <label>Company:</label>
+                <div>
+                    <input type="text" name="company" id="set-focus" autofocus/>
+                </div>
+            </div>
+            <div>
+                <label>Address 1:</label>
+                <div>
+                    <input type="text" name="address1" />
+                </div>
+            </div>
+            <div>
+                <label>Address 2:</label>
+                <div>
+                    <input type="text" name="address2" />
+                </div>
+            </div>
+            <div>
+                <label>City:</label>
+                <div>
+                    <input type="text" name="city" />
+                </div>
+            </div>
+            <div>
+                <label>State:</label>
+                <div>
+                    <input type="text" name="state" />
+                </div>
+            </div>
+            <div>
+                <label>Zip Code:</label>
+                <div>
+                    <input type="number" name="zip" />
+                </div>
+            </div>
+        </div>
 
-		<div class="formEmployeeContainer" id="contacts-employee">
-			<div class="formPersonal">
-				<div>
-					<label>Name:</label>
-					<div><input type="text" name="fullname" placeholder="Enter First and Last Name"/></div>
-				</div>
-				<div>
-					<label>Dept:</label>
-					<div><input type="text" name="dept" /></div>
-				</div>
-				<div>
-					<label>Phone:</label>
-					<div><input type="text" name="phone" /></div>
-				</div>
+        <div class="formEmployeeContainer" id="contacts-employee">
+            <div class="formPersonal">
+                <div>
+                    <label>Name:</label>
+                    <div>
+                        <input type="text" name="fullname" placeholder="Enter First and Last Name" />
+                    </div>
+                </div>
+                <div>
+                    <label>Dept:</label>
+                    <div>
+                        <input type="text" name="dept" />
+                    </div>
+                </div>
+                <div>
+                    <label>Phone:</label>
+                    <div>
+                        <input type="text" name="phone" />
+                    </div>
+                </div>
 
-				<div>
-					<label>Email:</label>
-					<div><input type="email" name="email" placeholder="Enter Email Format"/></div>
-				</div>
+                <div>
+                    <label>Email:</label>
+                    <div>
+                        <input type="email" name="email" placeholder="Enter Email Format" />
+                    </div>
+                </div>
 
-				<div class="notes">
-					<label>Notes:</label>
-					<textarea name="notes" wrap="soft"></textarea>
-				</div>
-			</div>
-		</div>
+                <div class="notes">
+                    <label>Notes:</label>
+                    <textarea name="notes" wrap="soft"></textarea>
+                </div>
+            </div>
+        </div>
 
-			<div class="buttonContainer">
-				<div class="itemButton">
-					<div><input type="button" id="contacts-op-discard" value="Clear" /></div>
-					<div><input type="submit" id="contacts-op-save" value="Save" /></div>
-				</div>
-			</div>
+        <div class="buttonContainer">
+            <div class="itemButton">
+                <div>
+                    <input type="button" id="contacts-op-discard" value="Clear" />
+                </div>
+                <div>
+                    <input type="submit" id="contacts-op-save" value="Save" />
+                </div>
+            </div>
+        </div>
 
-			<input type="hidden" name="idEntry" value="0" />
-	</form>
+        <input type="hidden" name="idEntry" value="0" />
+    </form>
 
-	<div class="tableContainer">
-		<p>Employee Info</p>
-	        <table>
-		        <thead class="fixedHeader" id="sort-icon">
-		        	<tr>
-		        		<th>ID</th>
-						<th>FullName</th>
-						<th>Dept</th>
-						<th>Phone</th>
-						<th>Email</th>
-						<th>Notes</th>
-						<th>Actions</th>
-		        	</tr>
-		        </thead>
-	        </table>
+    <div class="tableContainer">
+        <p>Employee Info</p>
+        <table>
+            <thead class="fixedHeader" id="sort-icon">
+                <tr>
+                    <th>ID</th>
+                    <th>FullName</th>
+                    <th>Dept</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
 
-            <table class="scrollTable">
-                <tbody class="scrollContent" id="contacts-table">
-					<tr></tr>
- 				</tbody>
-            </table>
-	</div>
+        <table class="scrollTable">
+            <tbody class="scrollContent" id="contacts-table">
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
 
-<script src="js/contact.js"></script>
+    <script src="js/contact.js"></script>
 
 </body>
+
 </html>
