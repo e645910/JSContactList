@@ -31,28 +31,23 @@ body {
     border-bottom: 5px solid #808080;
 }
 
-.headerContainer p {
-    float: left;
+.header img {
+    position: relative;
+    width: 33%;
+    padding: 1%;
+}
+
+.header p {
+    float: right;
     color: #fff;
     font-size: 10px;
     font-size: 1vw;
-    padding-left: 1%;
+    margin: 3.5% 1%;
 }
 
-.headerContainer span {
+.header span {
     color: #ffff00;
     text-decoration: underline;
-}
-
-.header {
-    position: relative;
-    top: calc(29% - 1em);
-    left: calc(2% - 1em);
-    width: 30%;
-    height: 50%;
-    background-image: url("./img/logo.png");
-    background-repeat: no-repeat;
-    background-size: contain;
 }
 
 
