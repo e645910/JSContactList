@@ -10,6 +10,8 @@ body {
     background-size: cover;
     z-index: 0;
 }
+
+
 /*--------- header -------------*/
 
 .headerContainer {
@@ -28,6 +30,7 @@ body {
     background-color: #77d42a;
     border-bottom: 5px solid #808080;
 }
+
 .headerContainer p {
     float: left;
     color: #fff;
@@ -35,10 +38,12 @@ body {
     font-size: 1vw;
     padding-left: 1%;
 }
+
 .headerContainer span {
     color: #ffff00;
     text-decoration: underline;
 }
+
 .header {
     position: relative;
     top: calc(29% - 1em);
@@ -50,6 +55,7 @@ body {
     background-size: contain;
 }
 
+
 /*--------- dropdown ---------*/
 
 .dropdownContainer {
@@ -60,17 +66,21 @@ body {
     height: 7%;
     color: #000;
 }
+
 .dropdownContainer label {
     text-decoration: underline;
     color: #ffff00;
     font-size: 10px;
     font-size: 1vw;
 }
+
 .dropdown {
     width: 90%;
     font-size: 15px;
     font-size: 1.5vw;
 }
+
+
 /*--------- form  -------------*/
 
 .formContainer {
@@ -88,6 +98,7 @@ body {
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811', GradientType=0);
     background-color: #77d42a;
 }
+
 .formContainer:hover {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
     background: -moz-linear-gradient(top, #5cb811 5%, #77d42a 100%);
@@ -98,12 +109,14 @@ body {
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a', GradientType=0);
     background-color: #5cb811;
 }
+
 .formContainer label {
     display: inline-block;
     font-size: 15px;
     font-size: 1.2vw;
     padding: 1% 1%;
 }
+
 .formContainer input {
     width: 90%;
     height: 3vh;
@@ -111,6 +124,8 @@ body {
     font-size: 1vw;
     border: 1px solid #808080;
 }
+
+
 /* company */
 
 .formCompany {
@@ -120,6 +135,8 @@ body {
     width: 40%;
     height: 80%;
 }
+
+
 /*personal info*/
 
 .formEmployeeContainer {
@@ -129,11 +146,14 @@ body {
     width: 40%;
     height: 75%;
 }
+
 .notes textarea {
     width: 90%;
     height: 9vh;
     border: 1px solid #808080;
 }
+
+
 /*--------- buttons  -------------*/
 
 .buttonContainer {
@@ -143,6 +163,7 @@ body {
     width: 16%;
     height: 17%;
 }
+
 .itemButton input {
     -moz-box-shadow: 3px 4px 0 0 #1564ad;
     -webkit-box-shadow: 3px 4px 0 0 #1564ad;
@@ -169,6 +190,7 @@ body {
     text-decoration: none;
     text-shadow: 0 1px 0 #528ecc;
 }
+
 .itemButton input:hover {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff));
     background: -moz-linear-gradient(top, #378de5 5%, #79bbff 100%);
@@ -179,10 +201,13 @@ body {
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff', GradientType=0);
     background-color: #378de5;
 }
+
 .itemButton input:active {
     position: relative;
     top: 1px;
 }
+
+
 /*--------- table  -------------*/
 
 .tableContainer {
@@ -193,6 +218,7 @@ body {
     height: 20%;
     overflow: hidden;
 }
+
 .tableContainer p {
     text-align: center;
     color: #ffff00;
@@ -200,40 +226,50 @@ body {
     font-size: 10px;
     font-size: 1vw;
 }
+
 .fixedHeader tr {
     position: relative;
     display: block;
 }
+
 th {
     width: 3vw;
     background-color: #306eff;
     color: #fff;
     border: 1px solid #808080;
 }
+
 th + th {
     width: 10vw;
 }
+
 th + th + th {
     width: 10vw;
 }
+
 th + th + th + th {
     width: 10vw;
 }
+
 th + th + th + th + th {
     width: 20vw;
 }
+
 th + th + th + th + th + th {
     width: 25vw;
 }
+
 th + th + th + th + th + th + th {
     width: 10vw;
 }
+
 .scrollContent {
     display: block;
     width: 100%;
     height: 60%;
     overflow: auto;
 }
+
 .scrollContent {
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -245,45 +281,60 @@ th + th + th + th + th + th + th {
     -epub-word-break: break-all;
     hyphens: auto;
 }
+
 .scrollContent tr {
     background-color: #77d42a;
 }
+
 .scrollContent td {
     border: 1px solid #808080;
 }
+
 .scrollContent td {
     width: 3vw;
 }
+
 .scrollContent td + td {
     width: 10vw;
 }
+
 .scrollContent td + td + td {
     width: 10vw;
 }
+
 .scrollContent td + td + td + td {
     width: 10vw;
 }
+
 .scrollContent td + td + td + td + td {
     width: 20vw;
 }
+
 .scrollContent td + td + td + td + td + td {
     width: 25vw;
 }
+
 .scrollContent td + td + td + td + td + td + td {
     width: 10vw;
 }
+
 .scrollTable {
     height: 100%;
 }
+
 table {
     border-collapse: collapse;
 }
+
 tr:nth-child(2n) {
     background-color: #fff380;
 }
+
 th:hover {
     text-decoration: underline;
 }
+
+
 /*-------- sort arrows ----------*/
 
 .sort-asc th::after {
@@ -291,6 +342,7 @@ th:hover {
     color: #ffff00;
     padding: 3%;
 }
+
 .sort-dsc th::after {
     content: "\2193";
     color: #ffff00;
