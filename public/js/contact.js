@@ -93,7 +93,6 @@ var Contacts = {
                 Contacts.$form.notes.value = '';
                 Contacts.$form.idEntry.value = '0';
             }
-            event.preventDefault();
         }, true);
 
 
@@ -277,7 +276,6 @@ var Contacts = {
                     }
                 }
             }
-            event.preventDefault();
         }, true);
     },
 
