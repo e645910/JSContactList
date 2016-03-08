@@ -8,8 +8,7 @@ Benefits of using windows localStorage are,
 	- does not expire
 	- works across different tabs or windows.
 
-
-This website can do the following:
+Website highlights are as follows:
 	- a form to add new entries or edit existing entries stored in the local storage area
 	- a table to list all the entries
 	- easily add new names to an existing company's employee list
